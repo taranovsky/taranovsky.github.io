@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Perfect Subset Property for co-analytic sets in ZF\P</TITLE>
+</HEAD>
+<BODY LANG="en-US">
+<P ALIGN=RIGHT>Dmytro Taranovsky<br/>
+June 25, 2004<br/>
+Slightly Modified: February 20, 2005</p>
+<P ALIGN=CENTER><B>Perfect Subset Property for co-analytic sets in ZF\P</B></P>
+<P><B>Abstract:</B>  We
+prove that second order arithmetic plus every uncountable co-analytic
+set has a perfect subset is equiconsistent with ZFC.</P>
+<P><B>Introduction:</B> 
+The question of whether every uncountable co-analytic set has a
+perfect subset (in other words, whether every co-analytic set has
+perfect subset property) has been an important problem in classical
+descriptive set theory.  Eventually, the
+question has been shown undecidable in ZFC and a positive answer
+equiconsistent with the existence of an inaccessible cardinal. 
+Nevertheless, based on strong set existence axioms (<B>Σ<SUB>1</SUB><SUP>1</SUP></B>
+determinacy would suffice), a consensus has emerged that every
+uncountable co-analytic set has a perfect subset.</P>
+<P>	In ZFC, perfect subset property for co-analytic sets is
+equivalent to the claim that ω<SUB>1 </SUB>
+is inaccessible to the reals, that is ω<SUB>1</SUB>
+in V is inaccessible in L(r) for every real number r (which implies
+that ω<SUB>1</SUB> is inaccessible
+in the constructible universe L).  Conversely, given a model of ZFC
+with an inaccessible cardinal κ, by
+using forcing, specifically Levy collapse, we can collapse all
+cardinals below κ to ω
+to produce a model of ZFC + ω<SUB>1</SUB><SUP>
+</SUP>is inaccessible to the reals.</P>
+<P>	Second order arithmetic is the standard theory about integers and sets of
+integers.  It consists of basic facts about integers, induction axiom
+<B>(</B>0∈X and ∀n (n ∈ X → n+1 ∈ X) implies every natural
+number I ∈ X<B>)</B>, and comprehension
+axiom schema, which is the universal closure of ∃X ∀n (x∈X ↔
+φ(n)) for every formula φ with
+parameters.  Simpson's book [1] explains how to formalize and prove
+much of mathematics, including descriptive set theory and
+theory of constructible sets in (weak subsystems of) second order
+arithmetic.  The membership relation for co-analytic sets is
+formalized by a Π<SUB>1</SUB><SUP>1</SUP>
+formula with parameters. A perfect set is the set of all paths
+through a perfect tree, and can be coded by such perfect tree.  A
+formula with one free real number variable defines an uncountable set
+of reals if there is no real number that enumerates all of the real
+numbers that satisfy the formula.  
+</P>
+<P>Second order arithmetic is inter-interpretable ZF\P + &quot;every set is
+countable&quot; and hence equiconsistent with ZF minus power-set. 
+For convenience, we will work in ZF\P.  A reference to an uncountable
+set in ZF\P should be interpreted as a reference to a corresponding
+code.<br/></P>
+<P><B>Foundational Significance:</B>  The proof illustrates that as far as ZFC &quot;knows&quot;,
+the class of all ordinals Ord is inaccessible:  The proof uses Ord in
+place of an inaccessible cardinal in the Levy collapse.  More
+importantly, the results contribute to the program of proving
+consistency and existence of well-behaved models of higher set theory
+from natural and intuitively true statements about integers and real
+numbers.  A number of philosophers believe that the notion of an
+arbitrary set of real numbers is inherently vague or that uncountable
+sets exist only as syntactical constructs.  At any rate, there is a
+greater doubt about higher set theory than about integers and real
+numbers, and it is important to place the study of higher set theory
+on a firm foundation.</P>
+<P><B>Further Areas Study:</B>
+ A model obtained by Col(ω, &lt;Ord)
+should have every projective set measurable, have Baire property, and
+perfect subset property, but verifying this requires checking that
+the usual proof can be modified to work for class forcing. 
+Restrictions of Separation and Replacement to Σ<SUP>n</SUP><SUB>ZF</SUB>
+formulas should correspond to corresponding restrictions in ZFC\P +
+(proper formalization of) every uncountable co-analytic set has a
+perfect subset.  A more ambitious project toward establishing
+consistency of higher infinities would be to show inside second order
+arithmetic that <br/>
+<B>Σ<SUP>1</SUP><SUB>n+1</SUB></B>
+determinacy is equivalent to &quot;M<SUB>n</SUB><SUP>#</SUP>(r)
+exists for every real r&quot; (which implies that ZFC + there are n
+Woodin cardinals has a well-behaved model).<br/><br/></P>
+<P><B>Theorem:</B>  ZF\P +
+&quot;every co-analytic set/class has perfect subset property&quot;
+is equiconsistent with ZFC.</P>
+<P><B>Proof:</B>  Perfect subset property for co-analytic sets is equivalent to &quot;for every
+real number r, the set of real numbers constructible from r is
+countable&quot;.  The only uses of uncountable sets in the standard
+proof are routine manipulations of projective sets, so the proof goes
+through (with syntactic modifications) inside ZF\P.</P>
+<P>	Consider a model M of
+ZF\P.  The notions in this paragraph are assumed to be relativized to
+M.  The constructible sets under the membership relation form a model
+L of ZFC\P.  Suppose that every set is countable and perfect subset
+property holds for co-analytic sets.  We show that L satisfies ZFC by
+showing that if α is a (countable)
+ordinal, then L satisfies the existence of the power-set of α.
+ Let r be a real number coding a bijection between α
+and ω.  The set of real numbers in
+L(r) is countable, so the set of subsets of α
+in L(r)<SUP>M</SUP>  and hence in L<SUP>M</SUP> is countable
+in M. Therefore, there is an ordinal β
+such that L<SUB>β</SUB> contains all
+constructible subsets of α, so L<SUB>β
++1</SUB> and hence L contains the constructible power set of
+α.</P>
+<P>For the other direction, let M be a (countable) model of ZFC.  Let G=Col(ω,
+&lt;Ord), which is the product of generic collapses Col(ω,
+κ) for every infinite regular cardinal
+κ.  Since the forcing is class
+forcing, the generic extension M[G] does not have to satisfy ZFC;
+however, G is sufficiently tame for M[G] to satisfy ZFC\P.  Because
+all uncountable cardinals are collapsed, in M[G], every set is
+countable. Let r be a real number in M[G].  Let g be a sufficiently
+long initial segment of G--sufficiently long for M[g] to contain r. 
+Since M[g] satisfies ZFC, ω<SUB>1</SUB><SUP>L(r)</SUP>
+exists in M[g].  By absoluteness, the same ordinal is ω<SUB>1</SUB><SUP>L(r)</SUP>
+in M[G], so the set of all reals constructible from r is countable in
+M[G].  Thus, in M[G] co-analytic sets satisfy perfect subset
+property.<br/><br/></P>
+<P ALIGN=CENTER>REFERENCE</P>
+<P>[1]  Simpson, Stephen. 
+<I>Subsystems of Second Order Arithmetic</I>.  Springer-Verlag: New
+York, 1999.</P>
+</BODY>
+</HTML>

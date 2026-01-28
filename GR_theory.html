@@ -1,0 +1,821 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 10 (filtered)">
+<title>General Relativity</title>
+
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Arial Unicode MS";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:"\@Arial Unicode MS";}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+h1
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	page-break-after:avoid;
+	font-size:24.0pt;
+	font-family:"Times New Roman";
+	font-weight:normal;}
+h2
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Times New Roman";
+	font-weight:normal;}
+h4
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	font-weight:normal;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoBodyText3, li.MsoBodyText3, div.MsoBodyText3
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoBodyTextIndent2, li.MsoBodyTextIndent2, div.MsoBodyTextIndent2
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-indent:.5in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoBodyTextIndent3, li.MsoBodyTextIndent3, div.MsoBodyTextIndent3
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-indent:.25in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:.9in .8in .9in .8in;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US>
+
+<div class=Section1>
+<p style="text-align: right">Back to Dmytro Taranovsky's  <a href="index.html">home page</a><br/>
+View as Microsoft Word <a href="GR_theory.doc"> document</a></p>
+<h4>Dmytro Taranovsky</h4>
+
+<p class=MsoNormal align=right style='text-align:right'>Date Started: February 12, 2001</p>
+
+<p class=MsoNormal align=right style='text-align:right'>Last Modified: January 4, 2002</p>
+
+<h1><span style='font-size:26.0pt'>General Relativity</span></h1>
+
+<p class=MsoBodyText3>The paper presents non-quantum physics with emphasis on
+the general theory of relativity. The entire theory but not many applications
+or approximation techniques are included. Required mathematics is rigorously
+developed.</p>
+
+<h2><b>Part I</b>: Mathematical Background</h2>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt'>Section 1: </span></b><span
+style='font-size:14.0pt'>Special Mathematical Notation</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>To keep formulas
+simple, special notation is used. When a statement has <b>free indexes</b> (superscripts
+and subscripts that are variable and not assigned a particular value), the
+statement is assumed true for all values of the indexes. For example, "<i>x<sub>i</sub>=c<sub>i</sub>t</i>
+where <i>i</i> can be 1, 2, or 3" means "<i>x<sub>1</sub>=c<sub>1</sub>t</i>, <i>x<sub>2</sub>=c<sub>2</sub>t</i>,
+and <i>x<sub>3</sub>=c<sub>3</sub>t</i>". Because of the extensive need for
+indexes, superscripts of variables are typically interpreted as indexes instead
+of powers. Instead, use parenthesis to express power. For example, <i>x<sup>2</sup></i><i><span
+style='font-family:"Arial Unicode MS"'>&#8800;</span>x*x=</i>(<i>x</i>)<sup>2</sup>.
+Sequences are denoted as follows: <i>x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub></i>
+is <i>x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n&#8209;1</sub>, x<sub>n</sub></i>
+if <i>n&gt;1</i>, is <i>x<sub>1</sub></i> if <i>n=1</i>, and is nothing when <i>n=0</i>.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'><b>Summation
+convention </b>states that when an index variable appears twice in an
+expression, summation over the allowed values of the index is assumed. For
+example, the chain rule simplifies to<sub><img width=84 height=45
+src="GR_theory_files/image001.gif"></sub>. To avoid using the summation
+convention, state "no summation" or enclose the indexes in parenthesis. The
+expression must be expanded before applying the summation: (<i>x<sub>i</sub>+y<sub>i</sub></i>)*(<i>x<sub>i</sub>+y<sub>i</sub></i>)=<i>x<sub>i</sub>x<sub>i</sub>+2x<sub>i</sub>y<sub>i</sub>+y<sub>i</sub>y<sub>i</sub></i>=(<i>x<sub>1</sub>+y<sub>1</sub></i>)<i><sup>2</sup>+</i>(<i>x<sub>2</sub>+y<sub>2</sub></i>)<sup>2</sup>
+with <i>i=</i>1, 2. The summation is not assumed when the indexes (after the
+expression is expanded) are separated by addition or subtraction: <i>a<sub>i</sub>+b<sub>i</sub></i>
+is not summed up over all <i>i</i>. The summation occurs as close to the
+indexes as reasonable: (<i>x<sub>i</sub>y<sub>i</sub></i>)<i><sup>2</sup></i>
+with <i>i=</i>1, 2 is (<i>x<sub>1</sub>y<sub>1</sub>+x<sub>2</sub>y<sub>2</sub></i>)<sup>2</sup>.
+When manipulating expressions using the summation convention, you can usually ignore
+implicit summation sign.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt'>Section 2: </span></b><span
+style='font-size:14.0pt'>Tensors and Tensor Operations</span></p>
+
+<p class=MsoBodyText style='text-indent:.5in'>A <b>tensor</b> T is defined as
+an ordered collection of its components: <sub><img width=44 height=27
+src="GR_theory_files/image002.gif"></sub>where each of the <i>i</i> and each of
+the <i>j</i> can assume any integer value from <i>1</i> to <i>N</i> and all
+components are real numbers. <i>N</i> is called <b>dimension</b>, <i>m</i> is
+contravariant order, <i>n</i> is covariant order, and (<i>m, n</i>) is rank of <i>T</i>.
+(The total number of components is N<sup>m+n</sup>.) <b>Tensor field</b>
+assigns a tensor to every point in a space. Tensors are often referred by
+their components.</p>
+
+<p class=MsoNormal style='text-align:justify'><b>Definition:</b> Let T be the
+value of a tensor field at a certain point. Let T have components <sub><img
+width=49 height=27 src="GR_theory_files/image003.gif"></sub><sub></sub>in
+coordinates x<sup>1</sup>, x<sup>2</sup>, ..., x<sup>N</sup>. Then in the
+coordinates <sub><img width=79 height=28 src="GR_theory_files/image004.gif"></sub>the
+components of T are <sub><img width=407 height=52
+src="GR_theory_files/image005.gif"></sub>where <i>W</i> is a real number
+(often a fraction or an integer) that is dependent only on the tensor field.
+(Do not forget to use the summation convention on every <i>a</i> and every <i>b</i>.)
+If <i>W=0</i>, the tensor is said to be absolute, otherwise the tensor is a
+relative tensor of <b>weight</b> <i>W</i>. Unless stated otherwise, <i>W=0</i>.</p>
+
+<p class=MsoBodyText><b>Theorem:</b> The definition is non-contradictory for
+arbitrary tensor fields and coordinates provided that the expression is defined
+and the Jacobian is not zero. </p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>Tensors are added, multiplied by a scalar, and subtracted
+component by component: <i>C=A+B</i> means<sub><img width=116 height=27
+src="GR_theory_files/image006.gif"></sub>; B=c*A means<sub><img width=92
+height=27 src="GR_theory_files/image007.gif"></sub>; <i>-B=-1*B</i>; <i>A-B=A+-B</i>.
+The operations above are undefined if there is a mismatch in rank or
+dimension. <b>Outer product</b>, <i>C=A</i><i><span style='font-size:10.0pt;
+font-family:"Arial Unicode MS"'>&#8855;</span>B</i>, means<sub><img width=116
+height=27 src="GR_theory_files/image008.gif"></sub>. <b>Contraction</b> is
+setting a subscript equal to a superscript and invoking the summation
+convention. For example, <sub><img width=103 height=27
+src="GR_theory_files/image009.gif"></sub>. (The covariant and contravariant
+orders are decreased by 1.) <b>Inner product</b> is an outer product followed
+by contraction(s). Addition, subtraction, multiplication by a scalar,
+contraction, outer product, and thus inner product of tensors can be shown to
+transform under coordinate change as tensors would by the definition. For example,
+<i>C=A</i><i><span style='font-size:10.0pt;font-family:"Arial Unicode MS"'>&#8855;</span>B</i><i><span
+style='font-family:"Arial Unicode MS"'>&#8660;</span></i><sub><img width=71
+height=23 src="GR_theory_files/image010.gif"></sub> where the bars indicate a
+new coordinate system. Tensor differentiation and integration, if done
+component by component, does not transform properly: often, <sub><img
+width=115 height=28 src="GR_theory_files/image011.gif"></sub>. Section 6
+describes how to differentiate tensors.</p>
+
+<p class=MsoBodyText style='text-indent:.5in'>When a quantity with proper
+components is defined in multiple coordinate systems or in terms of tensors,
+the quantity is said to be a tensor if it always obeys the transformation
+equation. Tensors are usually preferred over "nontensors" because a tensor
+needs to be defined in only one coordinate system and because change of tensor
+components under coordinate transformations is predictable and depend only on
+the coordinates and the nature of the tensor.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt'>Section 3:</span></b><span
+style='font-size:14.0pt'> Examples of Tensors</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'><b>Kronecker
+delta</b>, also called identity tensor, <i>&#948;<sup>ij</sup>=&#948;<sub>i</sub><sup>j</sup>=&#948;<sub>ij</sub>=1</i>
+if <i>i=j</i> and 0 otherwise. Generalized delta tensor has components<sub><img
+width=48 height=27 src="GR_theory_files/image012.gif"></sub>. Each component
+is 0 if <i>a<sub>i</sub>=a<sub>j</sub></i> or <i>b<sub>i</sub>=b<sub>j</sub></i>
+for some unequal <i>i</i> and <i>j</i>. Otherwise, if <i>a<sub>1</sub>a<sub>2</sub>...a<sub>n</sub></i>
+is an even permutation of <i>b<sub>1</sub>b<sub>2</sub>...b<sub>n</sub></i>, the
+component is one, odd permutation--the component is -1. Otherwise (that is if <span
+style='font-family:"Arial Unicode MS"'>&#8707;</span>i (1<span
+style='font-family:"Arial Unicode MS"'>&#8804;</span>i<span style='font-family:
+"Arial Unicode MS"'>&#8804;</span>n) <span style='font-family:"Arial Unicode MS"'>&#8704;</span>j
+(1<span style='font-family:"Arial Unicode MS"'>&#8804;</span>j<span
+style='font-family:"Arial Unicode MS"'>&#8804;</span>n) a<sub>j</sub><span
+style='font-family:"Arial Unicode MS"'>&#8800;</span>b<sub>i</sub>), the
+component is zero. <i>T</i> is called is <b>symmetric</b> with respect to <i>i<sub>x</sub></i>
+and <i>i<sub>y</sub></i> (<i>x</i><span style='font-family:"Arial Unicode MS"'>&#8800;</span><i>y</i>)
+if exchange of values of <i>i<sub>x</sub></i> and <i>i<sub>y</sub></i> does not
+affect any of the components, and <b>anti-symmetric</b> if the exchange
+multiplies every component by -1. (Both <i>i</i><sub>x</sub> and <i>i<sub>y</sub></i>
+must be either subscripts or superscripts.) For example, <i>&#948;<sub>ij</sub></i>
+is a symmetric tensor; <sub><img width=48 height=27
+src="GR_theory_files/image012.gif"></sub>is an anti-symmetric tensor with respect
+to any subscripts or superscripts. Note that if T is anti-symmetric with
+respect to <i>i<sub>x</sub></i> and <i>i<sub>y</sub></i>, then the value of
+every component where <i>i<sub>x</sub>=i<sub>y</sub></i> is zero. <b>Permutation
+tensor</b>, <i>e</i>, is anti-symmetric with respect to any two components, and
+<i>e<sup>12..n</sup>=e<sub>12..n</sub>=1</i>. Weight of <i>e<sup>ij..k</sup></i>,
+<i>e<sub>ij..k</sub></i>, <i>&#948;</i><sub>ij</sub>, and <i>&#948;</i><sup>ij</sup>
+is not zero.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>A tensor of rank
+(0, 0) is called a <b>scalar</b> and has only one component. A tensor of rank
+(1, 0) is called <b>contravariant vector</b> or simply <b>vector</b>. For
+example, position and velocity are vectors. A contravariant vector can be
+displayed as a sequence such as (<i>a<sub>1</sub>, a<sub>2</sub>, ..., a<sub>n</sub></i>).
+The transformation equation implies that in smaller coordinates vector
+components are larger. A tensor of rank (0, 1) is called <b>covariant vector</b>
+or a <b>1-form</b>. Covariant vectors can be interpreted as assigning for each
+contravariant vector a real number in a linear way through a dot product. The
+transformation equation implies that larger coordinates cause larger
+components. </p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>Let <i>E<sub>i</sub>E<sub>j</sub>...E<sub>k</sub>E<sup>l</sup>E<sup>m</sup>...E<sup>n</sup></i>
+be defined such that (<i>E<sub>i</sub>E<sub>j</sub>...E<sub>k</sub>E<sup>l</sup>E<sup>m</sup>...E<sup>n</sup></i>)<sub><img
+width=27 height=25 src="GR_theory_files/image013.gif"></sub>=1 and other
+components are zero. E<sub>i</sub>E<sub>j</sub>...E<sub>k</sub>E<sup>l</sup>E<sup>m</sup>...E<sup>n</sup>
+form a basis since an arbitrary tensor A=<sub><img width=36 height=25
+src="GR_theory_files/image014.gif"></sub> E<sub>i</sub>E<sub>j</sub>...E<sub>k</sub>E<sup>l</sup>E<sup>m</sup>...E<sup>n</sup><span
+style='font-size:14.0pt'> </span>(The summation is over all components.)
+(Visualization of 1-forms: <i>x<sub>i</sub>E<sup>i</sup></i> as a set of <i>y<sup>i</sup>E<sub>i</sub></i>
+such that <i>x<sub>i</sub>y<sup>i</sup>=1</i>.)</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>A <b>multilinear</b>
+form is a function that takes <i>n</i> vectors and returns a scalar in a linear
+way with respect to each of the vectors. For example, <i>f</i>(<i>cE<sub>1</sub></i>,
+<i>E<sub>2</sub></i>) = <i>cf</i>(<i>E<sub>1</sub>, E<sub>2</sub></i>), <i>f</i>(<i>E<sub>1</sub></i>,
+<i>E<sub>2</sub>+E<sub>3</sub></i>) <i>= f</i>(<i>E<sub>1</sub>, E<sub>2</sub></i>)+<i>f</i>(<i>E<sub>1</sub>,
+E<sub>3</sub></i>). Multilinear forms are, informally, essentially tensors of
+rank (0, n). That is T<sub>ij...k</sub>*<i>u<sup>i</sup>v<sup>j</sup>...w<sup>k</sup>=f(u,
+v, ..., w)</i> for an appropriate absolute tensor T.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'><b>Note:</b> Determinant
+of a square matrix A, det A=<sub><img width=133 height=27
+src="GR_theory_files/image015.gif"></sub>.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt'>Section 4:</span></b><span
+style='font-size:14.0pt'> Metric Tensor</span></p>
+
+<p class=MsoNormal style='text-align:justify'>An inner product between two
+vectors <b>u</b> and <b>v</b>, a real number &lt;<b>u</b>, <b>v</b>&gt;, is defined
+such that &lt;<b>u</b>, <b>v</b>&gt; = &lt;<b>v</b>, <b>u</b>&gt;, &lt;<b>u + w</b>,
+<b>v</b>&gt; = &lt;<b>u</b>, <b>v</b>&gt; + &lt;<b>w</b>, <b>v</b>&gt;, <b>u</b><span
+style='font-family:"Arial Unicode MS"'>&#8800;</span><b>0</b><span
+style='font-family:"Arial Unicode MS"'>&#8658;&#8707;</span><b>w</b> &lt;<b>u,
+w</b>&gt;<span style='font-family:"Arial Unicode MS"'>&#8800;</span>0. Metric
+tensor, <b>g</b><span style='font-family:"Arial Unicode MS"'>&#8801;</span>&lt;E<sub>i</sub>,
+E<sub>j</sub>&gt;E<sup>i</sup>E<sup>j</sup>. Conjugate metric tensor, g, is
+such that <span style='font-size:13.0pt'>g<sup>ij</sup>g<sub>jk</sub></span>=<sub><img
+width=19 height=25 src="GR_theory_files/image016.gif"></sub>. <b>Metric</b> is
+a smooth (that is infinitely differentiable) tensor field made of metric
+tensors. Geometry of any space with inner product--including distance, angles,
+and curvature--is entirely determined by the metric. Length squared, ||<b>u||<sup>2</sup></b><span
+style='font-family:"Arial Unicode MS"'>&#8801;</span>&lt;<b>u</b>, <b>u</b>&gt;.
+Note that for some spaces ||<b>u||<sup>2</sup> </b>can be zero or even negative
+for nonzero <b>u</b>. Metric is called <b>positive definitive</b> if in all
+cases &lt;<b>u</b>, <b>u</b>&gt; <span style='font-family:"Arial Unicode MS"'>&#8804;</span>
+0. An associate tensor to tensor T is a tensor to which T can be transformed
+through inner product(s) with metric tensor and/or conjugate metric tensor. <b>Example:</b>
+g<sub>ab</sub>T<sup>a</sup>=T<sub>b</sub>. </p>
+
+<p class=MsoNormal style='text-align:justify'><b>Note:</b> Outside of relativity,
+inner product is defined so that &lt;<b>u</b>, <b>u</b>&gt; <span
+style='font-family:"Arial Unicode MS"'>&#8805;</span> <b>0</b>.</p>
+
+<p class=MsoNormal style='text-align:justify'><b>Theorem:</b> <b>(a)</b> g<sub>ab</sub>
+is an absolute tensor of rank (0, 2); <b>(b)</b> g<sub>ab</sub>=g<sub>ba</sub>;
+<b>(c)</b> if metric tensor exists, conjugate metric tensor also exists; <b>(d)</b>
+g<sub>ab</sub><b>u</b><sup>a</sup><b>v</b><sup>b</sup> = &lt;<b>u</b>, <b>v</b>&gt;.
+<b>(e)</b> For every symmetric tensor g such that the matrix g<sub>ij</sub> is
+invertible, there exists an inner product such that g<sub>ab</sub><b>u</b><sup>a</sup><b>v</b><sup>b</sup>
+= &lt;<b>u</b>, <b>v</b>&gt;. <b>(f)</b> If metric is positive definitive, &lt;<b>u</b>,
+<b>u</b>&gt; = 0<span style='font-family:"Arial Unicode MS"'>&#8660;</span><b>u</b>=<b>0</b>.</p>
+
+<p class=MsoNormal><span style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt'>Section 5:</span></b><span
+style='font-size:14.0pt'> Manifolds</span></p>
+
+<p class=MsoNormal><b>Definition:</b> n-dimensional smooth manifold is a set
+of points combined with a set of coordinate systems such that:</p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.5in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Every
+coordinate system (also called smooth chart) consists of a subset R of the
+manifold and (<i>x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub></i>) for each
+point in R. All <i>x<sub>i</sub></i> are real numbers.</p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.5in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>In
+every coordinate system, different points have different coordinates.</p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.5in'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Every
+coordinate system is open and connected. Open means that for each (<i>x<sub>1</sub>,
+x<sub>2</sub>, ..., x<sub>n</sub></i>) in the system there exists <i>r&gt;0</i>
+such that every (<i>y<sub>1</sub>, y<sub>2</sub>, ..., y<sub>n</sub></i>) belongs
+to the coordinate system provided that (x<sub>i</sub>-y<sub>i</sub>)*(x<sub>i</sub>-y<sub>i</sub>)&lt;r*r.
+Connected means that for every pair of coordinates <b>y=</b>(y<sub>1</sub>, y<sub>2</sub>,
+..., y<sub>n</sub>) and <b>z</b>=(z<sub>1</sub>, z<sub>2</sub>, ..., z<sub>n</sub>),
+there exists a continuous function <i>f</i>(t)= (x<sub>1</sub>, x<sub>2</sub>,
+..., x<sub>n</sub>)(t) (where 0<span style='font-family:"Arial Unicode MS"'>&#8804;</span>t<span
+style='font-family:"Arial Unicode MS"'>&#8804;</span>1, and each (<i>x<sub>1</sub>,
+x<sub>2</sub>, ..., x<sub>n</sub></i>) are valid coordinates for the coordinate
+system) such that <i>f</i>(0)=<b>y</b> and <i>f</i>(1)=<b>z</b>.</p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.5in'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Union
+of all R is the set of points that make up the manifold.</p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.5in'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>For
+every 2 coordinate systems that share some of the points, the transformation between
+the coordinate systems must be smooth (that is infinitely differentiable) and
+thus have a nonzero Jacobian.</p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.5in'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>For
+every 2 points A and B, there exists A<sub>1</sub>, A<sub>2</sub>, ..., A<sub>n</sub>
+such that A<sub>1</sub>=A, A<sub>n</sub>=B, and for every integer i (0&lt;i&lt;n)
+there exists a coordinate system such that A<sub>i</sub> and A<sub>i+1</sub>
+belong to the system. In other words, the manifold is connected.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoBodyTextIndent2>Manifold is, informally, a generalization of a
+smooth surface or a space. Once a manifold is defined, more coordinate systems
+can be added provided that the Jacobian of all coordinate transformations
+exists and is nonzero at all points where the coordinates apply. Two manifolds
+are called topologically equivalent if there is a one-to-one transformation
+between the manifolds that preserves continuity. For example, all 2-dimensional
+ellipsoids are topologically equivalent, but a sphere is not topologically
+equivalent to a torus. Tensor field on a manifold is specified by specifying
+the field for every coordinate system such that the tensors obey the
+transformation equation.</p>
+
+<p class=MsoNormal><b>Definition:</b> Pseudo-Riemannian manifold is a smooth
+manifold with a metric.<br>
+<b>Definition:</b> Riemannian manifold is a pseudo-Riemannian manifold whose
+metric is positive definitive.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt'>Section 6:</span></b><span
+style='font-size:14.0pt'> Covariant Differentiation and Curvature</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>The actual
+change with location of a quantity depends not only on the change its
+coordinate components but also on the change of nature (size) of coordinates
+with location. For example, decrease of length of <i>x<sup>1</sup></i>
+(derived from <i>g<sub>11</sub></i>) with increasing <i>x<sup>2</sup></i> can give
+incorrect results because <span style='font-family:"Arial Unicode MS"'>&#8706;</span>x<sup>1</sup>/<span
+style='font-family:"Arial Unicode MS"'>&#8706;</span>x<sup>2</sup>=0 despite
+the change in lengths. Therefore, tensor differentiation is adjusted for the
+coordinates:</p>
+
+<p class=MsoNormal><sub><img width=391 height=101
+src="GR_theory_files/image017.gif"></sub></p>
+
+<p class=MsoNormal style='text-align:justify'>where Christoffel symbol of the
+second kind, <sub><img width=209 height=51 src="GR_theory_files/image018.gif"></sub>=g<sup>ia</sup>
+*[<i>jk</i>, <i>a</i>] and Christoffel symbol of the first kind, [<i>ac</i>, <i>b</i>]
+<span style='font-family:"Arial Unicode MS"'>&#8801;</span><sub><img width=149
+height=45 src="GR_theory_files/image019.gif"></sub>. <b>Covariant</b> (the
+adjusted differentiation is called covariant) derivative of an absolute tensor
+of rank <i>(m, n)</i> is an absolute tensor of rank <i>(m, n+1)</i>. The
+derivatives are denoted by adding a comma after the last subscript (such as <span
+style='font-size:13.0pt'>A</span><sub><span style='font-size:14.0pt'>i,j</span></sub>)
+and placing the number of the axis/coordinate after the comma. Second and
+higher derivatives do not require additional commas: A<sup>i</sup><sub>,jk</sub>.
+The derivative is a linear operator. Covariant derivative, especially of a
+scalar, is sometimes called gradient: B=<span style='font-family:"Arial Unicode MS"'>&#8711;</span>A
+means B<sub>i</sub>=A<b><sub>,i</sub></b>. Theorem: <b>g<sub>ij,k</sub>=0</b>.
+The theorem confirms that derivatives are adjusted for the change in coordinate
+size--that is the metric.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>A smooth curve
+is defined by a smooth function <b>r</b>(t)=(x<sup>1</sup>(t), x<sup>2</sup>(t),
+..., x<sup>n</sup>(t)). The curve is called normalized if ||d<b>r</b>/dt||=1 or
+||d<b>r</b>/dt||=-1 for every t on an open interval. <b>Intrinsic derivative </b>along
+a curve, <sub><img width=136 height=44 src="GR_theory_files/image020.gif"></sub>and
+is used instead of the non-adjusted derivative to compensate for the change of
+coordinate sizes and angles.</p>
+
+<p class=MsoNormal style='text-indent:.5in'>Curvature (more precisely intrinsic
+curvature of the manifold) at a point is fully described by the <b>Riemann
+Christoffel Tensor: </b><sub><img width=341 height=48
+src="GR_theory_files/image021.gif"></sub>.</p>
+
+<p class=MsoNormal>R<sub>abcd</sub><span style='font-family:"Arial Unicode MS"'>&#8801;</span>g<sub>au</sub>R<sup>u</sup><sub>bcd</sub>.
+<b>Theorem:</b> R<sub>abcd </sub>=-R<sub>bacd</sub>=R<sub>dcba</sub>; R<sub>abcd</sub>+R<sub>adbc</sub>+R<sub>acdb</sub>=0;
+R<sub>abcd,e</sub>+ R<sub>abec,d</sub>+ R<sub>abde,c</sub>=0.</p>
+
+<p class=MsoNormal><b>Theorem:</b> For every point in every pseudo-Riemannian
+manifold, there exists a coordinate system (called <b>geodesic coordinate
+system</b>) for which <span style='font-family:"Arial Unicode MS"'>&#8706;</span>g<sub>ij</sub>/<span
+style='font-family:"Arial Unicode MS"'>&#8706;</span>x<sup>k</sup> (and thus all
+of the Christoffel symbols) are zero at the point.</p>
+
+<span style='font-size:12.0pt;font-family:"Times New Roman"'><br clear=all
+style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal align=center style='text-align:center'><b><span
+style='font-size:18.0pt'>Part II:</span></b><span style='font-size:18.0pt'>
+General Theory of Relativity</span></p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt'>Section 1:</span></b><span
+style='font-size:14.0pt'> Geometry of space-time.</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>Our world is
+modeled by a 4-dimensional pseudo-Riemannian manifold called <b>space-time</b>.
+For every point, there exists a frame of reference, that is a coordinate system,
+such that in the frame at that point, the metric, g=&#951; where &#951;<span
+style='font-family:"Arial Unicode MS"'>&#8801;</span>E<sup>1</sup>E<sup>1</sup>+E<sup>2</sup>E<sup>2</sup>+E<sup>3</sup>E<sup>3</sup>-E<sup>4</sup>E<sup>4</sup>.
+Such frame of reference is called <b>locally normal</b>. If g=&#951; and <span
+style='font-family:"Arial Unicode MS"'>&#8706;</span>g<sub>ab</sub>/<span
+style='font-family:"Arial Unicode MS"'>&#8706;</span>x<sup>c</sup>=0, the frame
+of reference (for each point, such frame can be proven to exist) is called <b>locally
+inertial</b>. <b>MCRF</b> is a locally normal frame of reference where the
+point object is currently at rest.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>To be a complete
+theory, the mathematical model must be related to human perception. If g= &#951;,
+x<sup>4</sup>=A<sup>4</sup>E<sub>4</sub> refers to a point in time and A<sup>i</sup>E<sub>i</sub>
+= (<i>x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub></i>) (i=1, 2, 3) refers to a
+location in space. Let an observer be at rest in a locally inertial frame of
+reference. The observer will locally define distance in space between (<i>x<sub>1</sub>,
+x<sub>2</sub>, x<sub>3</sub></i>) and (<i>y<sub>1</sub>, y<sub>2</sub>, y<sub>3</sub></i>)
+as <span style='font-family:"Arial Unicode MS"'>&#8730;</span>(<i>(x<sup>1</sup>-y<sup>1</sup>)<sup>2</sup>+(x<sup>2</sup>-y<sup>2</sup>)<sup>2</sup>+(x<sup>3</sup>-y<sup>3</sup>)<sup>2</sup></i>)
+and interval in time between <i>x</i><sup>4</sup> and <i>y</i><sup>4</sup> as |<i>x</i><sup>4</sup><i>-y</i><sup>4</sup>|.
+Observers disagreeing on who is at rest may disagree about distance in space
+and interval in time. An observer at time <i>t</i> tends to consider space at
+time <i>T&gt;t</i> as the future (and not yet occurring), space at <i>T=t</i>
+to be the present real world, and space at <i>T&lt;t</i> as the past (what has
+already happened) provided that the direction of time is positive; otherwise,
+reverse '&lt;' and '&gt;'. </p>
+
+<p class=MsoNormal style='text-align:justify'>If g<span style='font-family:
+"Arial Unicode MS"'>&#8594;</span>&#951; at <i>x<sup>i</sup></i> and <i>d</i><span
+style='font-family:"Arial Unicode MS"'>&#8594;</span><i>0</i>, then <i>V(R)/(d)<sup>3</sup></i><span
+style='font-family:"Arial Unicode MS"'>&#8594;</span><i>1</i>, where <i>V(R)</i>
+is volume in space of all points <i>r<sup>i</sup></i> such that <i>x<sup>i</sup></i>&lt;<i>r<sup>i</sup></i>&lt;<i>x<sup>i</sup>+d</i>
+(<i>i</i>=1, 2, 3). For a property <i>F</i> based on a region of space, its
+density is <i>dF/dV</i>.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>&nbsp;</p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt'>Section 2:</span></b><span
+style='font-size:14.0pt'> Dynamics of Point Objects</span></p>
+
+<p class=MsoNormal style='text-align:justify'> A point object is a
+useful approximation for objects whose size that is small compared to the
+distance between the objects. It is described by its smooth curve: <b>r</b>(<i>t</i>).
+(<i>t</i> is a parameter, <i>r<sup>4</sup></i> is time; two curves <b>r</b>(s)
+and <b>R</b>(t) are equivalent if and only if there exists invertible s(t) such
+that <b>r</b>(s(t))=<b>R</b>(t).) <b>Four-velocity</b>, <b>u</b><b><span
+style='font-family:"Arial Unicode MS"'>&#8801;</span></b>d<b>r</b>/dt where <b>r</b>(t)
+is normalized. Observation shows that when <b>u</b> exists, ||<b>u</b>||=-1:
+Objects cannot move in space faster than they move forward in time. 4-velocity
+is undefined if the curve cannot be normalized. 4-velocity is used because
+objects move not only in space but also in time. Note: If g=&#951;, 3&#8209;velocity,
+<b>v</b>=(u<sup>1</sup>, u<sup>2</sup>, u<sup>3</sup>)/u<sup>4</sup>. <b>Theorem:</b>
+<b>(1)</b> MCRF exists unless <b>u</b> is undefined <b>(2)</b> <b>u</b> is a
+contravariant vector with value (0, 0, 0, 1) in any MCRF. </p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>For a normalized
+curve, <b>acceleration</b> (<b>a</b>) is the intrinsic derivative of the velocity.
+When a particle does not interact, its <b>a</b> is <b>0</b>, and it is said to
+move on a geodesic. (If the curve cannot be normalized, <b>a</b>=<b>0</b> when
+for an appropriate invertible s(t), &#948;r(s(t))/&#948;s=0.) Light has
+undefined 4-velocity and zero acceleration. Since an event cannot cause
+itself, for every smooth curve r(s) with ||<b>u</b>||=-1 at all points, s<span
+style='font-family:"Arial Unicode MS"'>&#8800;</span>t <span style='font-family:
+"Arial Unicode MS"'>&#8658; </span>r(s)<span style='font-family:"Arial Unicode MS"'>&#8800;</span>r(t).</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'><b>Rest mass</b>
+(an absolute scalar <i>m<sub>0</sub></i>) is mass in MCRF. <b>4-momentum,</b> <b>p</b>
+<span style='font-family:"Arial Unicode MS"'>&#8801;</span> <i>m<sub>0</sub></i><b>u</b>.
+<b>p</b> is a contravariant vector; ||<b>p</b>||<sup>2</sup>=-(<i>m<sub>0</sub></i>)<sup>2</sup>.
+If g=&#951;, the first 3 components form the usual momentum and the 4<sup>th</sup>
+component is <b>energy</b> (energy is relativistic mass). 4&#8209;momentum for
+a set of non-intersecting objects is defined as the sum of 4-momentums for all
+objects in the set--<b>p</b> is additive. Force is intrinsic derivative of the
+momentum (assuming that the curve is normalized). When acceleration is zero,
+force is zero.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>&nbsp;</p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt'>Section 3:</span></b><span
+style='font-size:14.0pt'> Relativistic Fluids</span></p>
+
+<p class=MsoNormal style='text-align:justify'>Since all objects have sizes,
+point objects are impossible. Instead, the universe is modeled by tensor
+fields (sometimes called <b>fluids</b>) such as the <b>stress-energy</b> tensor
+(<b>T<sup>ab</sup></b>). If a part of the world is modeled by tensor field <i>A</i>
+and <i>A</i> is sum of <i>B</i>s, then each <i>B</i> is called an element of <i>A</i>.
+Thus, each tensor field is additive for all of its elements. Let 4-momentum
+density in space (a vector) be denoted <i>P</i>. For a uniform element of
+4-velocity U, <b>T=U</b><b><span style='font-size:11.0pt;font-family:"Arial Unicode MS"'>&#8855;</span>P</b>
+(caution: elements of <b>P</b> do not match with elements of <b>T</b>); &#8209;g<sub>ab</sub>T<sup>ab</sup>
+is rest mass density. For an element, the force density, F<sup>a</sup>=T<sup>ab</sup><sub>,b</sub>
+(spatial components are pressure and the time component is density of power).
+Force density is based on area in space on which the force is acting. The task
+in non-quantum physics is to use some information about tensor fields to obtain
+more information.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt'>Section 4:</span></b><span
+style='font-size:14.0pt'> Gravitation and the Foundations of Relativity</span></p>
+
+<p class=MsoNormal><b>Gravitation</b> is represented by curvature of
+space-time. Ricci's tensor, R<sub>bd</sub> = R<sup>a</sup><sub>bad</sub>; R<sup>ab</sup>=g<sup>au</sup>g<sup>bv</sup>R<sub>uv</sub>.
+Einstein's tensor is <span style='font-size:13.0pt'>G<sup>ab</sup>=R<sup>ab</sup>-&#189;g<sup>ab</sup>g<sup>cd</sup>R<sub>cd</sub></span>.</p>
+
+<p class=MsoNormal>(Postulate) <b>Einstein's Field Equation:</b><span
+style='font-size:14.0pt'> G=8</span><span style='font-size:14.0pt'>&#960;</span><span
+style='font-size:14.0pt'>T</span>.</p>
+
+<p class=MsoNormal><b>Theorem:</b> <b>(a)</b> G<sup>ab</sup>=G<sup>ba</sup>; <b>(b)</b>
+G<sup>ab</sup><sub>,b</sub>=0.</p>
+
+<p class=MsoNormal><b>Corollary:</b> <b>(a)</b> T<sup>ab</sup>=T<sup>ba</sup>;
+<b>(b)</b> T<sup>ab</sup><sub>,b</sub>=0.</p>
+
+<p class=MsoNormal>Interpretation of part (b) of the corollary: </p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.5in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Locally,
+energy and momentum are conserved.</p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.5in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Whenever
+two elements interact, the change of T for element A due to element B is
+exactly opposite to the change of T for element B due to element A.</p>
+
+<p class=MsoNormal><span style='font-size:6.0pt'>&nbsp;</span></p>
+
+<p class=MsoBodyTextIndent3>General relativity is a template model--it specifies
+how interactions can be described but does not state all equations for all
+interactions. An interaction is specified by stating the type of tensor fields
+matter and the interaction have, the equations for the tensor fields, stress-energy
+tensor of the interaction field, and force density on the element by the
+field. All equations are expressed in terms of the tensors (including the
+metric g) through addition, contraction, products, covariant differentiation,
+and operations derived from these operations. Index variables but not specific
+index values may be used, and no variable in an expression may appear twice as
+a subscript or a superscript (except when separated by '+' in the expanded
+form).</p>
+
+<p class=MsoBodyTextIndent3 style='text-indent:0in'><span style='font-size:
+6.0pt'>&nbsp;</span></p>
+
+<p class=MsoBodyTextIndent3 style='text-indent:0in'><b>Theorem:</b> (It is
+stated informally. It is also called <b>Principle of Equivalence</b>)</p>
+
+<p class=MsoBodyTextIndent3 style='margin-left:.5in;text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Physical
+laws are the same in all frames of reference. </p>
+
+<p class=MsoBodyTextIndent3 style='margin-left:.5in;text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Other
+operations on tensors may not be included in the equations</p>
+
+<p class=MsoBodyTextIndent3 style='margin-left:.5in;text-indent:-.25in'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Physical
+laws are local (no actions at a distance)</p>
+
+<p class=MsoNormal style='text-align:justify'>Justification of part (1): The
+expressions transform as the appropriate tensors do.</p>
+
+<p class=MsoNormal style='text-align:justify'>An implication of part (2):
+Riemann Christoffel tensor (derived from the metric through non-adjusted
+differentiation and other operations) cannot be included. </p>
+
+<p class=MsoHeader>&nbsp;</p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt'>Section 5:</span></b><span
+style='font-size:14.0pt'> Laws of Electromagnetism</span></p>
+
+<p class=MsoNormal style='text-align:justify'>Let <i>j<sub>i</sub></i> be
+electric current density in<i> i</i> direction where x<sup>i</sup> are
+coordinates of space where g=&#951;; and let electric charge density, <i>dq/dV=</i>&#961;<sub>q</sub>.
+Then, <b>4-current,</b> <b>J</b> = (j<sub>1</sub>, j<sub>2</sub>, j<sub>3</sub>,
+&#961;<sub>q</sub>), is a contravariant vector. For a uniform element, <b>J</b>=<b>u</b>&#961;<sub>q</sub>.
+Electromagnetic field is characterized by Faraday's tensor: F<sup>ab</sup>. (Note:
+F<sup>a</sup><sub>v</sub>=g<sub>vb</sub>F<sup>ab</sup>; F<sub>uv</sub>=g<sub>ua</sub>F<sup>a</sup><sub>v</sub>.)
+<b>The field obeys F<sup>uv</sup>=-F<sup>vu</sup>, </b><b><span
+style='font-size:13.0pt'>F<sup>uv</sup><sub>,v</sub>=4</span></b><b><span
+style='font-size:13.0pt'>&#960;</span></b><b><span style='font-size:13.0pt'>k*J<sup>u</sup></span>
+and </b><b><span style='font-size:13.0pt'>F<sub>uv,w</sub>+ F<sub>vw,u</sub>+ F<sub>wu,v</sub>=
+0</span>, has stress-energy tensor T<sup>uv</sup> = (F<sup>ua</sup>F<sup>v</sup><sub>a</sub>-g<sup>uv</sup>F<sub>ab</sub>F<sup>ab</sup>/4)/(4</b><b>&#960;k),
+and force density on an element is </b><b><span style='font-size:13.0pt'>F<sup>c</sup>
+= F<sup>c</sup><sub>a</sub>J<sup>a</sup></span>.</b> </p>
+
+<p class=MsoNormal style='text-align:justify'><b>Note:</b> Coulomb's constant,
+k=0.007297...&#295;c/e<sup>2</sup>= c<sup>2</sup>*10<sup>&#8209;7</sup>(kilogram*meter)/(coulomb)<sup>2</sup>.
+</p>
+
+<p class=MsoNormal style='text-align:justify'><b>Theorem:</b> <b>J</b><sup>a</sup><sub>,a</sub>=0.
+Interpretation: Electric charge can move but cannot be created or destroyed.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'><b><span style='font-size:14.0pt'>Section
+6:</span></b><span style='font-size:14.0pt'> Concluding Remarks</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>A non-quantum
+physical model is called complete if, given an initial state of the system, its
+development in time can be (theoretically) fully predicted. Theorem: Gravitation
+and electromagnetism, as presented above, are complete. In addition to
+electromagnetism, user-defined interactions can be added to avoid using quantum
+mechanics: Such interactions usually describe macroscopic predictions of
+quantum mechanics. If the result of a calculation is in different units than
+you want the result to be, multiply and/or divide by the following conversion
+constants: c = 299792458 meter/second, G <span style='font-family:"Arial Unicode MS"'>&#8776;</span>
+6.67259*10<sup>&#8209;11</sup> (meter)<sup>3</sup>/(kilogram*(second)<sup>2</sup>).
+From this paper, you have learned the entire non-quantum physics in the sense
+that the knowledge that is not part of the paper can be derived from knowledge
+that is. However, theorems, relevant approximations in real-world situations,
+and practice are required to effectively solve problems.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:17.0pt'>Exercises</span></p>
+
+<p class=MsoNormal><b>1.</b> Show that C=A*B<span style='font-family:"Arial Unicode MS"'>&#8660;</span>C<sub>ik</sub>=A<sub>ij</sub>B<sub>jk</sub>
+for all matrices A, B, and C.</p>
+
+<p class=MsoNormal><b>2.</b> For a tensor of rank (<i>l, m</i>) and weight <i>W</i>
+in n-dimensional space increase of coordinates in '<i>a</i>' times increases
+the tensor components in '<i>b</i>' times. Prove: <i>W</i> = (<i>l-m+</i>log<sub>b</sub><i>a</i>)/<i>n</i>.</p>
+
+<p class=MsoNormal><b>3.</b> How does coordinate change affect<br>
+ <b>(a)</b> scalars <b>(b)</b> contravariant
+vectors <b>(c)</b> covariant vectors <br>
+ <b>(d)</b> tensors of rank (0, 2) <b>(e)</b> tensors of rank (2, 0) <b>(f)</b>
+tensors of rank (1, 1).</p>
+
+<p class=MsoNormal><b>4.</b> Prove that <b>(a)</b> <sub><img width=48
+height=27 src="GR_theory_files/image012.gif"></sub>=det A where A<sub>ij</sub>=<sub><img
+width=23 height=28 src="GR_theory_files/image022.gif"></sub> <b>(b)</b><sub><img
+width=144 height=27 src="GR_theory_files/image023.gif"></sub>.<br>
+<b>5.</b> Show that ||u + v||<sup>2</sup> = ||u||<sup>2</sup> + ||v||<sup>2</sup>
++ 2 &lt;u, v&gt;.</p>
+
+<p class=MsoNormal><b>6.</b> In parts (a) and (b), show that the space is a
+Riemannian manifold.</p>
+
+<p class=MsoNormal> <b>(a)</b> Euclidian n-dimensional space with metric g<sub>ij</sub>=&#948;<sub>ij</sub>.<br>
+ <b>(b)</b> The set of all x (0<span style='font-family:"Arial Unicode MS"'>&#8804;</span>x&lt;1)
+such that coordinate system 1: 0&lt;x&lt;1, y<sub>1</sub>=x, and system 2:<br>
+ 0<span style='font-family:"Arial Unicode MS"'>&#8804;</span>x&lt;½, y<sub>2</sub>=x,
+or ½&lt;x&lt;1, y<sub>2</sub>=x-1. For metric, g<sub>11</sub>=1 in both
+coordinate systems. <br>
+ Note: The manifold can be represented as a circle of circumference 1.</p>
+
+<p class=MsoNormal> <b>(c)</b> Show that no appropriate coordinate system
+can span the entire manifold in part (b).<br>
+<b>7.</b> For tensors in problem <b>3</b>, find <b>(a)</b> covariant
+derivative <b>(b)</b> intrinsic derivative.</p>
+
+<p class=MsoNormal><b>8.</b> For an arbitrary 2-dimensional orthogonal (g<sub>12</sub>=0)
+coordinate system find<br>
+ <b>(a)</b> All of the Christoffel symbols.</p>
+
+<p class=MsoNormal> <b>(b)</b> Riemann Christoffel tensor in terms of the
+metric.<br>
+Hint: Use symmetry in the equations to save time.</p>
+
+<p class=MsoNormal><b>9.</b> Lorentz transformation (of coordinates) is </p>
+
+<p class=MsoNormal>(<i>x<sup>1</sup>, x<sup>2</sup>, x<sup>3</sup>, x<sup>4</sup></i>)<span
+style='font-family:"Arial Unicode MS"'>&#8594;</span>((<i>x<sup>1</sup>-vx<sup>4</sup></i>)/<span
+style='font-family:"Arial Unicode MS"'>&#8730;</span>(1-(<i>v</i>)<sup>2</sup>),
+<i>x<sup>2</sup>, x<sup>3</sup></i>, (<i>x<sup>4</sup>-v*x<sup>1</sup></i>)/<span
+style='font-family:"Arial Unicode MS"'> &#8730;</span> (1-(<i>v</i>)<sup>2</sup>))
+where &#8209;1<i>&lt;v&lt;</i>1. <br>
+ <b>(a)</b> Show how Lorentz transformation affects tensors of rank (0, 2).</p>
+
+<p class=MsoNormal style='margin-left:30.0pt;text-indent:-.25in'><b>(b)<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></b>Use your answer to
+<b>(a)</b> to prove that if g=&#951;, then g=&#951; after a Lorentz
+transformation.</p>
+
+<p class=MsoNormal><b>10.</b> Find T for a uniform element of momentum density
+(p<sub>x</sub>, 0, 0, E) where g=&#951;.<br>
+<b>11.</b> Find Einstein's tensor <b>(a)</b> for metric in problem <b>7</b></p>
+
+<p class=MsoNormal> <b>(b)</b> for an
+arbitrary locally inertial (4-dimensional) coordinate system.<br>
+Note: Part <b>(b)</b> may be omitted because it may require a long
+calculation.</p>
+
+<span style='font-size:12.0pt;font-family:"Times New Roman"'><br clear=all
+style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal align=center style='text-align:center'><b>Appendix:
+Preliminary Mathematics</b></p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>Let <i>x<sub>1</sub>,
+x<sub>2</sub>, ..., x<sub>n</sub></i> be independent variables related to <i>y<sub>1</sub>,
+y<sub>2</sub>, ..., y<sub>n</sub></i>. Then, <sub><img width=52 height=25
+src="GR_theory_files/image024.gif"></sub>is the rate of change of <i>y<sub>i</sub></i>
+divided by rate of change of <i>x<sub>j</sub></i> assuming that the other <i>x</i>
+are held constant. <span style='font-family:"Arial Unicode MS"'>&#8706;</span><i>f/</i><span
+style='font-family:"Arial Unicode MS"'>&#8706;</span><i>x</i> is sometimes
+denoted <i>f<sub>x</sub></i>. Jacobian, <i>J(x/y)</i>, is determinant of the
+matrix whose cell of index <i>ij</i> is <span style='font-family:"Arial Unicode MS"'>&#8706;</span><i>x<sub>i</sub>/</i><span
+style='font-family:"Arial Unicode MS"'>&#8706;</span><i>y<sub>j</sub></i>.
+When coordinates work properly, the Jacobian is not zero.</p>
+
+<p class=MsoNormal style='text-align:justify;text-indent:.5in'>Let a space have
+a measure based on a region (length, area (A(R)), and volume (V(R)) are
+measures), <i>m</i>(R); and an additive function whose argument is a region:
+F(R). Then, f(<b>r</b>) = dF/d<i>m</i>=limit as size of R<span
+style='font-family:"Arial Unicode MS"'>&#8594;</span>0 of F(R)/<i>m</i>(R) when
+such limit exists, such that <b>r</b> always belongs to R. Then,<sub><img
+width=92 height=39 src="GR_theory_files/image025.gif"></sub>. Properties of
+measure: <i>m</i>(R)<span style='font-family:"Arial Unicode MS"'>&#8805;</span>
+0; measure is additive, that is measure of two non-intersecting regions is sum
+of measures of the regions. <b>Note:</b> <i>dF/dm</i> is sometimes called <i>F</i>
+density. <i>F(x)</i> is continuous if as change in <i>x</i><span
+style='font-family:"Arial Unicode MS"'>&#8594;</span>0, change in <i>f</i>(<i>x</i>)<span
+style='font-family:"Arial Unicode MS"'>&#8594;</span>0.<span style='font-size:
+14.0pt'> </span><i>df/dt</i> <span style='font-family:"Arial Unicode MS"'>&#8801;</span>
+<i>f</i><i><span style='font-family:"Arial Unicode MS"'>&#8242;</span>(t)</i> <span
+style='font-family:"Arial Unicode MS"'>&#8801;</span> limit of <i>(f(t+a)-f(t))/a</i>
+as <i>a</i><span style='font-family:"Arial Unicode MS"'>&#8594;</span>0 for any
+<i>f(t)</i> for which the limit exists. <i>d<sup>n+1</sup>f/dt<sup>n+1</sup>=(d<sup>n</sup>f/dt<sup>n</sup>)/dt</i>
+with <i>d<sup>0</sup>f/dt<sup>0</sup>=f(t)</i>. Function <i>f</i> is smooth if
+for all positive integers <i>n</i>, <i>d<sup>n</sup>f/dt<sup>n</sup></i>
+exists. In phrases such as "<i>a</i><span style='font-family:"Arial Unicode MS"'>&#8594;</span><i>b,
+c</i><span style='font-family:"Arial Unicode MS"'>&#8594;</span><i>d</i>",
+symbol '<span style='font-family:"Arial Unicode MS"'>&#8594;</span>' means 'approaches
+arbitrarily close to'.</p>
+
+<p class=MsoNormal style='text-align:justify'> '<span
+style='font-family:"Arial Unicode MS"'>&#8730;</span>' is a symbol for square
+root. |<i>x</i>|=<span style='font-family:"Arial Unicode MS"'>&#8730;</span>(<i>x</i>)<sup>2</sup>.
+<i>a</i><span style='font-family:"Arial Unicode MS"'>&#8801;</span><i>b</i>
+means <i>a</i> is defined to be equal to <i>b</i>. </p>
+
+<p class=MsoNormal style='text-align:justify'>&#960; <span style='font-family:
+"Arial Unicode MS"'>&#8801;</span> 1/1-1/3+1/5-1/7+1/9-.... <span
+style='font-family:"Arial Unicode MS"'>&#8707;</span><i>x</i> means 'there
+exists <i>x</i> such that'. <span style='font-family:"Arial Unicode MS"'>&#8704;</span><i>x</i>
+means 'for all <i>x</i>'. When <span style='font-family:"Arial Unicode MS"'>&#8707;</span>
+or <span style='font-family:"Arial Unicode MS"'>&#8704;</span> are used,
+parenthesis after the variable, if present, indicate restrictions on the values
+of the variable. <b>0</b> is a zero vector (or matrix or tensor), that is a
+vector whose all components are zero. A permutation is any rearrangement
+(including no rearrangement at all). Permutation is called even if it can be
+done using an even number of interchanges and odd if it can be done using an
+odd number of interchanges. Theorem: no permutation is both even and odd.</p>
+
+<p class=MsoNormal style='text-align:justify'> 'A<span
+style='font-family:"Arial Unicode MS"'>&#8658;</span>B' means 'A implies B',
+and 'A<span style='font-family:"Arial Unicode MS"'>&#8660;</span>B' means 'A<span
+style='font-family:"Arial Unicode MS"'>&#8658;</span>B and B<span
+style='font-family:"Arial Unicode MS"'>&#8658;</span>A'.</p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Technical Notes</title>
+</head>
+
+<body lang="en-US">
+
+<p style='text-align:right'>Dmytro Taranovsky<br/></p>
+
+<h1 style='text-align:center'>Technical Notes</h1>
+
+<p> <b>Description and Disclaimer:</b>  This page contains miscellaneous technical notes (mathematics, physics, computer science, etc.) that I made.  Some of the material is known, while some are new discoveries too short for a standalone paper.  Some things may be inaccurate, some explanations substandard, and some notes unimportant.  The notes were written primarily in 2011-2012 and published as a web page on December 29, 2012, with new notes from time to time since then.</p>
+
+
+<h2 style='text-align:center'>Physics</h2>
+
+<p><b>Pulling a sledge</b><br/>
+<i>Problem:</i> A sledge has weight W, and the friction coefficient is k.  What is the minimal force required to move it (the direction of the force need not be horizontal)?<br/>
+<i>Solution:</i>  Minimal force to move F at angle θ is such that W-F*sin(θ) = F*cos(θ)/k, so F = k*W/(cos(θ)+k*sin(θ)).  This is minimized at θ = arctan(k), at which F is k/sqrt(k<sup>2</sup>+1)*W.</p>
+
+<p><b>Neutrino Decay</b><br/>
+In the Standard Model with nonzero neutron masses, neutrino decay is possible but with an extremely long half-life. The process for muon neutrino decay is:<br/>
+1. ν<sub>2</sub> → e<sup>-</sup> + W<sup>+</sup> (possible by flavor mixing)<br/>
+2. e<sup>-</sup> or W<sup>+</sup> emits a photon<br/>
+3. W<sup>+</sup> e<sup>-</sup> → ν<sub>1</sub><br/>
+(The neutrino is nearly stable though because of the very low energy difference, loop suppression of the decay, and neutrinos traveling near the speed of light.)</p>
+
+<p><b>Note on Higgs Boson Parameters</b><br/>
+The electroweak scale is ν = 246GeV and a possible value of Higgs boson mass is M=125GeV.  This leads to the Higgs field constants (see p. 741 in "Standard Model and Beyond") μ = M/(-2)<sup>0.5</sup> = 88i*GeV and λ = (M/ν)<sup>2</sup>/2 = 0.129.</p>
+
+<p><b>Black Holes</b><br/>
+For philosophical reasons, I believe that time is absolute.  The principle of relativity implies limitations in measuring simultaneity, but does not contradict existence of not-entirely-measurable absolute time.  In free space, the preferred frame of reference probably approximately the one in which the dipole of the cosmic background radiation is zero.  In a static spherical gravitational well, symmetry suggests that it takes as much time for light to go in as it takes for it to get out.  In this frame of reference, it takes an infinite time to reach the black hole horizon, by which time the black hole may evaporate.  Black hole formation can be viewed as near complete time slow down in a collapsing star -- at least until currently unknown physics takes over.  Most likely, in this time-frozen or otherwise unusual state, radiation is effectively limited to wavelengths that are at least comparable to the black hole diameter.<br/>
+In the classical theory, objects reach black hole horizon in finite proper time and then continue inward.  However, since the classical theory predicts that objects that fall into the black hole cannot be observed after crossing the event horizon, its other predictions about those objects are not ordinary science -- the same way that if afterlife is not observable (except in the afterlife), other predictions about afterlife are not ordinary science.</p>
+
+<p><b> Observation in Quantum Mechanics </b><br/>
+An observation in quantum mechanics entangles the state of the system with the state of the observer, which makes the classical approximation (based on partial wave function collapse and the usual probabilities) accurate.</p>
+
+<p><b> Second Law of Thermodynamics </b><br/>
+The Second Law of Thermodynamics stems from reversibility of physical systems and appropriate initial conditions.  By reversibility (unitarity in quantum mechanics), there is no process to remove entropy/information from one system without storing it somewhere else.  The relevant initial conditions are non-uniformity in state variables (for example, non-uniform density) in an otherwise random system.  As different objects interact, the states of the objects can become mixed, and thus objects on average become individually more random (in the entropy sense).  While the special state (corresponding to nonrandom initial conditions) is preserved globally through certain correlations between objects, this is effectively impossible to extract, and the effective entropy increases.  Thus, eternal motion machines likely require an unlimited external energy source or new physics.<br/>
+(Side note: In a hypothetical quantum universe with only integral (times a common factor) energy differences, the system (likely after its effective heat death) will function as if the time is reversed and return to its initial state (up to an irrelevant global phase factor).)</p>
+
+<p><b>Physical Laws Optimality Principle</b><br/>
+Physical laws optimality principle is the assertion that physical laws are optimal in the moral sense.  It can be derived from existence of God, and there are other arguments for the principle as well.  However, the principle is partly philosophical, rather than something immediately and unambiguously testable.  An application of the principle is that since it is wrong for humans to be permanently constrained by the speed of light, faster than light travel is possible.</p>
+
+
+<h2 style='text-align:center'>Mathematics</h2>
+
+<p><b>Theoretical Computer Replacement Time</b><br/>
+<i>Problem:</i> Assume that computer cost decreases exponentially with time: C(t) = C<sub>0</sub>*P*e<sup>-t/T</sup> (C cost, P power)<br/>
+and utility per unit of time, V = C<sub>1</sub>*ln(P) (ln is natural log), and one can use only one computer.<br/>
+What is the optimal replacement period?<br/>
+<i>Solution:</i>  Let the adjusted utility rate be V<sub>1</sub>(t) = V-C<sub>1</sub>*t/T = C<sub>1</sub>*ln(C(t)/C<sub>0</sub>).  The strategy of buying at price C' and interval T' has cost rate C'/T', and average adjusted utility rate C<sub>1</sub>*ln(C'*e<sup>-T'/2/T</sup>/C<sub>0</sub>).  The difference (C<sub>1</sub>*ln(C'*e<sup>-T'/2/T</sup>/C<sub>0</sub>)-C'/T') is maximized at C'=C<sub>1</sub>*T' (for every T') and T'=2*T.  <b>Answer:</b> 2*T.<br/>
+(Note, however, that violations of the assumptions may make a different -- most commonly smaller -- interval optimal.)</p>
+
+<p><b>Daisy Petal Picking Game</b><br/>
+<i>Rules:</i> Starting with a daisy (or another circular ring of petals), players take turns to pick one or two adjacent petals.  The player who cannot move loses.<br/>
+<i>Analysis:</i>  sum of second-player win positions: second player win; second player win plus first player win: first player-win, <br/>
+n+n -- second player win (by symmetry)<br/>
+single n (not circular) -- first player win<br/>
+initial position (circular ring of 3 or more petals): second player win</p>
+
+<p><b>Estimating Monotonic Functions</b><br/>
+Given a function f, there are 4 equivalent ways to define the canonical monotonic g to approximate f:<br/>
+* g(x) = max(min(average(f(a..b)): b≥a): a≤x)<br/>
+* g(x) = min(max(average(f(b..a)): b≤a): a≥x)<br/>
+* g is the least sum of square differences monotonic approximator to f<br/>
+* After rescaling (if necessary) the independent variable such that x→|{t&lt;x: f(t) exists)}| is uniform, and letting fsum(x) be sum(f(t): t&lt;x) or analogously using the integral if domain(f) is continuous, then g is the derivative, calculated at right when the derivative is discontinuous, of the convex hull of {(x,y) y>fsum(x)}.</p>
+
+<p><b>A variant on Simpson's Rule</b><br/>
+integral(f(x),0,k*h) ≈ f(0)/4+f(h/2)/3+f(h)*11/12+f(2h)+f(3h)+...+f((k-3)h)+f((k-2)h)+f((k-1)h)*11/12+f((k-1/2)h)/3+f(kh)/4<br/>
+This variant is notable in that except near the borders, it uses simple unweighted summation; analogous rules also exist at higher orders.</p>
+
+<p><b>A note on sums of powers of primes</b><br/>
+The number of (x,y,z) with x,y,z prime and x<sup>2</sup>+y<sup>3</sup>+z<sup>5</sup> &lt; 10<sup>100</sup> can be approximated (Maxima syntax) as<br/>
+quad_qags(quad_qags(expintegral_li(sqrt(10^100-y^3-z^5))/(log(y)*log(z)),y,2,(10^100-z^5)^(1/3))[1],z,2,10^(100/5));<br/>
+with the result 3.99474*10<sup>97</sup> (which is slightly below 0.8% of odd numbers below 10<sup>100</sup>).<br/>
+(But I conjecture that every sufficiently large odd number is so expressible.)</p>
+
+<p><b>Near-optimal Encodings of Random Integers</b> (added February 8, 2016)<br/>
+The notion of a random natural number is apparently an idealization.  However, under certain natural symmetry assumptions, the probability distribution is sufficiently constrained to allow near-optimal encodings.<br/>
+O(log n) overhead — binary encoding of n with a special terminating symbol.<br/>
+O(log log n) overhead — encode length as above, then use the binary coding.<br/>
+O(log*n) overhead — code the number in binary, then its length, then the length of its length, and so on, finally coding the number of iterations in unary.<br/>
+O(log**n) overhead — derive encoding from a probability distribution of numbers.  Let n<sub>0,0</sub> = n, n<sub>i,j+1</sub> = floor(lg n<sub>i,j</sub>), and n<sub>i+1,0</sub> = k<sub>i</sub> with n<sub>i,k<sub>i</sub></sub> = 0.  Encode maximum i (i<sub>max</sub>) with O(log i<sub>max</sub>) = O(log log** n) overhead, and to recover n, in each transformation record a number n' between m and 2m according to c/(n' lg n') probability distribution (c chosen to make the probability of the range equal 1; also, do something reasonable for 0 and 1).  For each i, we lose O(1) bits, hence O(log**n) overhead.<br/>
+O(log***n) overhead — not sure; this is related to finding the right iterated exponential rate of growth that works correctly for fractional iterations.  If we can find the right probability distribution for numbers between m and 2<sup>m</sup> for large m, we can make n<sub>i,j+1</sub> to be about log* n<sub>i,j</sub>, and i<sub>max</sub> = O(log***n).</p>
+
+<p><b>Quantifiers in Modal Logic</b><br/>
+Quantifiers in modal logic are unproblematic as long as the necessity operator applies only to statements or to formulas with only world-independent variables (such as integers) free.  World-dependent free variables can be handled by using a necessity operator conditioned on existence. For example, with variable X, it would change "φ(X)" into "in all accessible worlds where X exists, φ(X)".</p>
+
+<p><b> Non-wellfounded sets </b><br/>
+The most natural conception of non-wellfounded multisets is based on trees of height ≤ω.  "<i>b</i> in <i>a</i>" is interpreted as there is <i>b'</i> such that there is an edge from <i>a'</i> to <i>b'</i>, where <i>a'</i> is the root of <i>a</i> and the subtree induced by <i>b'</i> (and its downstream vertices) is isomorphic to <i>b</i>. Equality is by isomorphism; if equality has to be identity, then we can represent a structure by the set of all sets that would represent the structure under the previous definition and have the least possible rank. To define non-wellfounded sets (that are not built using multisets), we take inductive closure of this definition:  A multiset is not a set if it has two equal elements or an element that is not a set.<br/>
+This interpretation reduces the theory of non-wellfounded sets to that of the set theoretical universe.  Thus, while foundationally significant, absence of non-wellfounded sets can also be viewed as a convenient convention, like absence of urelements.<br/>
+For non-wellfounded multisets with loops in the membership relation, the graph is obtained by unrolling the loops.  For example, a set that contains only itself is equivalent to "*→*→*→...".<br/>
+<i>Note:</i>  This notion was first proposed by Dana Scott (1960). A narrower notion (Aczel) considers x={x, {x}} to be the same set as y={y}, while a broader notion (Finsler) considers a set represented by "x={y}, y={x,z}, z={x,y}" to be different from y={y, {y}} (the difference is that while y and z are equivalent once the relation is unrolled into a tree, they are not equivalent points on the original graph).  There also other notions of non-wellfounded sets, for some of which the question of the best interpretation in V remains open.</p>
+
+<p><br/><b>A Very Strong Large Cardinal Axiom</b></p>
+
+<p> A possible strong large cardinal "axiom" (whose consistency is not clear) for ZF (not ZFC) is:<br/>
+<b>A</b>: There is κ such that for every binary relation R on V<sub>κ</sub>, there is a nontrivial elementary embedding of (V<sub>κ</sub>, R) into itself.<br/>
+One consequence of A is that we have elementary j<sub>1</sub>, j<sub>2</sub>, j<sub>3</sub>, ...<br/>
+j<sub>1</sub>: (V<sub>κ</sub>, ∈) → (V<sub>κ</sub>, ∈), j<sub>2</sub>: (V<sub>κ</sub>, ∈, j<sub>1</sub>) → (V<sub>κ</sub>, ∈, j<sub>1</sub>), j<sub>3</sub>: (V<sub>κ</sub>, ∈, j<sub>1</sub>, j<sub>2</sub>) → (V<sub>κ</sub>, ∈, j<sub>1</sub>, j<sub>2</sub>), and so on.<br/>
+This can be continued any finite number of times, and to the extent that the model has dependent choice, transfinitely.</p>
+
+<p>An embedding of A into ZFC would be<br/>
+<b>B</b>:  For every ordinal λ, there is a transitive model of ZF+A that is closed under λ sequences.</p>
+
+<p>Admittedly, the inclusion of ZF in B looks arbitrary.  However, if the strength of A derives from being able to construct (j<sub>1</sub>, j<sub>2</sub>, ...), then it increases as one adds dependent choice, and thus one might be able replace ZF+A in B with something simpler that captures the basic combinatorial strength. </p>
+
+<p><i>Equivalents of Berkeley Cardinals</i><br/>
+A strengthening of proposition A (for ZF) was discovered by Woodin (prior and independently of me), who called it a Berkeley Cardinal:  There exists κ such that for every transitive set M⊃κ there exists an elementary embedding j:M→M with critical point below κ. Here are two equivalents of Berkeley Cardinals:<br/>
+1.  There is a set κ such that every binary relation whose domain includes κ as a subset is nontrivially self-embeddable, with the embedding non-identity on κ.  (A natural weakening would be to remove 'non-identity on κ'.)<br/>
+2.  The is a set κ such that ∀S⊃κ ∃(one-to-one function f:S→S that is non-identity at κ) ∀s∈S ∀t∈S (s∈t ⇔ f(s)∈f(t)).  (A natural weakening would be change "non-identity at κ" to "non-identity".)</p>
+
+
+<p><b>Complexity of Cardinal Register Machines</b>
+<br/><i>Added August 3, 2016</i>
+<br/><i>Update:</i> For a fuller exposition, see <a href="https://mathoverflow.net/questions/280638/cardinal-register-machines">https://mathoverflow.net/questions/280638/cardinal-register-machines</a>. For extensions, a relevant question is MathOverflow <a href="https://mathoverflow.net/questions/279724/complexity-of-l-mathrmcf">Complexity of L[cf]</a>.</p>
+
+<p>A cardinal register machine has a finite internal state and a finite set of registers, and the ability to zero a register, increment a register, test registers for equality, halt with 'yes', and halt with 'no'.  Initially all registers are zero except for the input register which has a natural number.  The machine can run for a transfinite time where at limit times:<br/>
+* The internal state is reset to the initial state.<br/>
+* Registers that were zeroed cofinally often are zero.<br/>
+At all times:<br/>
+* Each register is the cardinal number that equals the number the number of times it was incremented since it was last zeroed.</p>
+
+<p>Which problems, viewed as sets of natural numbers, are decidable by such machines?</p>
+
+<p>If the registers are ordinals (and incremented and compared as ordinals), then decidable problems would be exactly Δ<sup>1</sup><sub>2</sub> (Computing the Recursive Truth Predicate on
+Ordinal Register Machines by Peter Koepke and Ryan Siders), and if we allow ordinals as oracles, exactly constructible reals.  However, one can argue that cardinal registers are more natural as the value of the register does not depend on the order in which it was incremented since it was last zeroed.</p>
+
+<p>For cardinal register machines, I expect that decidability equals Δ<sup>V</sup><sub>2</sub> definability in M, where M is the minimal inner model with a proper class of measurable cardinals, assuming M<sup>#</sup> exists.  The complexity cannot be higher than that because for an iterate of M, the measurable cardinals and their limits are exactly the uncountable cardinals in V, so M can compute how the machine behaves in V.  In the other direction, the machines can simulate ordinal register machines augmented with a test of a register being a cardinal.  The construction in the referenced paper appears to generalize, so the machines (using ordinal parameters) capture L[C] where C is the class of cardinals, and from L[C] we can recover the iterate of M that has measurable cardinals and their limits coincide with limits of uncountable cardinals in V.</p>
+
+<p><i>Extensions:</i><br/>
+* Add test whether a cardinal is regular — this appears to correspond with M being an iterate of the minimal mouse with a measure of order 2.<br/>
+* Add test whether β is α-Mahlo (for α&lt;β) — this may correspond with M being an iterate of the minimal mouse with o(κ)=κ+1.<br/>
+* Add test whether cofinalities are equal — one possibility is that this is too rich to have a 'simple' model.</p>
+
+<p>Also, a fixed finite number of registers should be sufficient and we may want to modify the rules to minimize the required number of registers — for example have registers as ordinals with a test for being a cardinal, and at limit points, set internal state to lim inf of the previous states.  We may also allow the input to be an ordinal, though if the ordinal is not countable, a more natural notion may be to do the compute in a generic extension where the ordinal is countable.</p>
+
+
+<p><b>Elementary embeddings j:V→V for V⊨ZFC</b><br/>
+<i>Added December 25, 2018</i><br/>
+<b>Reference/background:</b> <a href="http://pcorazza.lisco.com/papers/spectrum_embeddings.pdf">The spectrum of elementrary embeddings j : V → V</a> by Paul Corazza<br/>
+<i>Update:</i> Most of the below is now also on <a href="https://mathoverflow.net/questions/319673/strength-of-btee"</a>https://mathoverflow.net/questions/319673/strength-of-btee</a>.<br/>
+* Without separation and replacement for formulas using j, ZFC plus elementarity and nontriviality of j is equiconsistent with ZFC.<br/>
+* BTEE (the above + existence of critical point) is conservative over the stationary reflection principle, i.e. ZFC + (schema) {there is n-subtle cardinal}<sub>n</sub>.<br/>
+<i>Proof sketch:</i> One direction is proved in the above paper.  For the converse, given a proposition A, consistency of ZFC + A + (schema) {there is n-subtle cardinal}<sub>n</sub> implies existence of a model M of ZFC + A + n-subtle cardinal for a nonstandard number n, plus existence of V<sub>λ</sub><sup>M</sup>≺M.  Fix such an M and an M-well-ordering &lt;<sup>*</sup> of V<sub>λ</sub><sup>M</sup>, and (in M) use an n-subtle cardinal &lt;λ to produce an n-tuple (κ<sub>1</sub>,...,κ<sub>n</sub>) of good indiscernibles for (V<sub>λ</sub><sup>M</sup>, ∈<sup>M</sup>, &lt;<sup>*</sup>).  ("good" is a technical term here and is why we need the n-subtle cardinal.)  Let M' be the (V<sub>λ</sub><sup>M</sup>, ∈<sup>M</sup>, &lt;<sup>*</sup>) Skolem hull of the first ω of these indiscernibles (as computed in V so all Gödel numbers are standard).  (M',∈<sup>M</sup>,j) should satisfy BTEE + A where j(κ<sub>i</sub>)=κ<sub>i+1</sub> and j is extended to all sets in M' using the Skolem hull.<br/>
+* Every model of BTEE is a (possibly trivial) end-extension of a model M of BTEE with the critical sequence cofinal and having length ω in V.<br/>
+* BTEE is sufficient to develop a theory of <a href="../ReflectiveCardinals.html">reflective cardinals</a> corresponding to j with j<sup>m</sup>(κ) being n-reflective for each finite (i.e. finite outside of the model) m,n (but (V<sub>κ</sub><sup>M</sup>,∈<sup>M</sup>)≺(M,∈<sup>M</sup>) may fail if j is not cofinal).<br/>
+* BTEE + bounded quantifier least ordinal principle is likely equiconsistent with ZFC + (schema) {there is n-iterable cardinal}<sub>n</sub>.  See MathOverflow <a href="https://mathoverflow.net/questions/319231/consistency-strength-of-jl-%CE%B4%E2%86%92l-%CE%B4-for-some-%CE%B4">Consistency strength of j:L<sub>δ</sub>→L<sub>δ</sub> for some δ</a>.<br/>
+* WA<sub>0</sub> (bounded quantifier Wholeness Axiom, i.e. separation for bounded quantifier j-formulas) is equiconsistent with ZFC + (schema) {there is n-huge cardinal}<sub>n</sub>.<br/>
+<i>Proof sketch:</i>  One direction is proved in the above paper.  For the converse, consistency of ZFC + (schema) {there is n-huge cardinal}<sub>n</sub> implies existence of a model M of ZFC + n-huge cardinal for a nonstandard number n.  Starting with such M and an n-huge embedding j in M with κ = crit(j), let M' = {x∈M: ∃m&lt;ω x ∈<sup>M</sup> j<sup>m</sup>(V<sub>κ</sub><sup>M</sup>)}.  (Note that we use ω rather than ω<sup>M</sup>.)  (M', ∈<sup>M</sup>, j) satisfies WA<sub>0</sub>.<br/>
+* The above can be extended to show that WA<sub>0</sub> is conservative over ZFC + (schema) {there is n-huge κ with V<sub>κ</sub>≺<sub>Σ<sub>n</sub></sub>V}<sub>n</sub>.</p>
+
+
+<h2 style='text-align:center'>Computer Science</h2>
+
+<p><b>Sorting:</b>  If a sequence of length n switches between being ascending and descending k times, then it can be sorted in O(n*log k) time.  This can be done using merge sort with checking at each stage whether the subsequence is fully ascending or fully descending.</p>
+
+<p><b>Combining one v. all classification models</b><br/>
+Suppose that in multiclass classification, we use one v. all approach, and get probability p<sub>i</sub> from model i for being in class i.  In general, the most reasonable way to normalize these probabilities is to multiply each of the odds (p<sub>i</sub>/(1-p<sub>i</sub>)) by a constant so as to make the probabilities add up to one.</p>
+
+<p><b>Single State Reinforcement Learning</b><br/>
+(This is also called n-armed bandit problem.)  Assume that the reward function R is stationary and that we seek to maximize sum of R(t)/t where t is the observation index.  (This discounting of future observations roughly corresponds to having horizon t at time t; some kind of horizon or discounting is needed to avoid divergence.)  At a given time, the expected value of choice i is E(R(i))+E(V(i)) where E(R(i)) is the expected reward for choice i (which can be approximated by averaging the past rewards for i), and E(V(i)) is the expected benefit from the knowledge we gain as a result of this choice.  There are different approaches to evaluating E(V(i)), and one formula is
+s<sub>i</sub>/n<sub>i</sub><sup>0.5</sup>*Q(...)<br/>
+where s<sub>i</sub> is the expected standard deviation in R(i) (and thus s<sub>i</sub>/n<sub>i</sub><sup>0.5</sup> estimates the uncertainty in E(R(i))), n is the number of observations so far, n<sub>i</sub> is the number of observations for action i (and the formula assumes that n<sub>i</sub> is nonzero), and Q is a quality factor.  Q looks something like 1+ln(n/n<sub>i</sub>)<sup>0.5</sup>.  In n/n<sub>i</sub>, n represents the horizon window and 1/n<sub>i</sub> the significance of the observation for determining E(R(i)).  The ratio n/n<sub>i</sub> is then transformed (roughly speaking) based on discounting of importance of E(R(i)) for i likely to be suboptimal.  (Note:  If we expect a substantial contribution from influential rare events, then we may want to use a faster growing formula for Q.)<br/>
+If the reward is nonstationary, then a similar framework can be applied, but with appropriate recency-weighted discounting of past observations in computing n and n<sub>i</sub>.</p>
+
+<p><b>Generalization of Non-deterministic Time Hierarchy</b><br/>
+Computation with non-deterministic Turing machines are a special case of having an oracle O that can only be queried at the end, and if queried, its output must be presented as the answer.  If O is computable, then time hierarchy applies (Time(T1) &lt; Time(T2) where T2 > O(T1*log(T1))) and T1 is monotonic, time-computable, and greater than n) using similar proof as for non-deterministic machines.</p>
+
+<p><b>RAM Computational Model</b><br/>
+[This is just one of the different notions of RAM computational models.]<br/>
+Computational time complexity is robust up to a polynomial factor, and when using a binary tree tape (and assuming no parallelism) up to a polylogarithmic factor (specifically models agree up to O(log(n)<sup>2</sup>), and assuming at least two heads or two tapes, O(log(n))).  It is often convenient to assume O(1) time for a memory access.  However, if memory addresses and memory cells and registers are arbitrary natural numbers and multiplication is available, we might get exponential speed up (and using just addition, we might have polynomial speedup).  The solution is to restrict cell/register size to lg t, where t is time from the start, and allow a command to increment the global cell/register size, which will succeed only if t is large enough.  The abstract machine will consist of a finite state machine, processor registers (at least 2), and RAM.  All instructions take O(1) time.  There are instructions to load a RAM cell (with address specified in a register) into register, store register value into RAM cell (with address specified in a register), zero out a register, increment value in a register, test for equality (between register values), and bitwise OR and bitwise NOT operations.<br/>
+	There are variations on the model: (1) whether the space accessible at time t is limited to the first t/lg t cells (to ensure that linear time implies at most linear space), (2) whether input/output speed is 1bit per unit of time (as opposed to log(t) bits).  These differences are only relevant when time is o(n*log n).  Assume that a variation has been fixed.<br/>
+	Just 2 registers suffice since additional registers can be simulated with memory addresses 0,1,2,... and with O(1) time slowdown.  Many additional operations -- including '&lt;', '+', '*', '/', and '%' -- can be implemented in O(1) time by building a table of values for small operands (up to say size lg t/4), and then using the table to speed up the computation.  Simulating a given machine and keeping track of time can also be done with O(1) slowdown, which leads to a strict time hierarchy theorem:  If f and g are time constructible and f(t) is o(g(t)), then there are problems solvable in TIME(g) but not TIME(f).  We can actually improve this result by building a simulator that (after preprocessing) works with a particular O(1) slowdown independent of the simulated machine (regardless of the number of registers in the simulated machine and the presence of the additional operations listed above in the simulated machine), thus giving a time hierarchy theorem for linear slowdowns.</p>
+
+<p><b>Puzzles and PSPACE</b> (added Nov 2015)<br/>
+Sliding 1x2 blocks (and many other puzzles where pieces move but cannot get stuck) appears to be linear space complete.  Sliding blocks can be solved in linear space since undirected graph connectivity can be done O(log(graph size)) space. In the other direction, it appears that nondeterministic constraint logic can be used to implement a reversible turing machine (but I have not done/checked the details), and reversible space equals space (up to a constant factor).<br/>
+On the other hand, puzzles like sokoban (where one can get stuck) should be complete for nondeterministic linear space.<br/>
+<i>Nondeterministic linear space game equivalent:</i>  board with O(n)-bits, O(n) moves time limit, each player one move uses O(1) bits, and each player two move has O(n) bits.<br/>
+<i>EXPSPACE:</i> Many games without time limit where position repetition is forbidden are likely to be EXPSPACE-complete (but I have not seen a proof).</p>
+
+<p><b>Complexity Theory Note</b><br/>
+Most likely, the canonical complexity classes are distinct.  However, an alternative possibility is that most canonical complexity classes are comparable.  The evidence for this includes<br/>
+- almost complete lack of proofs of incomparable complexity classes<br/>
+- an abundance of results proving comparison<br/>
+- comparability in related areas, such as comparability of canonical Turing degrees.</p>
+
+<p>The most optimistic view is that linear space, and possibly nondeterministic linear space, equals linear time, suitably defined, even for function problems.
+Here are some notions of linear time:<br/>
+- I originally thought that 2-dimensional tape with a stack might suffice.  [Details:  To prevent potential quadratic space increase when the 2-dimensional tape is unwound into a linear tape, we can specify that all cells that are closer to the origin than some visited cell are counted as space (and also the maximum used length of the stack is included in space); and for measuring time, the space used is added to the time spent.  Input and output are stored on the stack (except when we have to define sublinear space).   In this model, a stack addresses the communication complexity limitation of single-head machines and allows support for subroutines.  Two dimensional tape allows getting to any location in sqrt(n) time.]  However, d-dimensional and tree Turing machines can be simulated in O(T/log T) space (see for "On time versus space II" and a later improvement for d-dimensional machines).<br/>
+- another mode I thought might work is uniform acyclic linear size circuits. One notion of uniformity is that the circuit is logspace computable (which translates to quasilinear time if the circuit models LSPACE (linear space)).  Note that LSPACE function problems are precisely those computable with uniform linear size circuits that have cycles.  However, I was able to prove that uniform (acyclic) circuits of SIZE(O(n)) can be evaluated in space O(n / log n).<br/>
+- linear time on storage modification machines, perhaps also requiring at most O(n/log n) nodes; this has not yet been proved too strict.<br/>
+- O(n*log n) time bound for an appropriate model.  One of the strictest models that has not been ruled out is reversible oblivious time O(n*log n) space O(n) Turing machines with one tape and one stack (without extra heads) and additionally with movement logspace computable.<br/>
+- linear time on automata.  One restriction is to limit the number of active nodes (with transition rules preventing increase in active nodes and preventing modification of nodes not adjacent to an active node) perhaps to O(n<sup>0.5</sup>) for 2-dimensional automata or O(log n) for tree automata.  We can also try to require reversibility.  Two dimensional (and perhaps 3-dimensional) automata have the benefit of being efficiently realizable in physical space.</p>
+
+<p><b>P v. NP note</b><br/>
+A theoretically efficient universal string enumerator can be constructed by allocating constant/n<sup>2</sup> (constant/n<sup>1.1</sup> would likely work faster but would still be completely impractical at present) share of time to the nth program (in a canonical enumeration of all programs) and efficiently running the programs in parallel on the input string, outputting strings as they are output by the simulated programs.  (Note:  A delimiter is output at the end of every string.)  Fix such an enumerator; for an appropriate computational model, for each simulated program, the slowdown is bounded by a constant.  Let the complexity of string B relative to string A be the amount of time the enumerator takes to output B if given input A.  This complexity measure is robust up to a constant factor -- for every program, there is a constant c>0 such that for every A the program does not output B before c*(complexity of B given A) steps.  P = NP iff there is a polynomial bound to the minimal relative complexity for an accepting string when there is an accepting string.  Here, for a suitable program T and polynomial time limit (both T and the polynomial are independent of A) and input A, string B is accepting iff T succeeds on A#B within the time limit.  Also, P = NP iff the lexicographically least accepting string (when there is one) is of at most polynomial complexity relative to the input.</p>
+
+<br/>
+
+<p><b>Why BPP vs EXP<sup>NP</sup> is Hard</b> (added Nov 2015)</p>
+
+<p> As of 2015, it remains open whether BPP=EXP<sup>NP</sup> &mdash; or even whether E<sup>NP</sup> equals quasilinear time in linear space and linear randomness, even for function problems (with linear output size) and exponentially small (with linear exponent) error probability.  The question is interesting because it is at the edge of what is possible (or rather what is not yet known to be impossible) and because it is essentially the most optimistic assumption about which complexity classes are feasible.  Here is why it is hard:<br/>
+1.  We currently lack tools to (provably) get incomparable complexity classes.  Thus, with current tools, to rule out BPP=NEXP, we would need a sub-exponential nondeterministic algorithm for BPP problems.  (However, it would be sufficient to get such an algorithm conditioned on BPP=NEXP.)<br/>
+2.  It is believed that Σ<sub>2</sub><sup>P</sup>-complete problems require exponential time even for machines with an NP oracle, so apparently we cannot rely on the low definitional complexity of BPP to get subexponential time.  (However, it might be possible to show that BPP is in a more tractable complexity class).<br/>
+3.  While it is believed that BPP=P, known derandomization procedures depend on a strengthening of BPP&lt;EXP, and thus do not appear to help on whether BPP=EXP.<br/>
+4.  Also, there is an oracle in which BPP=EXP<sup>NP</sup>, and typical complexity theory arguments relativize.  (However, the behavior of that oracle is not very plausible as it hides wisdom behind random data and also involves fine-tuning of some NP statements.)</p>
+
+<p><i>Notes:</i><br/>
+* BPP = EXP<sup>NP</sup> would be very surprising since randomness does not appear to help for ordinary problems (or rather can be replaced with pseudorandomness), and since BPP is expected to be two exponentials away from EXP<sup>NP</sup>.<br/>
+* It appears that randomness is useful when there is an adversary, but not otherwise.  Hence, IP=PSPACE and conjectured BPP=P.  Also, for some algorithms, randomness may convert good average case performance into good expected worst case performance.<br/>
+* MIP=NEXP suggests that the difference between BPP and NEXP can be characterized by an ability to do a kind of search, albeit a much more powerful search than what would be sufficient for NP.<br/>
+* P vs NP is different from EXP vs NEXP in part since EXP can iterate over all problems of comparable size as the instance (and still do the EXP computation).</p>
+
+<p><i>Approaches:</i><br/>
+* Randomness is tractable when space is limited (for example randomized logspace is in P), and it might have properties to make it tractable in general.<br/>
+* Proving nonsparseness of relevant complexity classes.<br/>
+* Developing a theory of what happens if BPP=EXP<sup>NP</sup>, and finding an impossible speed-up (such as the next item).<br/>
+* Finding improved CAPP or circuit-SAT algorithms; even a small improvement may rule out NEXP being in P/poly.</p>
+
+<p><i><u>Further Restrictions on the Computational Model</u></i></p>
+
+<p>A natural approach is to take the largest potentially feasible complexity class, and consider the most restrictive natural computational model for that class that has not been ruled out.  Besides BPP v NEXP, another (perhaps more important) question on the edge of what is known is whether NP (or even PP) equals LogSpace (or even logtime-uniform NC<sub>1</sub>).  But to get the widest gap (or the most impressive possibility), we can combine circuit depth and size restrictions with a way out through access to random data.</p>
+
+<p><i>Question 1:</i> Can every function (with linear output size) in E<sup>NP</sup> be computed with linear size logarithmic depth bounded fan-in bounded fan-out logtime-uniform circuits, if O(n) random bits are appended to the input string, allowing 2<sup>-O(n)</sup> error probability?<br/>
+If/when question 1 is ruled out:<br/>
+<i>Question 2:</i> Can every function (with linear output size) in E<sup>NP</sup> be computed in O(log n) time with an O(n)-size O(1)-depth recurrent reversible logtime-uniform circuits, if O(n) random bits are appended to the input string, allowing 2<sup>-O(n)</sup> error probability?</p>
+
+<p><i>Note:</i>  The answers are very likely no; the questions can be viewed as challenges to be ruled out.  This and similar questions on the edge of what is known are now on Stack Exchange <a href="https://cstheory.stackexchange.com/questions/39046/complexity-class-equalities-on-the-edge-of-inconsistency">Complexity Class Equalities on the Edge of Inconsistency</a>.</p>
+
+<p><i>Uniformity note:</i>  Dtime(log(n)) uniformity for circuit connection language is not believed to be sufficient for subquadratic time construction of the circuit, and (in the other direction) it might be too restrictive for linear size circuits, so here is a notion that intuitively corresponds with what we want in logtime uniformity.  A robust variation on time t (for multitape Turing machines) is TimeSpace(t*(log t)<sup>O(1)</sup>, O(t)). Also, one notion of time complexity of uniformity is complexity of finding &mdash; given gate number in some order consistent with the topological sort &mdash; the type of the gate and the gate numbers to send the outputs; also useful would be gates from which to get inputs, and the depth of the gate and having gate numbering consistent with depth.</p>
+
+<p><i>Fanout:</i> Unbounded fanout can be converted into bounded fanout with a constant factor increase in size and logarithmic increase in depth or with O(k) increase in depth and n<sup>1/k</sup> increase in size, but neither preserves linear size logarithmic depth.</p>
+
+<p><i>Communication complexity:</i>  Linear size circuits are implausible on communication complexity grounds, especially for function problems and logarithmic depth.  Hence, question 2 was chosen to have a natural model that is restricted, yet suffices for many ordinary computations.</p>
+<br/>
+
+
+<p><b>Oblivious Turing Machines</b><br/>
+Multitape Turing machines can be simulated by a two tape (or just one tape and a stack) oblivious Turing machine with O(n*log n) slowdown and linear space increase (allowing slowdown and space increase to depend on the number of tapes in the simulation).  A Turing machine is oblivious if its movement (on all tapes) is independent of input (but allowing the machine to halt or otherwise represent accept or reject depending on the input).  Let the current simulated time be n and d the number of bits in n.  In the simulation, each tape is stored in a separate track, and each track consists d blocks arranged in order.  For 1≤i≤d, block i has length 2<sup>i+2</sup> and contains tape contents at time n//2<sup>i</sup> * 2<sup>i</sup> ('//' is floor division) that are centered at the nearest location to the simulated head at that time that is a multiple of 2<sup>i</sup>.  Thus, the ith block is updated whenever the simulated time is divisible by 2<sup>i</sup>.  Because on the simulated tape there are just 3 possible locations of block i relative to block i+1, the update can be done obliviously in O(2<sup>i</sup>) time, leading to O(n*log n) total running time.  Furthermore, we can arrange that the location of both heads as a function of time t can be arranged to computed in O(log t) time.<br/>
+Note that instead of a second tape/stack, we could have done the simulation with partially-oblivious memory copy functionality, which can be defined as follows:  The machine signals at the starting location and the ending location (of the region to copy), and the new starting location; to be be partially oblivious, the time of these signals must be independent of the input, but a non-oblivious no-copy signal may be used to not actually copy the data.  With a further O(log n) slowdown, we could have used a fully oblivious memory copy functionality:  Given two regions of size n and distance of O(n) from each other, we could obliviously interleave the regions in O(n*log n) time, then manually do conditional copy in O(n) time, and then restore the regions.<br/>
+An alternative to memory copy is flip to origin function -- if the head is at position k, the new position is 0 and forall i≤k cell i is swapped with cell k-i (assume for definiteness that the tape is half-infinite and starts at 0).   Flip to origin function can also be defined without head movement, provided that it takes time k and is counted as movement with regard to obliviousness.  It appears likely that O(n) time in single-tape machines with flip-to-origin function can simulated in space O(n/(log n)<sup>2</sup>) (general O(log n) reduction and likely another O(log n) reduction because of the time required to bring data to origin for efficient processing).<br/>
+We can create an analogous simulation for multidimensional tapes, allow multiple d-dimensional tapes to be obliviously simulated by a single d-dimensional tape and a stack running in O(n<sup>2-1/d</sup>) time provided that d>1 and that each head of the simulated machine stays within distance O(n<sup>1/d</sup>) of the origin.</p>
+
+<p><b>Time-Efficient Diagonalization</b><br/>
+The time hierarchy theorem depends on efficient universal simulation, time keeping, and reversal.  By choosing a model where these items are low overhead, we obtain a much sharper hierarchy.  Specifically, for the following model, for every logtime constructible T and S, TimeSpace(T, S) strictly includes TimeSpace(T-ω(log T), S-ω(log T)), and in particular Time(T) strictly includes Time(T-ω(log T)).  (We assume that input is prefixed by input size or input size is otherwise logtime constructible.) The model uses a CPU, code memory, and data memory.  Different programs use the same CPU, but different code.  The code memory is modifiable, so a program can load another program, allowing universal simulation with O(1) additive time overhead (that depends on the simulated machine).  For time/space keeping and reversal, we add the following virtualization capability.  A system call or another mechanism is used to launch a program with<br/>
+- interception of the return value / output string (allowing reversal)<br/>
+- time limit (optional)<br/>
+- space limit (optional)<br/>
+This procedure can be nested, with each program unable to see its caller.  The called program runs at full speed (see below about hardware implementation).  Other details are basically irrelevant as the long as the CPU/architecture is fixed.  (Hardware Implementation Note:  To implement time limit tracking efficiently, ignore time limits that would trigger on or after an existing limit; at each step update the remaining time only on the innermost time limit, and when that limit no longer applies, subtract the appropriate value from the remaining time for the previous time limit (if any); and similarly with space limits.  For a reasonable implementation, this has logarithmic (or possibly just constant) slowdown, so 1unit of time on the machine with virtualization can be simulated in amortized time O(log T) on a similar machine without virtualization capabilities.  O(1) simulation slowdown is possible for some implementations, including, for example, multitape Turing machines if the machine without virtualization has 2 or 3 extra tapes (and code stack is specified appropriately).)</p>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>	
+<title>Space-Efficient Circuit Evaluation</title>	
+</head>
+<body lang="en-US">
+
+<p align="right">Dmytro Taranovsky<br/>August 10, 2012</p>
+<!-- Nov 30, 2013: Minor clarifications and a minor fix in a proof.-->
+
+<h1 align="center">Space-Efficient Circuit Evaluation</h1>
+
+<p><b>Abstract:</b>  We prove that uniform circuits of size n can be evaluated in space O(n/log n).  Thus, Space(O(n)) is not in uniform Size(o(n*log n)).  For uniformity, we only require that the circuit is O(n/log n)-Space uniform.  We also generalize the construction to prove that a machine with O(n<sup>δ</sup>) (δ&lt;1) internal storage and O(2<sup>n<sup>δ</sup></sup>) length single-bit-access read-write RAM that does only O(n) RAM reads (1 bit per read) can be simulated in space O(n * log log n / log n).</p>
+
+<p><i>Update (March 2025):</i><br/>
+* By a striking new result of Ryan Williams <a href="https://eccc.weizmann.ac.il/report/2025/017/">Simulating Time in Square-Root Space</a>, uniform circuits of size n can be evaluated in space n<sup>1/2+o(1)</sup>.  However, the result here generalizes to depth reduction for uniform circuits:  We get O(n/log n) size uniform alternating circuit (as in alternating time) and thus O(n / \log n) depth uniform circuit, and we also get circuit evaluation in O(n / log n) alternating time given random access to circuit gates as input (and thus no need for uniformity).</br>
+* Our construction for circuits is similar to that in <a href="https://www.sciencedirect.com/science/article/pii/0304397576900906">Circuit size is nonlinear in depth</a> (Paterson and Valiant, 1976), which I overlooked, though that paper did not claim uniformity.<br/>
+* For the second part of the paper, we get O(n * log log n / log n) alternating time given an oracle for Space(O(n<sup>δ</sup>)) (not needed if δ<1/2, as space can be simulated in quadratic alternating time).</p>
+
+<h2>Introduction</h2>
+<p>Circuit lower bounds have been notoriously hard to prove, with the often quoted statement that no concrete problem is known to require nonlinear circuit size.  This paper attempts to remedy the situation, albeit with the limitations of uniformity and of having to use a high complexity class (linear space).  We also generalize the construction to prove sublinear space evaluation for a general model that may be called unit cost single-bit-access RAM with fast CPU cache.</p>
+
+<p>The constructions in this paper use similar techniques as the space-efficient simulations of tree Turing machines and multidimensional Turing machines in "On Time versus Space II" (Paul and Reischuk, 1979), and a general framework like that in "On Time versus Space III" (Halpern, et al, 1986).  Like those simulations, the space-efficient constructions in this paper use exponential time.</p>
+
+<h2>Circuit Evaluation</h2>
+
+<p>In this section, we prove the following theorem.</p>
+
+<p><b>Theorem 1:</b>   O(n/log n)-Space uniform SIZE(O(n)) is in SPACE(O(n/log n)).</p>
+
+<p> The uniformity condition means that given gate index i (0≤i&lt;n), the type of the gate and the indexes of the inputs and outputs are computable in O(n/log n) space. SIZE refers to circuit size, which is the number of wires.</p>
+
+<p>For convenience, each gate has bounded fan-in and bounded fan-out (for example, we can have AND, OR, NOT, and wire duplicator), this increases the number of wires in at most a constant number times.  Fix an ordering of the gates such that each gate only receives inputs from lower-numbered gates.<br/>
+Numbering Convention:  Gates are 0,1,2...; interval i..j contains gates i, i+1, ..., j-1.</p>
+
+<p>Our circuit evaluation can be described as follows:<br/>
+<i>Given:</i> An interval a..c, and a procedure for accessing inputs in a..c from gates below a; and index i of the gate in a..c whose output we want.<br/>
+<i>Output:</i> Output of gate i.</p>
+
+<p>Let Space(a..c) be the space used by the algorithm to compute a..c (for the worst possible output index).  Define Edges(a..b, c..d) to be the number of wires going from a..b to c..d; Edges(a..c) is Edges(a..c, a..c).  To simplify running time analysis, treat each gate as having an extra (nonfunctional) wire going to itself.</p>
+
+<p style="white-space:pre-line"><i>Algorithm (general form):</i>
+If i&lt;c-1; set c = i+1.
+If c-a ≤ max(log n, 1), compute the circuit directly.
+Nondeterministically pick a position b (a&lt;b&lt;c).
+Nondeterministically evaluate the circuit using either A or B:
+<b>A.</b>  Compute circuit b..c, and whenever encountering edge from a..b to b..c, compute its value by computing circuit a..b.
+Space Usage (approximate upper bound):  Space(a..b) + Space(b..c)
+<b>B.</b>  Compute circuit a..b and store all outputs that are used in b..c.  Because the circuit geometry is known, we only need to store one bit per output.  Compute b..c with the help of those outputs.
+Space Usage (approximate upper bound):  max(Space(a..b),Space(b..c)) + Edges(a..b,b..c)</p>
+
+<p><b>Determinization:</b>  Set the space limit to a low value, and run the search over the different paths.  When the space limit is hit, backtrack; when the search is over at the root level, increment the space limit. Stop when the output is computed.<br/>
+<b>Note:</b>  To get the O(n/log n) space bound, we do not have to search over values of b.  We can actually pick any value of b as long as (for all the intervals) min(b-a,c-b) > (c-a)*const for some constant const>0.  To simplify exposition, let b be selected as the midpoint of a..c.  The counting of the (nonfunctional) gate self-wires (one wire per gate) ensures that for some constant k&lt;1, max(Edges(a..b), Edges(b..c)) &lt; k*Edges(a..c) (and also that min(b-a,c-b) > (c-a)*const).</p>
+
+<p><b>Space Analysis</b></p>
+
+<p style="white-space:pre-line">Not counting storage of the edge/output values, the space overhead for each level of recursion or function call is O(log n), so assuming, if necessary, that we treat intervals shorter than n<sup>0.5</sup> as basic (with direct linear space computation), almost all of the space is used for storing the values of the edges.
+Thus, we have to relate Space(a..c) to Edges(a..c).  We have:
+Edges(a..c) = Edges(a..b) + Edges(b..c) + Edges(a..b,b..c)
+Space(a..c) = min(Space(a..b) + Space(b..c), Edges(a..b,b..c) + max(Space(a..b),Space(b..c)))
+Edges(a..b,c..d) ≤ 3*(d-c)</p>
+
+<p style="white-space:pre-line"> Let x = Edges(a..c), y = Edges(a..b,b..c) and assume that Space/Edges is at most ε for both subproblems.
+Space(a..c) = min(space using A, space using B) ≤ min((x-y)*ε, x*k*ε+y) (where k&lt;1 is a constant),
+The right side is maximal when (x-y)*ε = x*k*ε+y &nbsp;&nbsp;⇒&nbsp;&nbsp;  y = x*(1-k)*ε/(ε+1)  &nbsp;&nbsp;⇒&nbsp;&nbsp;  Space(a..c) ≤ ε*x*(1+k*ε)/(1+ε).
+In the worst case (i.e space using A equals space using B), the recurrence ε→(1+ε*k)/(1+ε)*ε is applied Ω(log n) times, so ε becomes O(1/log n) and the space usage is O(n/log n) as required.</p>
+
+<h3> Extension to non-uniform circuits </h3>
+
+<p>For non-uniform circuits, our best result is the following:</p>
+
+<p><b>Proposition 2:</b>  For every space-constructible function f with f(n) ≥ n, Space(O(f(n))) is not in f(n)-bits-of-nonuniformity SIZE(o(f(n)*log(f(n)))).<br/>
+For "f(n)-bits-of-nonuniformity", it suffices that there is a sequence of f(n) bits (f(n) not O(f(n))) from which each gate of the circuit can be constructed in o(f(n)) space.<br/>
+<b>Proof Sketch:</b> The proposition is proved by:<br/>
+* showing that the result for space-efficient computation of uniform circuits relativizes, so given f(n) bits (stored separately) the circuit can be evaluated in Space(o(f(n))), and<br/>
+* using a construction analogous to the proof that PSPACE is not in non-uniform SIZE(n<sup>k</sup>). Briefly, set g(i) to 1 if there is a circuit encoded by a program of length ≤2*f(n) that correctly computes g(0), g(1), ..., g(i-1) and the majority of such circuits output 0 on input i; else set g(i) to 0.  g(i) can be computed in O(f(n)) space given g(0), g(1), ..., g(i-1). By a counting argument, g(i)=0 for i>2*f(n)+1, so storage of values of g also uses O(f(n)) space.</p>
+
+
+<h2>Space-Efficient Simulation of RAM</h2>
+
+<p>In this section, we generalize the space-efficient circuit evaluation technique to a much broader class of machines.  The machines (specified in the theorem below) may be called unit cost single-bit-access RAM with fast CPU cache.</p>
+
+<p><b>Theorem 3:</b>  Let δ&lt;1 be a constant. O(n) time on the following class of machines can be simulated in O(n * log log n / log n) space.<br/>
+- The machine has read-only input of length O(2<sup>n<sup>δ</sup></sup>), internal storage of size O(n<sup>δ</sup>), and tape of length O(2<sup>n<sup>δ</sup></sup>).<br/>
+- The tape acts as random access memory.  Each access either reads or writes one bit at the specified location, and takes 1 unit of time.  Everything else (i.e. reading input and internal processing) is free (takes 0 time).<br/>
+- Furthermore, the theorem applies even if writing to the tape is free.</p>
+
+<p><b>Note:</b>  The details of the internal storage are irrelevant as long as it is space-computable.  The tape is initialized with 0s.</p>
+
+<p><b>Lemma:</b> For m>n<sup>δ</sup>, m steps of the machine can be simulated in O(m) space.<br/>
+<b>Proof:</b>  The internal storage and the location of the input head take up O(m) space, but (even if writing is charged) a naive simulation might use Ω(m*lg(tape length)) space to store the address of each bit.  Instead, we run the simulation multiple times, progressing one read bit at a time, and using O(m) space to store the sequence of bits read from the tape.  Each time we get the address of the next bit, and on the next try keep track of the value at that address.</p>
+
+<p><b>Proof of Theorem 3</b></p>
+
+<p>Analogously to our simulation of circuits, we define an algorithm that given a time interval a..c, and a procedure for accessing the state at a, and index i, will output the ith bit of the state at c.</p>
+
+<p style="white-space:pre-line"><i>Algorithm:</i>
+If c-a &lt; n<sup>(1+δ)/2</sup>, evaluate the circuit in space O(|c-a|) using the lemma.
+Let b be the midpoint of a..c, b = (a+c)/2.
+Nondeterministically evaluate the value (index i of the state at c) using either A or B:
+<b>A.</b>  Evaluate the interval b..c, and whenever we need the value of a bit at time b, compute its value by computing a..b.
+Space Usage (approximate upper bound):  Space(a..b) + Space(b..c)
+<b>B.</b>  Evaluate a..b and efficiently store all outputs that are needed in b..c as described below.  Compute b..c with the help of those outputs.</p>
+
+<p>For B, we efficiently store the outputs by storing the bits in the order they are first read by b..c, along with the number of steps it takes for b..c to get to each bit.  We can guess this set of values and iterate over possible guesses.  For each guess, we try the computation of b..c multiple times, each time going one read bit further, and verifying that the guess is correct about whether the bit was modified in a..b and if so whether its value is correct.  For each address, we may have to store the bit multiple times, once for each time the bit is read in b..c except for reads occurring after the bit is written to during b..c.  Assuming that we have to store d bits per unit time, the storage per bit is (-d*lg(d)+-(1-d)*lg(1-d))/d + 1 ≈ lg(1/d) + lg e + 1 ≈ lg(1/d) + 2.44, which is O(log(1/d)).</p>
+
+<p>As before, nondeterminism can be replaced by search with progressively increasing space bounds.  Also, instead of using the midpoint, we could have searched over all values of b, or even picked any value of b as long as (for all the intervals) min(b-a,c-b) > (c-a)*const form some constant const>0.</p>
+
+<p>Let Edges(a..b,c..d) (b≤c) be the number of bits on the tape accessed in interval c..d that were last modified during a..b (the count is per access rather than per address; a bit at a single address may get counted multiple times).  In the algorithm, let Edges(a..c) = c-a in the base case and Edges(a..c) = Edges(a..b) + Edges(b..c) + Edges(a..b,b..c) in the recursive case.  Edges(a..c) is Θ(c-a) (actually, c-a ≤ Edges(a..c) ≤ 2*(c-a)) because each bit read access corresponds to one edge.  Thus, for some constant k&lt;1 (if b is the midpoint, k = 2/3+epsilon), max(Edges(a..b), Edges(b..c)) &lt; k*Edges(a..c).</p>
+
+<p>In addition to edges, we also have to store the internal state (and input head location).  However, our stopping condition ensures that we do not have to store too many copies of the internal state simultaneously:  (number of intervals) * (internal state size) is below our space bound.</p>
+
+<p style="white-space:pre-line">We now write the recurrence relations, expressing space bounds in terms of the number of edges:
+Let x = Edges(a..c), d = Edges(a..b,b..c)/x, and assume that Space/Edges is at most ε for both subproblems.
+Space(a..c) = min(space using A, space using B) ≤ x*min((1-d)*ε, ε*k + d*(lg(1/d)+O(1))) (where, as noted above, k&lt;1 is a constant).
+Space(a..c)/x ≤ ε*min(1-d, k+d/ε*(lg(1/d)+O(1)))
+For each value of ε, this is less than ε (since k&lt;1), so as recursion depth increases, ε→0.  The worst case behavior is when d is selected such that both sides are equal, which leads to d = Θ(ε/log ε) and Space(a..c)/x = ε*(1-Θ(ε/log ε)).  After i iterations, 1/ε becomes Θ(i/log i).  Since the recursion depth i is Θ(log n), the total space usage is O(n*log log n/log n), which completes the proof.</p>
+
+<p><b>Notes:</b><br/>
+* In the simulation, we can arrange that we only access the input bits that are used by the simulated machine (but we access those bits many times).<br/>
+* Also, we can allow the internal storage to be a black box as long as the simulation is given access to it, and with the ability to read and set the black box state. We can ensure that the simulator only uses those states of the black box that would have been used by the simulated machine.</p>
+
+<p><b>References:</b><br/>
+W. J. Paul, R. Reischuk, "On time versus space II", 20th Annual Symposium on Foundations of Computer Science, 1979.<br/>
+Joseph Y. Halpern, Michael C. Loui, Albert R. Meyer and Daniel Weise, "On Time versus Space III", Theory of Computing Systems, Volume 19, Number 1 (1986).
+</p>
+</body>
+</html>

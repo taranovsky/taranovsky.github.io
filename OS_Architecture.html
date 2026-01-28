@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+	
+  <meta http-equiv="CONTENT-TYPE"
+ content="text/html; charset=iso-8859-1">
+  <title>Secure Operating System Architecture</title>
+	 	
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+	
+  <meta name="AUTHOR" content=" ">
+	
+  <meta name="CREATED" content="20011103;17491100">
+	
+  <meta name="CHANGEDBY" content=" ">
+	
+  <meta name="CHANGED" content="20020422;7582100">
+	
+  <meta name="DESCRIPTION"
+ content="Specifies operating system architecture that provides security against viruses.">
+	
+  <meta name="KEYWORDS"
+ content="operating system; architecture; security; virus; viruses; rights management">
+</head>
+<body>
+<p align="right">Back to Dmytro Taranovsky's <a href="index.html">home
+page</a>.<br>
+Dmytro Taranovsky<br>
+November 7, 2001<br>
+Last Modified:&nbsp; July 29, 2002</p>
+<h1 align="center">Operating System Architecture</h1>
+<p>By gaining control of computers, computer viruses, worms, trojans,
+software bugs, and bad people can create extraordinary damage by
+shutting down infrastructure, using online banking to steal money, or
+using robots to attack people. Our civilization is increasingly depended
+on computers for survival. Therefore, a fully secure operating system
+is essential for the society. Below is the architecture by which
+maximum security against viruses and other threats can be achieved.</p>
+<p>Operating system and the rest of the software should be modular.
+Each small module performs a function and may take parameters. For
+example, a web browser uses an HTML renderer to display a webpage. In
+turn, the HTML renderer uses a jpg-renderer to display jpg images. An
+e-mail program might use the same HTML renderer. The rich collection of
+functions (with application program interfaces) makes writing programs
+much easier, greatly reduces the need to write the same functionality
+many times, and allows the same program to work on different computers.
+Modularity is also essential for stability and internal security of a
+complex program--failure of some modules to work properly should affect
+only the functions the modules perform and (usually) should not cause
+the program to crash or become unnecessarily insecure. Moreover, proper
+multi-tasking (see below) ensures that a delay in a non-essential
+module does not excessively delay the program.</p>
+<p>While the code for a function is loaded once into the memory,
+multiple executions can occur simultaneously.  Functions remain in
+memory until the memory (RAM) is about to run out; when that happens,
+functions least likely to be called are unloaded or put into the swap
+space.</p>
+<p>Each process has a set of rights and priorities. The rights include
+the type of resources the process can access such as what devices
+(speakers, networks, etc.) and files the process can access and at what
+permission level. For example, a process may be allowed to modify only a
+certain region of the monitor. A process can be denied access to a
+file, given a read-only access, allowed to read and append, or allowed
+read-write access. Ideally, each process is given just enough rights to
+perform all of the functions it should perform.</p>
+<p>The priorities are specified for limited resources such as the
+amount of memory, processing time, bandwidth, and disk space. The
+priorities are determined based on the importance of each process. The
+process managers allocate scarce resources based on the priorities.
+Real-time multitasking ensures that each process gets a fair share and
+that essential processes are performed. (As a process is granted more
+and more resources, its priority decreases; as a process is denied
+resources, its priority increases; thus, a malfunctioning process will
+not be able to occupy too much of vital resources.)</p>
+<p>For example, a device driver can communicate with the hardware
+device and with the device manager. Its priorities depend on the
+importance of the hardware. A device driver is not allowed to modify
+files or otherwise damage the computer.</p>
+<p>A process can use any function (and execute any code) that it can
+read, and can create new processes. The parent process decides (and can
+later change) what rights and priorities to give to its child. (A
+function used by a process is either a part of that process or its
+child.)&nbsp; However, the child process cannot have more rights than
+the parent process. Moreover, the total priorities for the parent and
+all of its derivative processes cannot exceed the original priority of
+the parent. This way processes will be unable to circumvent their rights
+and priorities.</p>
+<p>To prevent security vulnerabilities, the operating system uses
+microkernel architecture. Each resource (such as a file system) has a
+device manager. The resource can only be accessed through the device
+manager. The device manager uses the process rights and priorities to
+determine whether to grant access. To prevent security flaws, the device
+manager does not do much else and uses the device driver to actually
+access the device. For efficiency, CPU acts as a basic memory manager
+preventing unauthorized access.</p>
+<p>Programs can be run as a team of mutually trusted cooperating
+processes. Such processes can send messages to each other. The messaging
+device manager(s) control the form and the existence of messages. 
+(Otherwise, malicious programs could use messaging to gain control of
+processes with many rights.)  The limited messaging right is given to
+cooperating processes (only to communication among themselves), basic
+resource/device managers, log-in managers, and other processes as
+necessary. </p>
+<p>A process may ask the user a special permission for a resource. To
+do so it sends a message (permission request and reason) to an
+appropriate log-in manager.&nbsp; A log-in manager is a program that has
+the right to change certain rights of processes.&nbsp; The log-in
+manager decides whether to grant permission and may prompt the user with
+the request and the text of the reason for the request. If the user
+agrees (and both the user and the manager have the permission), the
+request is granted. For security, messaging device manager limits
+access to log-in managers.&nbsp; The log-in manager can later terminate
+the special rights it had granted.&nbsp; A log-in manager may request
+authentification (username/password, digital signature, and/or
+satisfactory results from a special authentification program).&nbsp;
+For greatest compatibility with legacy programs, a process's rights may
+specify for automatic transfer of a denied attempt to access a resource
+to a log-in manager for a possible authorization of access.&nbsp; To
+prevent security breaches, in an ordinary configuration, only one log-in
+manager has broad power, and that manager may only give that power to a
+user who communicates only through approved channels (is at the
+computer). </p>
+<p>For example, an editor does not need read-write access to all files:
+It simply relies on the user to grant a permission to save a file. A
+harmful macro in Microsoft Office will not be able to damage files
+except the few files for which the user explicitly gave the access.
+(Since the damage is quickly detected, Microsoft Office can be
+terminated and possibly reinstalled before the macro damages too many
+files.) Of course, Microsoft Office should have internal process and
+document rights management system to prevent a malicious document from
+making damage.</p>
+<p>Digital signature module is used to make and verify high security
+digital signatures. Encryption module uses public key cryptography to
+prevent unauthorized access to secret data. These modules allow secure
+(and confidential) interaction between computers even if the network
+itself (including network device driver) is not. Certain functions (such
+as processing time of a remote computer) are not free. Financial module
+allows controlled money transfer through digitally signed authorization
+to take the stated amount of money from the bank account. Digital
+signature prevents fraud. Of course, the access to digital signatures
+and finances is restricted. Different users/processes may have
+different signatures.&nbsp;&nbsp;</p>
+<p>Each process has a unique ID. The child process inherits the ID of
+the parent in addition to its own ID. This way a process along with all
+its derivative processes can be terminated (or abridged on
+rights/priorities) if so desired.</p>
+<p>A user is just like a process, with certain rights and with the
+ability to create processes. Since each user has limited rights, the
+computer/network is safe from malicious users. Just like many processes
+can be active at the same time, multiple users can use the
+computer/network at the same time.</p>
+<p>By default, users and processes own the processes they create. The
+process manager allows the user or process to control the rights and
+priorities of the processes it owns. Thus, users and processes can
+terminate the processes they own (including themselves).</p>
+<p>Certain processes present a special identification to the user such
+as a certain message in a particular area of the screen. The right to
+present the identification is restricted to the authorized software and
+enforced by appropriate device managers.</p>
+<p>The network manager provides basic functionality of sending
+inter-process messages across the network (such as a multiprocessor
+system, local area network, or the internet), for accessing functions
+over the network, and for transferring and creating processes from one
+computer on the network to another. This way the network manager makes
+the network transparent, with network services accessed just like
+ordinary programs. Because each process has limited rights and
+priorities, which are enforced, network transparency does not cause
+security vulnerabilities.</p>
+<p>The architecture above when properly implemented resolves all
+security issues except which (authenticated) users/processes to trust
+with which resources and files.&nbsp; Users and programs will not be
+able to what they are not authorized to, but at the same time they will
+be able to run any programs they want and programs will not be
+restricted in their internal structure.&nbsp; The architecture allows
+the operating system to be very extensible and scalable. Moreover, the
+operating system is stable since a failure of almost any process will
+not cause the computer to crash or to excessively delay an essential
+process. Stability is essential in many cases: It is essential that
+computer-controlled automobiles do not crash every year.</p>
+</body>
+</html>

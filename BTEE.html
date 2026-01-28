@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Elementarily self-embeddable models of ZFC</title>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+		tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+	});
+	</script>
+	<script type="text/javascript"
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">  
+	</script>
+
+	<style type="text/css">
+		h2 {margin-top: 20pt}
+		@page {margin: 1.0in}
+	</style>
+	<!-- <i>Note:</i>  Text justification is not used because it sometimes leads to very long spaces.-->
+</head>
+<body>
+<p style="text-align:right">Dmytro Taranovsky<br/>
+February 23, 2020<br/>Modified: May 6, 2020<br/>Minor change: January 2, 2021</p>
+
+<h1  style='text-align:center;font-size:180%'> Elementarily self-embeddable models of ZFC </h1>
+
+<p><b>Abstract:</b>  We explore ZFC extended with a symbol $j$ for a nontrivial elementary embedding $V→V$ without separation and replacement for $j$-formulas. The theory is<br/>
+- conservative over ZFC<br/>
+- with critical point, $κ=\mathrm{crit}(j)$ — conservative over ZFC + {there is $n$-subtle cardinal}$_{n∈\mathbb{N}}$<br/>
+- with bounded quantifier transfinite induction $\mathrm{TI}_{0,j}$ — equiconsistent with ZFC + {$n$-iterable cardinal}$_{n∈\mathbb{N}}$<br/>
+- with $\mathrm{TI}_{0,j}$ or $\mathrm{TI}_j$, and $∃δ \! > \! κ \, j(δ)=δ$ &nbsp;— equiconsistent with ZFC + $ω$-Erdős<br/>
+- with existence of $ω$-sequence $(κ,j(κ),...)$ or with $≤κ$ dependent choice — equiconsistent with ZFC + measurable<br/>
+- with bounded quantifier separation — equiconsistent with ZFC + {$n$-huge cardinal}$_{n∈\mathbb{N}}$.</p>
+
+<h2>1 Introduction</h2>
+
+<p>Symmetry is fundamental to set theory and is naturally expressible through elementary embeddings.  Particularly elegant would be nontrivial elementary embeddings $j:V→V$, except that assuming the axiom of choice and replacement for $j$-formulas, they do not exist (Kunen's inconsistency).</p>
+
+<p>But metaphysical non-existence of $j$ in the true $V$, if such it is, need not stop us from studying elementary self-embeddings in other models.  There is a hierarchy of axioms for $j:V→V$ in ZF (with replacement for $j$-formulas) [Bagaria 2019]; and here we consider ZFC in the language $(∈,j)$, but without full separation and replacement for formulas using $j$. This was already explored in [Corazza 2006], but many important questions were left unanswered.  Here, we answer some of these questions, and doing so, offer qualitative new insight on the large cardinal hierarchy.</p>
+
+<p><i>Outline:</i> In section 2, we discuss versions of $j:V→V$ conservative over ZFC or otherwise lacking critical point.  In sections 3 and 4, we discuss results for BTEE at the level of large cardinals consistent with $V=L$, including existence of transitive models.  In section 5, we consider elementary $j:L_α→L_β$.  Section 6 considers strengthenings of BTEE at the level of measurable and stronger cardinals.</p>
+
+<p><i>Acknowledgment:</i> I am very grateful to Victoria Gitman for confirming my conjecture that existence of a well-founded model of BTEE is between $n$-iterable and $ω$-iterable, which served as the triggering point for this paper, as well as for reviewing a number of proofs here.</p>
+
+<p><b>Terminology</b></p>
+
+<p><b>Definition 1.1:</b> Following [Corazza 2006], the theory BTEE (Base Theory of Elementary Embeddings) uses language $(∈,j)$ and consists of:<br/>
+- ZFC (without separation and replacement for formulas using $j$)<br/>
+- (schema) $j$ is a nontrivial elementary embedding of $V$ into $V$ (for formulas without $j$)<br/>
+- <i>critical point:</i> the least ordinal moved by $j$ exists.</p>
+
+<p>Typically, $κ=\mathrm{crit}(j)$ (the critical point of $j$) in this paper.</p>
+
+<p>TI refers to transfinite induction (least ordinal principle). In $\mathrm{TI}_{0,j}$, 0 means bounded quantifier, and $j$ refers to use of $j$.</p>
+
+<p>Per [Corazza 2006], $\mathrm{WA}_0$ is bounded quantifier Wholeness Axiom, i.e. BTEE + bounded quantifier separation.  Over BTEE, it is equivalent to existence of $j∩S$ for every set $S$.</p>
+
+
+<h2>2 Elementary self-embeddings conservative over ZFC</h2>
+
+<p>Elementary self-embeddings add no strength to a theory unless we require that the embedding coheres (in some sense) with the model. The following theorem is well-known, and generalizes to other theories without finite models.  Note that the resulting models in this section are generally ill-founded.</p>
+
+<p><b>Theorem 2.1:</b> BTEE without the critical point axiom is conservative over ZFC.<br/>
+<b>Proof:</b> Given a consistent theory extending ZFC, add Skolem functions, and add $ω$ constant symbols for indiscernible ordinals, use compactness to find a model, take the Skolem hull of the indiscernibles, and add a nontrivial order preserving injection between the indiscernibles, which will then extend to an elementary embedding $j$.</p>
+
+<p>We should also mention that every countable ill-founded model of ZF (or just $\text{KP}^\mathcal{P} +Σ_1^\mathcal{P}\text{-Separation}$) has a (not necessarily elementary) rank-initial nontrivial self-embedding pointwise fixing an arbitrarily large rank-initial segment [Gorbow 2019].</p>
+
+<p>As we increase reflection properties, we can get "better" embeddings for Theorem 2.1, and significant reflection is already present in ZFC.  The following theorem combines the construction in Theorem 2.1 with the existence of elementary end extensions (the latter is shown in, for example, [CK 1990] Theorem 2.2.18).</p>
+
+<p><b>Theorem 2.2:</b>  Every countable, or just countable cofinality, model $M$ of ZFC has an elementary end-extension $M'$ with a nontrivial automorphism $j$ pointwise fixing $M$ and with $∀α∈\mathrm{Ord}^{M'}\backslash M \, ∃β&lt;α \, j(β)≠β$.  This also holds for extensions of ZFC with an additional predicate satisfying replacement.<br/>
+<b>Proof:</b>  We first present the countable case, then extend it to uncountable with countable cofinality, and finally explain how to ensure that $j$ does not pointwise fix an $M'$-transitive set not in $M$.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;Let $T$ be the theory of $M$ in the language extended with a constant for every element of $M$ and (if necessary) Skolem functions consistent with the replacement schema.  Add ordinal constants $c_i$ for $i∈ℤ$ to $T$.  For every $T$ formula and every $S∈M$, assert that $c_i$ are indiscernibles, even allowing parameters from $S$ (each assertion quantifies over elements of $S$ ($S$ is used as a constant) but uses a fixed number of $c_i$).  Using Erdős-Rado theorem, a statement using $n$ $c_i$ is consistent with the theory iff $M ⊨ ∀λ∈\mathrm{Ord} \, ∃I⊂\mathrm{Ord}$ "$\mathrm{ordertype}(I)=λ$ and all $n$-tuples from $I$ (used in place of $c_i$ with the same order) satisfy the statement".  Now, for $a∈M$, an isolated type $φ$ that gives a new element of $a$ would mean (1) $⊬¬∃b∈a \, φ(b)$ and (2) $∀b∈^M \! a \, ⊢¬φ(b)$.  (2) limits the above $λ$ for $φ(b)$, and using replacement, we get a limit on $λ$ that works for all $b∈^M a$, contradicting (1) (using Erdős-Rado to select $b$).  We can then apply the omitting types theorem to get a model such that elements of $M$ do not get new members, and then proceed as in theorem 2.1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;For uncountable $M$ of countable cofinality (so $M=∪_{n&lt;ω} X_n$ with each $X_n∈M$), we can still complete the Henkin construction (i.e. a term model) for our use of the omitting types theorem in $ω$ steps.  An $M$-generic well-ordering of $M$ exists in $V$, so we get Skolem functions consistent with replacement.  At stage $n$, we will resolve the first $n$ questions for all elements in $∪_{i&lt;n} X_n$.  Since every element of $M$ is a constant, we can do this in a single statement (with Erdős-Rado theorem and replacement guaranteeing existence of a consistent choice).  Then (again with Erdős-Rado and replacement), for each term constructed so far that we have asserted is in $∪_{i&lt;n} X_n$, assert a specific element of $∪_{i&lt;n} X_n$ to which it is equal.  Since we are building a term model, this suffices for ensuring that elements of $M$ do not get new members.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;We can prevent pointwise fixing of $M'$-transitive sets not in $M$ as follows.  After stage $n$, order all the ordinals we added so far (using Erdős-Rado and replacement), and then pick the least ordinal $c$ such that it is consistent that $c≥\mathrm{Ord}^M$.  Thus (using replacement), there is $f$ in $M$ (definable with parameters), such that for every $λ∈\mathrm{Ord}^M$, $f(λ)$ is a set of size $λ$ satisfying the statements we added about indiscernibles, and $c^{f(λ)} > λ$.  Assert (for a large enough $m$) $∃λ \, \{c_0,...,c_m\} ⊂ f(λ)$.  We have $c>λ$, and (by definability of $f$) $c_i$ are not indiscernibles with parameters in $V_λ∪\{λ\}$, so the automorphism will move an ordinal $&lt;c$.<br/>
+<i>Notes:</i><br/>
+* Once we fixed the theory of the indiscernibles with parameters in $M$, we can expand the indiscernibles to an arbitrary infinite order type and get a rich class of automorphisms.<br/>
+* For countable models, this theorem (and more) was proved in [EKM 2017].
+</p>
+
+<p><b>Corollary 2.3:</b> Every $j$-free statement provable in BTEE minus critical point plus "$S∩φ$ exists where $φ$ may use parameters and $j$, and set $S$ is definable without $j$ from some transitive set pointwise fixed by $j$" is provable in ZFC + $\{∃α \, (V_α⊨\text{ZFC} ∧ V_α ≺_{Σ_n} V)\}_{n&lt;ω}$.</p>
+
+<p>The above automorphisms may also fix some sets outside of $M$.  [Enayat 2004] shows that a complete theory $T$ in the language $(∈,&lt;)$ extending ZFC + "replacement for $&lt;$" has a model $M$ with an elementary end extension that has a nontrivial automorphism that fixes precisely the sets in $M$ iff $T$ satisfies $\{\text{there is } n\text{-Mahlo }κ: V_κ ≺_{Σ_{n,&lt;}} V \}_{n∈ω}$. (Enayat also assumes that $&lt;$ is a well-behaved well-ordering of $V$ to derive the equivalence in a theory much weaker than ZFC; this is not needed in ZFC.)</p>
+
+<p><b>Theorem 2.4:</b>  BTEE with critical point weakened to $ω∈I$ and $∃x ∈ \mathrm{Ord} \!\setminus\! I \,\, ∀y ∈ x \!\setminus\! I \,\, j(y)≠y$ where $I=\{β∈\mathrm{Ord}: ∀α≤β \, j(α)=α\}$ is conservative over $\text{ZFC} + \{n\text{-Mahlo}\}_{n∈ω}$.<br/>
+<b>Proof:</b> For such $M$ and $j$, $I$ is a strong cut, i.e.  $∀f∈M \, (f \text{ is a function}) \,\, ∃y∈\mathrm{Ord} \!\setminus\! I \,\, ∀x∈I \,\, f(x)∉ y \!\setminus\! I$.  This can be proved by considering the least point of difference between the graphs of $f$ and $j(f)$ and relying $j(x)≠x$ for all sufficiently small $x$ above $I$.  As in [Enayat 2004], $I$ being a strong cut (and $ω∈I$) implies that $(V_I,C,∈)$ satisfies NBG + $\mathrm{Ord}$ is weakly compact, where $C=\{x∩V_I:x∈V\}$ (i.e. $C$ is $V$ with $x∼y ⇔ ∀z∈V_I (z∈x⇔z∈y)$).<br/>
+In the other direction, suppose a statement $A$ is consistent with $\text{ZFC} + \{n\text{-Mahlo}\}_{n∈ω}$.  Add a global well-order '≺', and consider a countable model $M$ satisfying $A$ with an $n$-Mahlo cardinal $δ$ for a nonstandard natural number $n$.  In $M$, let $P$ be the $Σ_{m,≺}$ theory of $V$ with parameters in $V_δ$ for a standard $m$ large enough to witness $A$.  As in [Enayat 2004] (Theorem 2.1 part 2), find a model $(N,C)$ satisfying NBG + $\mathrm{Ord}$ is weakly compact, with $N$ being a rank-initial cut of $M$ below $δ$, and $N∩P∈C$.  As in [Enayat 2004], find an elementary end-extension $M'$ of $(N,∈^N,P∩N)$ with a nontrivial automorphism $j$ whose set of fixed points is $N$.  Finally, use the extension of $P∩N$ to extend $j$ to a model of $A$ (above $M'$) that does not add new sets for ordinal ranks in $M'$.</p>
+
+<p>An interesting question is to what extent we can add separation for $j$-formulas without adding strength:<br/>
+<i>url:</i> <a href="https://mathoverflow.net/questions/350746/elementary-self-embeddings-conservative-over-zfc">https://mathoverflow.net/questions/350746/elementary-self-embeddings-conservative-over-zfc</a><br/>
+<i>Question:</i> Is the following theory conservative over ZFC? And if not, what is its strength?<br/>
+<i>Language:</i> $∈$, $j$ (unary function symbol)<br/>
+<i>Axioms:</i><br/>
+1. ZFC (without separation and replacement for formulas using $j$).<br/>
+2. (schema) $j$ is a nontrivial elementary embedding $(V,∈)→(V,∈)$.<br/>
+3. (schema) $S∩φ ≡ \{s∈S:φ(s)\}$ exists whenever $φ$ is a formula with parameters and one free variable and set $S$ is definable (allowing $j$).<br/>
+<i>Extension:</i>  Allow $S$ to be definable from any set $T∈V_I$ (as above, $I=\{β∈\mathrm{Ord}: ∀α≤β \, j(α)=α\}$).</p>
+
+<p><i>Notes:</i><br/>
+* (3) implies existence of $S'∩φ$ for all $S'$ with $|S'|≤|S|$ for some $S$ as above.  Thus, (3) simply asserts the full Separation Schema for sets that are not too large.<br/>
+* A partial result is the Corollary 2.3 above.<br/>
+* A further extension is to allow $S$ to be definable from any set $T$ with $T=j(T)$; its strength is above $n$-Mahlo.</p>
+
+<p>The theory (1)-(3) looks deceptively strong, resembling the Wholeness Axiom, but without critical point, we do not appear to get anywhere.</p>
+
+
+<h2>3 Strength of BTEE</h2>
+
+<p><b>Basic strength</b></p>
+
+<p>In a number of ways, BTEE suffices for a basic theory of $j$.  In BTEE, $κ$ is fully indescribable:  $∀A⊂V_κ \, (φ(A) ⇒ ∃κ'&lt;κ \, φ(A∩V_{κ'})$ ($φ$ has one free variable and does not use $j$).  For every finite $n$, BTEE proves that $κ=\mathrm{crit}(j)$ is $n$-ineffable [Corazza 2006].  Moreover, in BTEE, if $U$ is the ultrafilter on $κ$ derived from $j$, then whether or not $U$ exists as a set, $U$ is $κ$-complete and normal (but not necessarily weakly amenable), and for every finite $n$, BTEE proves the ultrafilter partition relation $κ→(U)^n$.</p>
+
+<p>It may seem that BTEE should be strong, but strikingly we have the following, which we believe clarifies the combinatorial essence of SRP.</p>
+
+<p><b>Definition 3.1:</b> Stationary reflection principle (SRP) is ZFC + (schema) {there is $n$-subtle cardinal}$_{n∈\mathbb{N}}$.<br/>
+<i>Note:</i> Using $n$-ineffable in the schema is equivalent.</p>
+
+<p><b>Theorem 3.2:</b> BTEE is conservative over SRP.</p>
+
+<p><i>Note:</i> We get conservativity and not just equiconsistency.  SRP (without full conservativity) shows up in a number of other results including in a basic axiomatization of reflective cardinals of finite orders [Taranovsky 2012], and (separately) in Harvey Friedman's natural arithmetic statements independent of ZFC [Friedman 2020].  A basic theory of $n$-subtle and $n$-ineffable cardinals is developed in [Friedman 2001].</p>
+
+<p><b>Proof:</b>  As noted above, for every $n$, BTEE implies existence of $n$-subtle cardinals.  For the converse, given a proposition $A$, consistency of ZFC + $A$ + (schema) {there is $n$-subtle cardinal}$_{n∈\mathbb{N}}$ implies existence of a model $M$ of ZFC + $A$ + $n$-subtle cardinal for a nonstandard number $n$, plus existence of $λ$ with $V_λ^M≺M$.  Fix such an $M$ and an $M$-well-ordering $&lt;^*$ of $V_λ^M$, and (in $M$; $n$ is nonstandard outside of $M$) use an $n$-subtle cardinal $&lt;λ$ to produce an $n$-tuple $(κ_1,...,κ_n)$ of good indiscernibles for $(V_λ^M, ∈^M, &lt;^*)$.  ("good" is a technical term here and is why we need the $n$-subtle cardinal; it will ensure that $j$ does not move $M$-ordinals below $κ_1$.  Their existence follows from homogeneity for regressive functions $f:κ^n→P(κ)$; regressive means that $f(s)⊆\min(s)$.)  Let $M'$ be the $(V_λ^M, ∈^M, &lt;^*)$ Skolem hull of the first $ω$ of these indiscernibles (as computed in $V$ so all Gödel numbers are standard).  $(M',∈^M,j)$ satisfies BTEE + $A$ where $j(κ_i)=κ_{i+1}$ and $j$ is extended to all sets in $M'$ using the Skolem hull.</p>
+
+<p>There is also a close connection with reflective cardinals.  Recall that a cardinal $κ$ is reflective in $(V,∈,P)$ ($P$ is a predicate), denoted by $κ∈R$, iff it satisfies the "correct" theory for $(V,∈,κ,P)$ with parameters in $V_κ$.  Reflective cardinals are a canonical extension to the language of set theory, and they can be used for semantics of higher order set theory.  The below theorem states that in the presence of a definable well-ordering, a basic axiomatization of reflective cardinals of finite orders corresponds to $V_κ$ in BTEE.</p>
+
+<p>Let $\mathrm{Th}_A(V,∈,κ,P)$ be the theory of $(V,∈,κ,P)$ with parameters in $A$.  The below theorem also holds for reasonable variations of reflectiveness (and $\mathrm{Th}$) as long as we do not restrict the domains of the parameters.</p>
+
+<p><b>Theorem 3.3:</b> A statement in the language $(∈,≺,R_1,R_2,...)$ is provable in<br/>
+- ZFC (plus replacement in the extended language; or just replacement for '≺'-formulas and amenability for $R_i$)<br/>
+- '≺' is a well-ordering of $V$<br/>
+- each $R_i$ is a proper class<br/>
+- $R_{i+1}(λ)⇒R_i(λ)$<br/>
+- $R_i(λ) ⇔ \mathrm{Ordinal}(λ) ∧ ∀α∈R_i \, ∀β∈R_i \, (λ&lt;α&lt;β ⇒$ $\mathrm{Th}_{V_λ} (V_β,∈,≺,R_1,...,R_{i-1},λ) = \mathrm{Th}_{V_λ} (V_β,∈,≺,R_1,...,R_{i-1},α))$<br/>
+iff<br/>
+BTEE proves that for every well-ordering '$≺$' of $V_κ$, it holds in $(V_κ,∈,≺,R_1,R_2,...)$ where $κ=\mathrm{crit}(j)$ and $R_i = \{ λ∈κ: \mathrm{Th}_{V_λ} (V_κ,∈,≺,R_1,...,R_{i-1},λ) = $ $ \mathrm{Th}_{V_λ}(V_{j(κ)},∈,j(≺),j(R_1),...,j(R_{i-1}),κ)\}$.<br/>
+<i>Note:</i> The conditions are a basic axiomatization for $R_i$ being the class of $(V,∈,≺,R_1,...,R_{i-1})$-reflecting cardinals.<br/>
+<b>Proof:</b> BTEE+... ⇒ ZFC+... is straightforward.  For the other direction, ordinals that belong to all $R_i$ can be shown to be good indiscernibles, so we can argue as in the above theorem.<br/>
+<i>Note:</i> Using the omitting types theorem, we can even ensure that $κ$ is the least ordinal in the model that is in every $R_i$.  This holds since every $φ(x)$ (one free variable) that does not imply that $x$ is one of the indiscernible constants we added is satisfied by some $x$ not in all $R_i$.</p>
+
+<p><b>Partial well-foundedness</b></p>
+
+<p>Existence of well-founded models of BTEE is significantly stronger.  This gap exists because BTEE derives its strength from the coherence/closeness between $V$ and $j$, and well-foundness (and least ordinal principle) implies a degree of coherence.  In turn, the gap in strength between BTEE and $\mathrm{TI}_{0,j}$ leads to a hierarchy of theories based on how high up the transfinite induction holds, and similarly, a hierarchy of models based on how extensive is the well-founded part.  Our exposition is in the order of increasing strength.</p>
+
+<p><b>Definition 3.4</b> ($α$-<i>ineffable</i> and <i>completely ineffable</i>):  For a cardinal $κ$, let<br/>
+- $S_0$ be the stationary subsets of $κ$ <br/>
+- $S_{α+1}$ = {$A⊂κ$: every $f:κ^2→2$ has homogeneous $B⊂A$ with $B∈S_α$}<br/>
+- for limit $α$, $S_α = ∩_{β&lt;α} S_β$.<br/>
+κ is $α$-ineffable iff $S_α$ is non-empty.<br/>
+$κ$ is completely ineffable iff $S_α$ is non-empty for every ordinal.</p>
+
+<p>Using the ultrafilter partition property, BTEE proves that if $κ$ is not completely ineffable, then the least $α$ such that $U_j$ contains a set not in $S_α$ does not exist.  Transfinite induction on $α$ suffices for $α$-ineffability of $κ$, and transfinite induction on $(2^κ)^+$ suffices for complete ineffability.  As will be shown later, stronger versions (i.e. using higher $α$) are interleaved with $n$-iterable cardinals.</p>
+
+<p><b>Theorem 3.5:</b>  For every $α&lt;ε_0$, BTEE + induction (on $ω$) proves that $κ=\mathrm{crit}(j)$ is $α$-ineffable.<br/>
+<b>Proof:</b>  Using induction (even just for bounded-quantifier set formulas using $j$), given a cut $I_1$ on ordinals, $I_2 = \{α: ∀x \, (I_1(x)→I_1(x+ω^α))\}$ is also a cut, and since $I = \{ α: U_j⊂S_α\}$ ('$⊂$' permits equality but it holds either way) does not have a largest element, $I$ includes every ordinal $&lt;ε_0$ coded by a standard number.</p>
+
+<p>We conjecture that BTEE + induction (on $ω$) is equiconsistent with ZFC + {$α$-ineffable: $α&lt;ε_0$}.</p>
+
+<p>For $α&lt;κ$ (and in sharp contrast to $α≥κ$), the separation schema for $j$-formulas for sets of cardinality $α$ has roughly similar strength as transfinite induction on an ordinal somewhat larger than $α$.</p>
+
+<p><b>Theorem 3.6:</b><br/>
+<b>(a)</b> For every transitive set $S$, there is a model $N$ of BTEE end-extending $\{S\}$ with $S∈V_κ^M \, (κ=\mathrm{crit}(j))$ iff there is there is a model $M$ of ZFC (equivalently, ZFC\P) end-extending $\{S\}$ with a $β$-ineffable cardinal $λ>β$ for an ill-founded $β$.<br/>
+<b>(b)</b> If there is a $(2^{|S|})^+$-ineffable cardinal $λ>|S|$ for a transitive $S$, then there is a model of BTEE end-extending $S$. If $\mathrm{cf}(|S|)=ω$, $(2^{&lt;|S|})^+$ suffices in place of $(2^{|S|})^+$.<br/>
+<i>Note:</i>  For |S| of uncountable cofinality, $|S|^+$-ineffable is insufficient for (b).  For example if $M⊨\text{ZFC}$ end-extends $ω_1$, then $ω_2^M$ is well-founded.<br/>
+<b>Proof:</b> <b>(a)</b> In BTEE, $κ$ is $β$ ineffable for an ill-founded $β&lt;κ$ unless $κ$ is $κ$-ineffable (and more), but then we can get such a model using the proof of (b).  In the other direction,  add an $M$ well-ordering '$≺$'.  For an ill-founded sequence $β > β_1 > β_2 > ...$, find $R_i∈S_{β_i}$ (with $S$ as in Definition 3.4) with $R_{i+1}⊂R_i$, and $R_i$ being good 1-indiscernibles for $(V_κ^M,∈^M,≺,R_1,...,R_{i-1})$.  Next add constants $c_0&lt;c_1&lt;c_2&lt;$ and assert that they belong to every $R_i$ (and hence are good indiscernibles), and construct the term model with parameters in $S$.  This works even if $∩R_i$ is empty in $M$.<br/>
+<b>(b)</b> This is enough to get a desired model (with the same $\mathrm{Th}_S$ as $V_{λ+1}$) with an ill-founded $β$.  Let $β=(2^{|S|})^+$.  Add a well-ordering '≺' of $V_{λ+1}$.  By recursion on $n$, choose $P_n⊂[β]^n$ such that $β=\sup(\min(x:x∈s):s∈P_n)$ and $∀s∈P_n \, ∀t∈P_n \, \mathrm{Th}_S(V_{λ+1},∈,≺,s) = \mathrm{Th}_S(V_{λ+1},∈,≺,t)$ and $∀s∈P_{n+1} \, s\!\setminus\!\min(s)∈P_n)$.  Add constant symbols $c_1 > c_2 > c_3 > ...$ and assert $P_n(\{c_1,...,c_n\})$ and construct the term model.  If $\mathrm{cf}(S)=ω$ and $β=(2^{&lt;|S|})^+$, choose $X$ with $S=∪_{n&lt;ω} X_n$ and $|X_n|&lt;S$, add $X$ to the language, and have elements of $P_n$ agree about the theory with parameters in $∪_{i&lt;n} P_i$ (and for $|S|=ω$, require agreement about the values of the first $n$ finite Skolem constants).</p>
+
+<p><b>Corollary 3.7:</b> There is an $ω$-model of BTEE iff for every $α&lt;ω_1^\mathrm{CK}$ there is an $ω$-model of ZFC + $α$-ineffable.<br/>
+<b>Proof:</b>  Under $Σ^1_1$ bounding, the latter gives an $ω$-model for ZFC + $α$-ineffable for an ill-founded $α$.  Conversely, in $ω$-models of ZFC (or just $\text{ATR}_0$), the well-founded part extends up to $ω_1^\mathrm{CK}$.</p>
+
+<p><b>Theorem 3.8:</b> $κ$ is completely ineffable iff in a generic extension of $V$, there is a model $M$ of BTEE such that $P(κ)^M=P(κ)^V$.<br/>
+<b>Proof:</b> Using such $M$ and $j$, using $κ→(U_j)^2$ (for functions in $V$), and applying transfinite induction, $κ$ is completely ineffable in $V$ (but not necessarily in $M$).<br/>
+In the other direction, as in [Gitman 2019], take $M_0=V_{κ+1}$ and a generic normal weakly amenable $V$-ultrafilter $U$ on $P(κ)$, and iterate it to get $M_ω$.<br/>
+Using [Kanamori 2009] Lemma 19.9, which holds even for ill-founded iterations, $κ_n$ are indiscernibles in $M_ω$, even allowing $j_{0,ω}(X)$ as a parameter if $X∈M_0$.  Moreover, every element of $M_ω$ equals $j_{0,ω}(f)(s)$ for some $f∈M_0$ and $s$ a finite subsequence of the critical sequence $κ_n$.  Thus, $M_ω$ is nontrivially self-embeddable with $j(κ_n)=κ_{n+1}$ and $\mathrm{crit}(j)=κ$, and $(V_{κ_ω}^{M_ω},∈^{M_ω},j)⊨\text{BTEE}$.<br/>
+<i>Note:</i> Obtaining such a model of BTEE was a joint work with Victoria Gitman.</p>
+
+<p>Note that, using the above theorem, the least $κ^+$-ineffable $κ$ is not completely ineffable.  If $κ$ is the least completely ineffable in $V$, then inside the above $M$, $κ$ is $κ^+$-ineffable (and by indescribability in $M$ cannot be the least such) but not completely ineffable (also using indescribability).</p>
+
+<p><b>Theorem 3.9:</b> The following theory is conservative over ZFC + completely ineffable:<br/>
+* BTEE with $κ=\mathrm{crit}(j)$.<br/>
+* (schema) For every predicate satisfied by some ordinal $&lt;κ^+$, the least such ordinal exists.<br/>
+* (schema) For every predicate $P$, for every $S∈V_κ$, $S∩P$ exists as a set.<br/>
+* For every $A⊂κ$, $j^ω(A)$ exists as a set.<br/>
+* $j^ω(κ)$ is completely ineffable.<br/>
+<b>Proof:</b>  We suspect that the model obtained in Theorem 3.8 works with $M_0=V$ (without cutting it off).  In any case, it suffices to consider finite fragments of the theory.  Complete ineffability of $κ$ implies that for every regular $θ>κ$, every $A⊂κ$ is in some weak $κ$-model $M_0≺H_θ$ with a weakly amenable $M_0$-ultrafilter for $P(κ)$ [Gitman 2019].  We can then use the argument in Theorem 3.8 on $M_0$ with $V_κ∈M_0$ and $M=M_ω$. Because $j$ is in $V$, the required separation schema holds for $j$-formulas.  Also, for $A⊂κ$ in the model, $j^ω(A) = j_{0,ω}(A)$ and therefore is in the model.</p>
+
+<p><b>BTEE with well-foundedness or transfinite induction</b></p>
+
+<p>Well-foundedness, or just $\mathrm{TI}_{0,j}$, allows capturing the properties of $j$ through a generic extension.</p>
+
+<p><b>Theorem 3.10:</b>  Suppose that $M⊨\mathrm{ZFC\backslash P}$, &nbsp; $N∈M$, &nbsp; $S⊂N$, &nbsp; $(N,∈^M,S)⊨φ$ &nbsp; ($φ$ is a statement)&nbsp; and $M$ is well-founded or otherwise satisfies the least ordinal principle for bounded quantifier formulas using $S$.  Then there is $S'$ belonging to a generic extension of $M$ such that $(N,∈^M,S')⊨φ$.<br/>
+<b>Proof:</b> If $M$ is well-founded, collapse $S$ to $ω$ and use $Σ^1_1$ correctness.  More generally, the existence of $S'$ in some $M[G]$ is equivalent in $M$ to player II winning strategy in the open game of length $ω$, where player I picks elements of $N$ (one at a time) and player II replies with values of enough Skolem functions (a fixed set of functions, dependent on $φ$, suffices) for purported $(N,∈,S')⊨φ$, and player I wins iff there is inconsistency, including inconsistency with $(N,∈)$.  If player I can win, choose a winning strategy, so the play subtree is well-founded (in $M$), and use the first (in some well-ordering) maximal play consistent with $S$ to get contradiction.</p>
+
+<p>With this principle, we can use $j$ to get virtual large cardinals in the model, i.e. cardinal principles where the embedding need only exist in a generic extension of V.  Many virtual large cardinals are defined in "Virtual Large Cardinals" by Victoria Gitman and Ralf Schindler [GS 2018].  $κ$ is virtually $n$-huge* iff there is a generic elementary embedding $j:V_α→V_β$ with $α&lt;j^n(\mathrm{crit}(j))$.  The asterisk in huge* is used in the paper as it is a variation (a strengthening) of hugeness.  Virtually $n$-huge* cardinals are $n+1$-iterable, and $n+2$-iterable cardinals are limits of virtually $n$-huge* cardinals.</p>
+
+<p><b>Theorem 3.11:</b> BTEE + $\mathrm{TI}_{0,j}$ is equiconsistent with ZFC + {there is $n$-iterable cardinal}$_{n∈\mathbb{N}}$.<br/>
+<b>Proof:</b>  If $M$ is a model of ZFC with a virtually $n$-huge* cardinal $κ$ for a nonstandard number $n$ as witnessed by $j$, then $(V_{j^ω(κ)}^M,∈^M,j)$ (<i>standard</i> $ω$, so this is a cut) satisfies BTEE + bounded quantifier transfinite induction (but not necessarily full induction), so that theory is consistent relative to ZFC + {$n$-iterable}$_{n∈ω}$.<br/>
+For the other direction, using the above theorem, for every finite $n$, BTEE + $\mathrm{TI}_{0,j}$ $⊨$ $κ$ is virtually $n$-huge*.<br/>
+<i>Note:</i>  The proof shows that "BTEE + $\mathrm{TI}_{0,j}$ + non-existence of $j^ω(κ)$" is conservative over ZFC + {there is virtually $n$-huge* $κ$ with $V_κ ≺_{Σ_n} V$}$_{n∈ω}$.</p>
+
+
+<p><b>Theorem 3.12:</b> A cardinal $κ$ is $ω$-iterable iff for every $A⊂κ$, there is a transitive model of BTEE containing $A$ with $\mathrm{crit}(j)=κ$.<br/>
+<b>Corollary:</b>  An $ω$-iterable cardinal implies existence of a transitive model of BTEE, even one of an uncountable height.<br/>
+<i>Note:</i>  For an $n$-iterable cardinal, we get the same equivalence with well-foundedness of $j^n(κ^+)^M$ in place of full well-foundedness.<br/>
+<b>Proof of the theorem:</b> If $κ$ is $ω$-iterable and $A⊂κ$, take an iteration of length $ω$ for a transitive model of ZFC\P containing $A$ with critical sequence $κ_n$ with $κ_0=κ$ and let $δ=κ_ω$.  $κ_n$ are indiscernibles in $(L_δ[j_{0,ω}(A)],∈,j_{0,ω}(A))$ even allowing ordinals $&lt;κ$ as parameters.  The Skolem hull of $κ∪\{κ_0,κ_1,κ_2,...\}$ gives a desired model of BTEE using $j$ based on $j(κ_n)=κ_{n+1}$.  For the other direction, given a transitive model of BTEE, the ultrafilter derived from $j$ is $ω$-iterable using arguments similar to [GS 2018] Theorem 4.20 (where they get $ω$-iterability from a virtually rank-into-rank cardinal).</p>
+
+
+<h2>4 Weak extensions of BTEE</h2>
+
+<p><b>4.1 Longer critical sequences</b></p>
+
+<p><b>Theorem 4.1.1:</b> BTEE + $\mathrm{TI}_{0,j}$ + $∃δ>κ \, j(δ)=δ$ is equiconsistent with ZFC + $ω$-Erdős.</p>
+
+<p><b>Proof:</b>  Suppose that $V$ is a model of ZFC plus $ω$-Erdős cardinal $δ$.  Using $λ>δ$ (which can allow an arbitrary finite fragment of ZFC), and a well-ordering $≺$ of $V_δ$, the Skolem hull of indiscernibles $&lt;δ$ for $(V_λ,∈,δ,≺)$ is a nontrivially self-embeddable elementary submodel of $V_λ$ with $j(δ)=δ$.  Conversely, in the extension of BTEE, $δ$ or a lower ordinal is $ω$-Erdős in HOD:  If a set $A=j(A)$ is the HOD-least counterexample to the partition property for $δ$, then $(κ,j(κ),...)$ would be homogeneous for $A$.  $(κ,j(κ),...)$ might not exist in the model as a set, but its definability using $j$ suffices to get the partition property.</p>
+
+<p><i>Notes:</i><br/>
+* The constructed models, being well-founded, also have $\mathrm{TI}_j$, but only a finite fragment of ZFC.  The least transitive model of BTEE + $∃δ>κ \, j(δ)=δ$ actually has a greater height than the least transitive model of ZFC + $ω$-Erdős as the former but not the latter includes ordinals that are not $j$-free definable in the model.<br/>
+* For all $j$-free statements, we have: ZFC + $ω$-Erdős ≥ BTEE + $\mathrm{TI}_{0,j}$ + $∃δ>κ \, j(δ)=δ$ ≥ ZFC + $ω$-Erdős in HOD.  We do not know whether we can remove "in HOD", but we can change it to $\mathrm{HOD}(V_δ)$ since existence of a counterexample in $\mathrm{HOD}(V_δ)$ implies existence of a counterexample $j$-free definable from a parameter in $V_κ$.</p>
+
+<p>Going further, let us define the <i>transfinite critical sequence</i> of $j$ (with $κ=\mathrm{crit}(j)$) as $j^{β+1}(κ)=j(j^β(x))$, and for limit $β$, $j^β(x) = \lim_{γ→β} j^γ(x)$.  This works for transitive models, and for every $α&lt;ω^ω$, BTEE + $\mathrm{TI}_{0,j}$ allows defining of $\{(β,j^β(κ)):β&lt;α∧ j^β(λ)&lt;\mathrm{Ord}\}$ (with definition complexity increasing with $α$).  To go further inside BTEE-like theories, we can add $f$ with $f(α)=j^α(κ)$ (as a <i>predicate</i> $\{(α,β):f(α)=β\}$) and add the definition of $j^α(κ)$ and bounded quantifier transfinite induction.</p>
+
+<p><b>Definition 4.1.2:</b>  A cardinal is <i>virtually $λ$-huge*</i> iff in a generic extension of $V$ there is an elementary embedding $j:V_α→V_β$ with $κ=\mathrm{crit}(j)$ and $j^λ(κ)&lt;α$ and $∀λ'&lt;λ \, j^{λ'}(κ)&lt;j^{λ}(κ)$.</p>
+
+<p>Similarly to Theorem 3.11, for appropriate (in terms of definability) limit $λ$, BTEE + (the above extension using $f$) + "the critical sequence has length $λ$" is equiconsistent with ZFC + {virtually $λ'$-huge*: $λ'&lt;λ$}.</p>
+
+<p>We also have that if $κ$ is $α$-iterable for limit $α$, then for every $A⊂κ$, there is a transitive model of BTEE containing $A$ with $\mathrm{crit}(j)=κ$ and the critical sequence having length $α$.  Similarly, if $δ$ is $α$-Erdős for limit $α$, then every transitive $M⊨\text{ZFC\P}$ with $δ∈M$ has an elementary substructure that for some $j$ satisfies BTEE\P and has critical sequence of length $α+1$.  For both $α$-iterable and $α$-Erdős, the converse is unclear.</p>
+
+<p><b>4.2 Nested embeddings</b></p>
+
+Adding nested embeddings to BTEE appears to add little strength to the theory.
+
+<p><b>Definition 4.2.1</b>  In this section, $\text{BTEE}_n$ is the theory in the language $(∈,j_1,j_2,...,j_n)$ asserting ZFC (without separation and replacement for $j$-formulas) plus (schema) $j_i$ is an elementary embedding of $(V,∈,j_1,...,j_{i-1})$ into itself with a critical point.  $\text{BTEE}_{n+}$ is $\text{BTEE}_n$ plus $\mathrm{crit}(j_i)&lt; \mathrm{crit}(j_{i+1}) \,\, (i&lt;n)$.</p>
+
+<p><b>Theorem 4.2.2:</b> $\text{BTEE}_{n+}$ is conservative over SRP.<br/>
+<b>Proof:</b>  Proceed as in the proof of Theorem 3.2.  Find a nonstandard model as in that proof and good indiscernibles $κ_{i,j}$ of order type <i>standard</i> $ℤn$ (i.e. $n$-fold repetition of $ℤ$; $1≤i≤n$; $j∈ℤ$) and take the Skolem hull $M$ of the indiscernibles.  Define $j_i(κ_{i',j'})=κ_{i',j'+1}$ if $i=i'$ and $j'≥0$ and $j_i(κ_{i',j'})=κ_{i',j'}$ otherwise.  Use the Skolem functions to extend $j_i$ to the entire $M$.  $M$ has enough symmetry that each $j_i$ is an elementary embedding (with $\mathrm{crit}(j_i)=κ_{i,0}$) of $(M,∈^M,≺,j_1,j_2,...,j_{i-1}, \, j_{i+1},...,j_n)$ into itself.</p>
+
+<p><b>Theorem 4.2.3:</b>  If $∀α ∃δ \, δ→(ω)_α^{&lt;ω}$, then for every $n$, there is a transitive model of $\text{BTEE}_n$.<br/>
+<i>Notes:</i><br/>
+* The consistency strength of this assumption is below $ω+1$-iterable cardinals:  If $M⊨\text{ZFC\P}$ is $ω+1$ iterable with critical point $κ$, then $V_κ^M$ satisfies the assumption.<br/>
+* The assumption also implies that for every $n$ and $α$ there is $δ$ such that if $M$ is a transitive model of ZFC and $δ∈M$, then there is $(M',∈,j_1,...,j_n)⊨\text{BTEE}_n$ with $M'≺M$ and $M'∩V_α=M∩V_α$.<br/>
+<b>Proof:</b> Let $δ_1$ be large enough, and $δ_{i+1}$ be large enough relative to $δ_i$, and $M$ be a transitive model of ZFC with $δ_{n+1}∈M$.  Let $I_1$ of length $ω$ be good $M$-indiscernibles $>δ_n$.  Let $M_1$ be the Skolem hull of $I_1∪V_{δ_n}^M$ in $M$, and set $j_1(I_1(m)) = I_1(m+1)$ and canonically extend it to the full $M_1$.  Now, let $I_2$ of length $ω$ be good $(M_1,∈,j_1)$-indiscernibles $>δ_{n-1}$, and similarly define $M_2$, and so on, with $M_n$ being the desired model.</p>
+
+<p>We suspect that using commuting embeddings, the same or slightly stronger assumption also gives a transitive model of $\text{BTEE}_{n+}$.</p>
+
+<p>An extension of $\text{BTEE}_{n+}$ is to require (for all $i$) $∀s=j_i(s) \,\, s=j_{i+1}(s)$.  It is likely that an $ω^{ω(n-1)+1}$-iterable cardinal gives a transitive model with the critical sequence of $j_{i+1}$ being $\{κ_{ω^{ωi}(1+α)}: ω^{ωi}(1+α)&lt;ω^{ω(n-1)+1}\}$.  In any case, the critical sequence cannot be shorter than that.  However, it is likely that the extension of $\text{BTEE}_{n+}$ + $\text{TI}_{j_1,...,j_n}$ is equiconsistent with ZFC + {there is $ω^m$-iterable cardinal}$_{m∈ω}$.  The reason is that for $i>1$, the elementarity of $j$, even for bounded domains, is not first-order expressible, so the theory is not expected to prove that $\mathrm{crit}(j_2)≥j_1^{ω^ω}(κ)$.</p>
+
+
+<h2>5 Elementary embeddings $j:L_α→L_β$</h2>
+
+<p>A well-founded model of BTEE gives a nontrivial elementary embedding $j:L_δ→L_δ$, and conversely given a nontrivial elementary $j:L_δ→L_δ$,&nbsp; $(L_{j^ω(\mathrm{crit}(j))},∈,j)$ satisfies BTEE.  Thus, in place of well-founded models of BTEE + $V=L$, we can consider the more general question of existence of nontrivial elementary embeddings $j:L_α→L_β$ (with critical point $κ$) for various closure conditions relative to $j$.</p>
+
+<p><b>Definition 5.1:</b> In this section, a cardinal $κ$ is <i>virtually $n,\!λ$-extendible</i> iff there is a generic elementary embedding $j:V_α→V_β$ with $\mathrm{crit}(j)=κ$ and $j(κ)≥α$ and $j^n(κ+λ)≤α$.<br/>
+<i>Note:</i> Virtually $n$-huge* is the same as virtually $n,\!1$-extendible.</p>
+
+<p><b>Theorem 5.2:</b>  If $j$ is an elementary embedding $L_α→L_β$ with critical point $κ$, then:<br/>
+(a) $L_κ ≺ L_{j(κ)}$<br/>
+(b) $κ$ is regular in $L_{α+1}$<br/>
+(c) $(κ^+)^{L_β} ≤ j(κ)$<br/>
+(d) If $α ≥(κ^+)^{L_β}$, then $κ$ is completely ineffable in $L_β$ (and hence in $L_{j(κ)}$).<br/>
+(e) If $α ≥ j(κ)$, then for every $n$, $κ$ is virtually $C^{(n)}$ extendible in $L_{j(κ)}$.  Moreover, $(L_κ,∈,P(κ)^{L_β})$ satisfies the generic Vopenka principle.<br/>
+(f) If $α ≥ j^n(λ^+)^{L_β}$ and $λ&lt;j(κ)$ and $L_β⊨λ=|V_{κ+λ'}|$, then $κ$ is virtually $n,λ'$-extendible in $L_{j(κ)}$.<br/>
+Corollary to (f): If $j^n(κ^{++})^{L_β}≤α$, then in $L_{j(κ)}$, $κ$ is virtually $n$-huge*, and hence $n+1$-iterable (including for $n=0$).<br/>
+<b>Proof:</b><br/>
+(a) trivial.<br/>
+(b) if $s⊂κ$ in $L_{α+1}$ is cofinal, then $\mathrm{ordertype}(s) &lt; \mathrm{ordertype}(j(s))$.<br/>
+(c) $j(κ)$ is regular in $L_{β+1}$.<br/>
+(d) $κ$ is inaccessible in $L_β$ since non-inaccessibility of $κ$ would be witnessed below $(κ^+)^{L_β}$, and $κ=(κ'^+)^{L_β}$ would imply $j(κ)=(κ'^+)^{L_β}$.  Next, $L_β ⊨ κ→(U_j)^2$, which (even though $U_j∉L_β$) gives the complete ineffability.<br/>
+(e) In $L_{j^2(κ)}$, $j$ is a $C^{(n)}$ extendible embedding, so (by Theorem 3.10) such an embedding exists in a generic extension of $L_{j(κ)}$.  For the Vopenka principle, given $f:κ→V_κ$ in $L_β$, $\{α&lt;κ: f(α) \text{ is elementarily embeddable into } j(f)(κ)\}∈U_j$.<br/>
+(f) It suffices to consider $α=j^n(λ^+)^{L_β}$.  For every $γ&lt;κ$ and $δ&lt;κ$, $γ$ is $n,δ$-extendible in $L_κ$ iff it is $n,δ$-extendible in $L_α$.  Thus, $κ$ is $n,λ'$-extendible in $L_{j(κ)}$ iff it is $n,λ'$-extendible in $L_β$; and using $j$ and Theorem 3.10, $κ$ is virtually $n,λ'$-extendible in $L_β$.</p>
+
+<p>Using $Σ^1_2$-absoluteness, a virtually $n$-huge* cardinal implies existence of an elementary embedding $j:L_α→L_β$ with $α=j^n(κ^+)^{L_β}$ and $κ=\mathrm{crit}(j)$, and similarly with other virtual properties.</p>
+
+<p>The consistency strength of $n+1$-iterable (including for $n=0$) is actually strictly between existence of such $j:L_α→L_β$ ($α=j^n(κ^+)^{L_β}$ and $κ=\mathrm{crit}(j)$) and virtually $n$-huge*.  Virtually $n$-huge* cardinals are $n+1$-iterable and more (Theorem 4.13 in [GS 2018]).  In the other direction, consider any $n+1$-iterable $(M_0,U_0)$ with $M_0⊨\text{ZFC\P}$ and having maximal cardinal $κ=\mathrm{crit}(j_{U_0})$, and let $M_i$ be the $i$th iterate of $M$.  As in the proof of Theorem 4.14 in [GS 2018], $U_0$ gives an elementary embedding $j:M_n→M_{n+1}$ with $κ=\mathrm{crit}(j)$ and $M_n=H(j^n(κ^+))^{M_{n+1}}$.  In fact, using the arguments in the two theorems, $κ$ is $n+1$-iterable in $L$ iff for cofinally many $α&lt;(κ^+)^L$, there is some elementary $j:L_α→L_β$ with $κ=\mathrm{crit}(j)$ and $α=j^n(κ^+)^{L_β}$.</p>
+
+<p>We can also use embeddings to characterize regular cardinals in $L$ and other such models:  For limit $β$, an ordinal $δ \,\, (ω&lt;δ&lt;β)$ is regular in $L_β$ iff for every $β' \,\, (δ&lt;β'&lt;β)$, there is an elementary embedding $j:L_α→L_{β'}$ with $j(\mathrm{crit}(j))=δ$.  Note that there is such an embedding in $L_β$:  Take the Skolem hull of $(L_{β'},∈,α)$ and repeatedly add ordinals to get a model $M$ with $M∩α∈α$, and let $j$ be the inverse of the transitive collapse of $M$.</p>
+
+<p>We also have:<br/>
+* $δ$ is inaccessible in $L$ iff for every $β>δ$, there is an elementary $j:L_α→L_β$ where $κ=\mathrm{crit}(j)$ is an $L$-cardinal and $δ=j(κ)$.<br/>
+* $δ$ is Mahlo in $L$ iff for every $β>δ$, there is an elementary $j:L_α→L_β$ with $κ=\mathrm{crit}(j)$ regular in $L$ and $δ=j(κ)$.<br/>
+* $κ$ is weakly compact in $L$ iff for every $α \; (κ &lt; α &lt; (κ^+)^L)$ (equivalently, for cofinally many $α&lt;(κ^+)^L$), there is some elementary $j:L_α→L_β$ with $κ=\mathrm{crit}(j)$.</p>
+
+<p>Existence of an elementary embedding $j:L_α→L_β$ with $\mathrm{crit}(j)&lt;|α|$ implies existence of $0^\#$ (for example, see [Kanamori 2009] Theorem 21.1).</p>
+
+
+<h2>6 Stronger theories</h2>
+
+<p><b>Theorem 6.1:</b> The following are  equiconsistent.<br/>
+(1) BTEE (by itself or with $\mathrm{TI}_{0,j}$) + $\mathrm{crit}(j)∩φ$ exists where $φ$ is a bounded quantifier formula, allowing parameters and $j$.<br/>
+(2) KM + Ord is measurable (in the language $(∈,U)$) (separation and collection allows $U$-formulas).<br/>
+(3) ZFC\P (in the language $(∈,U)$) plus $U$ is a normal measure (separation and collection allows $U$-formulas).<br/>
+Moreover, these theories prove the same $(V_κ,∈)$ statements where $κ$ is $\mathrm{crit}(j)$ in (1), and $\mathrm{Ord}$ in (2), and $\mathrm{crit}(U)$ in (3).<br/>
+<i>Note:</i> By strengthening the separation in (1) to include collection and adding class collection (including for $U$-formulas) to (2), the agreement extends to $(V_{κ+1},∈,U)$ (using $U=U_j$ in (1)).  Also, the strengths here are above that of completely Ramsey.</p>
+
+<p><b>Proof:</b> (3) leads to (2) by interpreting $κ$ as $\mathrm{Ord}$ and considering $V_{κ+1}$.  (2) implies (3) in $(K^\mathrm{DJ}[A],∈,U)$, where $A$ is a well-ordering of $V$, and $K^\mathrm{DJ}$ is the Dodd-Jensen core model of height $\mathrm{Ord}^+$.  (An argument like this is needed as Kelley-Morse set theory has class separation and global choice, but not class collection.)  (1) leads to (2) in $(V_{κ+1},∈,U_j)$.<br/>
+Finally, (3) leads (1) by iterating $U$ $ω$ times (<i>standard</i> $ω$) and then using the original $U$ to get an elementary embedding $j:M→M$ where $M = V_{κ_ω}^{M_ω} = ∪_{n&lt;ω} M_n$.  Every element of $M_n$ of is coded (non-uniquely) by a subset of $κ$ in $M_0$, and by using such coding, $j↾M_n$ is definable $M_0$.  Thus, we get transfinite induction for $(M_n,∈,j)$ and thus $\mathrm{TI}_{0,j}$ for $M$.</p>
+
+<p><b>Theorem 6.2:</b> The following are equiconsistent:<br/>
+(1) ZFC + measurable<br/>
+(2) BTEE + $\{j^n(κ):n&lt;ω\}$ exists as a set<br/>
+(3) BTEE + dependent choice for $j$ formulas for sequences of length $κ=\mathrm{crit}(j)$.</p>
+
+<p><b>Proof:</b>  If $\{j^n(κ):n&lt;ω\}$ exists, then $δ=j^ω(κ)$ is singular in $V$ but regular in HOD: If a set $A$ were the HOD-least witness of singularity of $δ$, then $j(A)=A$, which is impossible.  Thus, we get an inner model of ZFC + measurable.  Conversely (this argument was given to the author by Woodin a few years ago), given ZFC + measurable $κ$, let $M$ be a model obtained by iterating $ω$ times a normal measure on $κ$ and adding the critical sequence (which is Prikry generic).  $M$ is closed under $κ$ sequences and is nontrivially self-embeddable.</p>
+
+<p><br/>Going further, we have an approximate three-way correspondence:<br/>
+* large cardinal axioms asserting elementary embeddings with a certain degree of closure<br/>
+* transitive models of BTEE having a corresponding amount of closure<br/>
+* BTEE with separation axioms for $j$ formulas with a corresponding amount of closure</p>
+
+<p>For example, a cardinal $κ$ is called $μ$-measurable iff there is an elementary embedding $j:V→M$ with $κ=\mathrm{crit}(j)$ and $U_j∈M$.  Using it, and iterating the extender $ω$ times, we can get a transitive model of BTEE containing $U_j$.</p>
+
+<p>We also have that a cardinal $κ$ is strong iff for every $S∈V$ there is a transitive model $M$ of BTEE with $κ=\mathrm{crit}(j)$ and $S∈M$.  (Iterate a strong enough extender $ω$ times to get a model of BTEE containing $S$, and conversely, inclusion of $V_{λ+1}$ in the model gives a $λ$-strong extender on $κ$.)</p>
+
+<p>For regular $λ≥κ$, there is a model of BTEE closed under $λ$-sequences with $κ=\mathrm{crit}(j)$ iff $κ$ is $λ$-supercompact [EF 2019].  For $λ>j^n(κ)$, we should get $n$-hugeness.</p>
+
+<b>Potential project 6.3:</b> Work out the correspondences (in multiple forms) and their hierarchy.
+
+<p>We close with the following result, which bridges the gap between $n$-huge and I<sub>3</sub>.</p>
+
+<p><b>Theorem 6.4:</b> $\mathrm{WA}_0$ (i.e. BTEE + $∀S \, ∃T = S∩j$) is conservative over ZFC + (schema) {there is $n$-huge $κ$ with $V_κ≺_{Σ_n}V$}$_{n∈\mathbb{N}}$ .<br/>
+<i>Note:</i> This is $Σ_2^V$ conservative over ZFC + (schema) {there is $n$-huge $κ$}$_{n∈\mathbb{N}}$.<br/>
+<b>Proof:</b> The BTEE+... $⇒$ ZFC+... direction is proved in [Corazza 2006].  For the converse, given a proposition $A$, consistency of ZFC + $A$ + (schema) {there is $n$-huge $κ$ with $V_κ≺_{Σ_n}V$}$_{n∈\mathbb{N}}$ implies existence of a model $M$ of ZFC + $A$ + $n$-huge cardinal $κ$ for a nonstandard number $n$, and with $V_κ^M≺M$.  Starting with such $M$ and an $n$-huge embedding $j$ in $M$ with $κ = \mathrm{crit}(j)$, let $M' = V_{j^{ω^V}(κ)}^M ≡ \{x: ∃m&lt;ω \,\, x ∈^M j^m(V_κ^M)\}$ (standard $ω$ rather than $ω^M$). $(M', ∈^M, j)$ satisfies WA<sub>0</sub> + $A$.</p>
+
+<p>REFERENCES</p>
+
+<p>
+[Bagaria 2019] Bagaria, J.; Koellner, P.; Woodin, W. H. Large Cardinals Beyond Choice. The Bulletin of Symbolic Logic 2019, 25, 283–318.<br/>
+[CK 1990] Chang, C.C.; Keisler, H.J.  <i>Model Theory</i> (3rd edition). North Holland. 1990.<br/>
+[Corazza 2006] Corazza, P. The spectrum of elementary embeddings j:V→V. Annals of Pure and Applied Logic 2006, 139, 327-399.<br/>
+[Enayat 2004] Enayat, A. Automorphisms, Mahlo cardinals, and NFU. <i>Nonstandard Models of Arithmetic and Set Theory Contemporary Mathematics</i> 2004, 37–59.<br/>
+[EKM 2017] Enayat, A.; Kaufmann, M.; Mckenzie, Z. Largest initial segments pointwise fixed by automorphisms of models of set theory. Archive for Mathematical Logic 2017, 57, 91–139.<br/>
+[EF 2019] Eskew,M.; Friedman,S.D.  Embeddings into outer models, <a href="https://arxiv.org/abs/1905.06062">arXiv:1905.06062</a> 2019.
+[Friedman 2001] Friedman, H. Subtle cardinals and linear orderings. Annals of Pure and Applied Logic 2001, 107, 1–34.<br/>
+[Friedman 2020] Friedman, H. Tangible Incompleteness. Interim Report. Version from <!--<a href="https://cpb-us-w2.wpmucdn.com/u.osu.edu/dist/1/1952/files/2020/04/TangIncomp033120.pdf">2020-03-31</a>--><a href="https://u.osu.edu/friedman.8/files/2020/08/TangibleIncomReport080920.pdf">2020-08-09</a>.<br/>
+[GS 2018] Gitman, V.; Schindler, R. Virtual large cardinals. Annals of Pure and Applied Logic 2018, 169, 1317–1334.<br/>
+[Gitman 2019] Gitman, V.  Completely ineffable cardinals.  <a href="https://victoriagitman.github.io/research/2019/06/05/completely-ineffable-cardinals.html">https://victoriagitman.github.io/research/2019/06/05/completely-ineffable-cardinals.html</a> 2019.<br/>
+[Gorbow 2019] Gorbow, P.K.  Rank-initial embeddings of non-standard models of set theory.  Archive for Mathematical Logic 2019.<br/>
+[Kanamori 2009] Kanamori, A. <i>The Higher Infinite:  Large Cardinals in Set Theory from Their Beginnings</i> (2nd edition). Springer, 2009.<br/>
+[Taranovsky 2012] Taranovsky, D. Reflective Cardinals.  <a href="https://arxiv.org/abs/1203.2270">arXiv:1203.2270</a> 2012.
+</p>
+</body>
+</html>
+
+
+

@@ -1,0 +1,536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Sorting with lg(n!)+o(n) comparisons</title>
+
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+		tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+	});
+	</script>
+	<script type="text/javascript"
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">  
+	</script>
+
+	<style type="text/css">
+		h1 {font-size:150%}
+		h2 {font-size:120%}
+		a {text-decoration:none}
+		@page {margin: 1.0in}
+	</style>
+	<!-- Note:  Text justification is not used because it sometimes leads to very long spaces.-->
+</head>
+<body>
+
+$\DeclareMathOperator{\lg}{lg}$
+
+<p style="text-align:right">Dmytro Taranovsky<br/>Sep 9, 2018 - Sep 10, 2021<br/>Minor changes: Mar 8, 2025</p>
+
+<h1 align="center">Sorting with $\lg(n!)+o(n)$ comparisons</h1>
+
+<p><b>Abstract:</b>  We prove that comparison-based sorting is possible with $\lg(n!)+o(n)$ comparisons, specifically $\lg(n!)+O(n^{1-ε})$ for the average case, and $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ for the worst case ($\lg(n!)+O(n^{1-ε})$ should be possible).  Furthermore, we give a possible construction for sorting with an average of $\lg(n!)+O(\log n)$ comparisons.</p>
+
+
+<h2><a id="A1"/>1&nbsp;&nbsp; Introduction</h2>
+
+<p>In a number of ways, sorting is the classic problem in computer science, and yet it continues to surprise us with new results.  A simply entropy argument shows that comparison-based sorting requires an average of $≥\lg(n!)$ comparisons ($\lg$ is $\log_2$), but how closely can we approach this bound?  In this paper, we break the $\lg(n!)+Ω(n)$ barrier of previous constructions, both for the average and the worst case.</p>
+
+<p>A symbolic significance of $\lg(n!)+o(n)$ is that it is $o(n)$ comparisons from optimal, wasting an average of only $o(1)$ comparisons per element.  If achievable, $O(n^{0.5-ε})$ would break the square root barrier commonly seen in randomized constructions, and $O(\log n)$ is exceptionally close to having zero waste.  While the immediate benefit of the results is mostly theoretical, the constructions here enhance our understanding of probability and computation and may be useful in other contexts, especially in optimization.</p>
+
+<p><i>Prior work and history of the paper:</i>  Merge sort uses $\lg(n!) + Θ(n)$ comparisons even in the worst case, and is efficiently implementable in practice.  Merge-insertion sort (also known as Ford–Johnson sort) also uses $\lg(n!)+ Θ(n)$ comparisons but with a much smaller constant in $Θ(n)$.  <a href="#ref1">[1]</a> gives a variation and a modification that is efficient in terms of compute.  Slightly improved average bounds are obtained in <a href="#ref2">[2]</a>, and their (1,2)Insertion algorithm resembles a portion of our average-case $\lg(n!)+o(n)$ algorithm.  Many of the results in this paper were originally presented in <a href="#ref1">[3]</a> (2018), with this paper started as the expanded version.  In May 2020, I obtained $\lg(n!)+o(n)$ for the worst case, as well as a partial construction for an average of $\lg(n!)+O(\log n)$ comparisons.  In Aug and Sep 2021, I extended the provable results for both average and worst case (which were not even $\lg(n!)+O(n/\log n)$) to $\lg(n!)+O(n^{1-ε})$ and $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ comparisons, respectively, corrected and expanded the $\lg(n!)+O(\log n)$ construction, and for the worst case, got a plausible $\lg(n!)+O(n^{1-ε})$ algorithm.</p>
+
+<p><i>Open problems:</i><br/>
+• Is sorting possible with an average of $\lg(n!)+O(\log n)$ comparisons? Is this optimal?<br/>
+• How many comparisons are needed in the worst case?<br/>
+Related to the above problems:<br/>
+• A proof for $\lg(n!)+O(n^{1-ε})$ worst case comparisons.<br/>
+• How well can the constructions in the paper for $n^{0.5+o(1)}$ and $O(n^{0.5-ε})$ and (especially) $O(\log n)$ work?<br/></p>
+
+<p><b>Outline:</b> <br/>
+<a href="#A1"><b>1</b></a> <i>Introduction</i><br/>
+<a href="#A2"><b>2</b></a> <i>Basic approach</i> &nbsp;-&nbsp; basic approach for the average case, including a discussion of entropy, and a key function that we will call Compare.<br/>
+<a href="#A3"><b>3</b></a> <i>A $\lg(n!)+o(n)$ algorithm</i> &nbsp;-&nbsp; proves that sorting is possible with an average of $\lg(n!)+o(n)$ comparisons.  The algorithms in sections 3,4,5 are all different.<br/>
+<a href="#A4"><b>4</b></a> <i>A $\lg(n!)+O(n^{1-ε})$ algorithm</i> &nbsp;-&nbsp; Gives a relatively simple conjectured algorithm for an average $\lg(n!)+O(n^{1-ε})$ comparisons, discusses various refinements, and then proves variations for $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ and $\lg(n!)+O(n^{1-ε})$ average comparisons.<br/>
+    &nbsp;&nbsp;<a href="#A4.1"><b>4.1</b></a> A likely $\lg(n!)+O(n^{1-ε})$ algorithm<br/>
+    &nbsp;&nbsp;<a href="#A4.2"><b>4.2</b></a> Optimizations<br/>
+    &nbsp;&nbsp;<a href="#A4.3"><b>4.3</b></a> A $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ algorithm<br/>
+    &nbsp;&nbsp;<a href="#A4.4"><b>4.4</b></a> A proof of $\lg(n!) + O(n^{1-ε})$<br/>
+    &nbsp;&nbsp;<a href="#A4.5"><b>4.5</b></a> Compute and parallelization<br/>
+<a href="#A5"><b>5</b></a> <i>A possible $\lg(n!)+n^{0.5+o(1)}$ algorithm</i><br/>
+<a href="#A6"><b>6</b></a> <i>A possible $\lg(n!)+O(n^{0.5-ε})$ combination</i> &nbsp;-&nbsp; combines the algorithms in the previous two sections (less important now because of the possible $\lg(n!)+O(\log n)$ algorithm)<br/>
+<a href="#A7"><b>7</b></a> <i>A possible $\lg(n!)+O(\log n)$ algorithm</i> &nbsp;-&nbsp; refines the $\lg(n!)+n^{0.5+o(1)}$ algorithm, plausibly achieving an average of $\lg(n!)+O(\log n)$ comparisons<br/>
+&nbsp;&nbsp;<a href="#A7.1"><b>7.1</b></a> Main description<br/>
+&nbsp;&nbsp;<a href="#A7.2"><b>7.2</b></a> Various properties<br/>
+&nbsp;&nbsp;<a href="#A7.3"><b>7.3</b></a> Parallelizability<br/>
+&nbsp;&nbsp;<a href="#A7.4"><b>7.4</b></a> Implementation suggestions and distribution shaping<br/>
+<a href="#A8"><b>8</b></a> <i>Worst-case complexity of sorting</i> &nbsp;-&nbsp; proves that sorting is possible with $\lg(n!)+o(n)$ worst-case comparisons, and adapts some of the algorithms to the worst case.<br/>
+    &nbsp;&nbsp;<a href="#A8.1"><b>8.1</b></a> General notes<br/>
+    &nbsp;&nbsp;<a href="#A8.2"><b>8.2</b></a> A $\lg(n!)+O(n/\log n)$ algorithm<br/>
+    &nbsp;&nbsp;<a href="#A8.3"><b>8.3</b></a> Multiway merge<br/>
+    &nbsp;&nbsp;<a href="#A8.4"><b>8.4</b></a> A $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ algorithm<br/>
+    &nbsp;&nbsp;<a href="#A8.5"><b>8.5</b></a> A plausible $\lg(n!)+O(n^{1-ε})$ algorithm
+</p>
+
+<p>We extensively use Big O and related notations ($o,O,Ω,ω$, and the tilde modifier).</p>
+
+In section 2, we present the basic approach for the average case.  In sections 3-7, we give different algorithms and likely constructions for the average case.  In section 8, we adapt some of the algorithms for the worst-case; the $\lg(n!)+o(n)$ proof is independent of sections 4-7.
+
+
+<h2><a id="A2"/>2&nbsp;&nbsp; Basic approach</h2>
+
+<p>We can assume that all elements are distinct, by annotating them if necessary.  The average case uses distinct elements in random order.  By randomly shuffling the items, we can turn the average performance into the expected performance for <i>every</i> input, and the probability of 'bad' behavior can be typically made exponentially small, which arguably makes the average-case complexity the more important one.  As an aside, we note that in practice, one may first want to check if the list is already largely sorted, and also take advantage of equal items and other information.</p>
+
+<p>We can compute the average number of comparisons by adding the entropy loss for each comparison relative to using a fair coin.  At $\frac{1}{2}+ε$ yes probability, the loss, which will also call <i>entropy waste</i> is $Θ(ε^2)$.  Thus, assuming an average of $O(n \log n)$ comparisons, the precise average number of comparisons is $\lg(n!)(1+Θ(E(ε^2)))$  ($E$ is expectation value; $ε$ is varying and unconstrained).  Proper constructs will allow us great freedom to use slightly imbalanced comparisons to reduce the need for bad strongly imbalanced comparisons in the end and minimize the expected $ε^2$.</p>
+
+<p>For one of the algorithms, we will use that merging two random sorted lists (by going sequentially from small to large) of the <i>same</i> size $n$ wastes only $Θ(\log n)$ entropy, which can be seen in two ways.  For an element in position $i$, the comparison probability is typically $\frac{1}{2}±Θ(1/\sqrt{\min(1+i,n-i)})$, which adds up to waste $Θ(\log n)$.  Alternatively, the exact waste is $2n-\lg {2n \choose n}+O(1) = \frac{1}{2} \lg n + O(1)$ as merging uses $2n+O(1)$ comparisons while reducing bit entropy by $\lg {2n \choose n}$.  However, such a low entropy waste is likely the exception rather than the rule.</p>
+
+<p><i>Optimizing insertion sort</i></p>
+
+<p>Our starting point is insertion sort with a binary search to decide where to insert the next element into the sorted subset $S$.  When $(1-ε)2^m ≤ |S| ≤ 2^m-1$, an insertion uses at most $m$ comparisons, which (in terms of entropy) is optimal up to an $O(ε)$ additive factor; and for average-case complexity, $2^m ≤ |S| ≤ (1+ε) 2^m$ also works.  Now, when $|S|$ is not close to a power of 2, insertion of an element $A$ is suboptimal, even in the average case and regardless of how we balance each query: Any balancing that does not 'cross' a power of 2 leads to the same average number of comparisons (as can be checked using the comparison tree).</p>
+
+<p>However, if by using other elements, and wasting $o(1)$ comparisons, we could steer an element $A$ to an approximately uniform distribution over an interval of $S$ of length close to a power of 2 (regardless of whether |S| itself is close to a power of 2), we get the desired $\lg(n!)+o(n)$.</p>
+
+<p>We achieve this by adding elements in batches, and sometimes efficiently comparing elements of the batch with each other, such that the interval of $S$ corresponding to an element $A$ decreases in a quasi-random manner (and with the probability distribution of $A$ inside the interval nearly uniform), and when the interval length is close enough to a power of 2, doing the binary search to insert $A$.</p>
+
+<p><i>Common constructs</i></p>
+
+<p>We will keep a subset $S$ of sorted elements, and for each unsorted element $A$, we will keep track of the minimal interval $I_A$ of $S$ where $A$ is known to be located.  $|I_A|$ is the length of $I_A$; $I_A=I_B$ is by the identity of the intervals.</p>
+
+<p>Let $\mathrm{Compare}(A,B)$ be: Compare $A$ with $B$, and then (in random order) compare $A$ and $B$ against corresponding elements of $S$ until their intervals are disjoint (or both have length 1).  The elements of $S$ are chosen (in a consistent manner) to make the probabilities for the comparison as close to 1/2 as possible, assuming that when $\mathrm{Compare}$ is called, $(A,B)$ is uniformly distributed on $I_A⨯I_B$.  Some algorithms will use Compare with nonrandom selection of $A$ vs $B$ in comparisons with $S$, such as choosing the longer interval.</p>
+
+<p>Because of the disjointedness in the end, $\mathrm{Compare}$ preserves the uniformity assumption.  Also, on average, $\mathrm{Compare}$ does $O(1)$ comparisons, and aside from the initial comparison, wastes only $O(l^{-2})$ entropy where $l$ is the shortest interval length.</p>
+
+<p>We say that uninserted elements $A$ and $B$ are directly entangled iff $I_A$ and $I_B$ overlap and we know whether $A&lt;B$; and <i>entangled</i> is the transitive closure of directly entangled.  For unentangled $A$ and $B$, their probability distributions on $I_A$ and $I_B$ will be approximately independent in our algorithms, and similarly for bigger groups of elements.</p>
+
+<p>In the next three sections, using different algorithms (all for the average case), we<br/>
+- prove the $\lg(n!)+o(n)$ bound,<br/>
+- prove the $\lg(n!)+O(n^{1-ε})$ bound, and<br/>
+- attempt to get $\lg(n!)+n^{0.5+o(1)}$, and in the following sections, $\lg(n!)+O(n^{0.5-ε})$ and $\lg(n!)+O(\log n)$ refinements.</p>
+
+
+<h2><a id="A3"/>3&nbsp;&nbsp; A $\lg(n!)+o(n)$ algorithm</h2>
+
+<p>Our first algorithm is the following (which can be applied repeatedly to sort a list).</p>
+
+<p><i>Given:</i>  A sorted list $S$, and a batch of $m$ unsorted elements; $m∈ω(1)∩o(|S|)$; the unsorted elements are random relative to $S$.<br/>
+<i>Goal:</i>  Sort all elements.<br/>
+<i><u>Procedure</u>:</i><br/>
+<i>Repeat (1)-(3) while possible:</i><br/>
+1. Pick two elements $A$ and $B$ from the batch with $I_A=I_B$ (any choice will work).<br/>
+2. Run $\mathrm{Compare}(A,B)$.<br/>
+3. If $|I_A|$ is close enough to a power of 2,<sup>(note 1)</sup> remove $A$ from the batch (without forgetting $I_A$); and do similarly with $B$ (i.e. remove $B$ if $|I_B|$ is close enough to a power of 2 regardless of $|I_A|$).<br/>
+<i>Finally:</i>  Insert all elements into $S$ and complete the sort.</p>
+
+<p><i>Note 1:</i> For "close enough", any $o(1)$ relative error (as a function of $m$) works as long as $m-o(m)$ elements will be removed in step (3) (possible by note 2).  Under a conjectured randomization assumption ($\frac{|I_A|}{2^{\lfloor \lg |I_A| \rfloor}}$ behaves randomly enough), using $c \log \log m / \log m$ relative error captures $m(1-\log^{-Θ(c)}m)$ elements, allowing (using a large enough $c$) a $\lg(n!)+O(n \log \log n / \log n)$ average comparison sorting algorithm.</p>
+
+<p><i>Note 2 (proof of the $o(m)$ bound on wasted entropy):</i> Because the same sequence of comparisons leads to the same bounding interval, almost all elements will go through step 1 $Ω(\log m)$ times and/or be removed in step 3.  In the beginning, if $A &lt; B$ and we pick $A$, we compare $A$ against element $S[≈(1-1/\sqrt{2})|S|]$, and each application of step (3) to $A$ has $Θ(1)$ probability of reducing $|I_A|$ in $≈1/(1-1/\sqrt{2})$ times.  Now for every ratio $a>1$ that is not a rational power of 2, we have $∀ε>0 \, ∀d>0 \, ∃m_1,m_2∈\mathbb{N} \,\, 1-ε &lt; \frac{a^{m_1}}{d2^{m_2}} &lt; 1+ε$ (and by compactness, an upper bound $M$ on $m_1$ can be chosen independent of $d$ if $1 ≤ d &lt; 2$).  Thus, for every $ε$, there is $M$ such that a chain of $≤M$ applications of $\mathrm{Compare}$ has $2^{-O(M)}$ probability of getting close enough to a power of 2, and so we get the $o(m)$ bound, and hence sorting with an average of $\lg(n!)+o(n)$ comparisons.</p>
+
+<p><b>A $\lg(n!)+O(n/\log n)$ algorithm</b></p>
+
+<p>By becoming more tolerant with depth, we can reduce excess comparisons to $O(n/\log n)$ (or $O(m/\log m)$ for the batch).  The above algorithm likely works (with the reasonable thresholds), but to avoid analyzing whether the behavior is random enough, we note the following.</p>
+
+<p>In Compare, assuming initially $I_A=I_B$, by choosing the order of $A-S$ and $B-S$ comparisons, we can, after $\lg(1/ε)+O(1)$ comparisons, with probability $Ω(ε)$, have $A$ and $B$ disentangled with the new $|I_A|$ being within $ε$ relative distance of being a power of 2.  The procedure is simple:  After $A-B$ comparison, do the $B-S$ comparison $\lg(1/ε)+O(1)$ times in a row, and then do one $A-S$ comparison.  (Any $O(1)$ gives $1+O(ε)$ factor, and $10=O(1)$ is much more than enough for the $1+ε$.)</p>
+
+<p>For the algorithm below, choose Compare to use the $B-S$ comparisons the minimum number of times needed get the $|I_A|$ close enough to a power of 2 (the threshold is below) if we are lucky, and if we are unlucky with a comparison result, proceed to disentangle (without completing the remainder of $B-S$ comparisons).  Disentanglement can be done be choosing $A$ or $B$ with the largest interval length as many times as needed.</p>
+
+<p>The algorithm is the following modification of the first algorithm: Set the removal threshold (for relative distance to a power of 2) as $10000(\log m - 100i)/\log^2 m$, where $i$ is the number of times the item has been through Compare, with immediate removal if the threshold is negative.  The exact thresholds above ($100=C_1$ and $10000=C_2$, which is impractically cautious) do not affect the asymptotics as long as the entropy of Compare is $&lt;C_1/\log 2 - 1$ bits (so we become tolerant with depth fast enough for all but $m^{1-Ω(1)}$ elements to be removed), and $C_2$ is at least a large enough constant times $C_1$ (so that the reduction in the number of elements outpaces the threshold increase).</p>
+
+<p>$\lg(n!)+Θ(n/\log n)$ is likely optimal if all comparisons must be either with the sorted list $S$ or be exactly even (i.e. exactly 1/2 chance of yes), and all groups of entangled elements have size $O(1)$.</p>
+
+
+<h2><a id="A4"/>4&nbsp;&nbsp; A $\lg(n!)+O(n^{1-ε})$ algorithm</h2>
+
+<h3><a id="A4.1"/>4.1&nbsp;&nbsp; A likely $\lg(n!)+O(n^{1-ε})$ algorithm</h3>
+
+<p>Modulo a randomization assumption, we can achieve $\lg(n!)+O(n^{1-ε})$ average comparisons as follows.  The below was chosen for simplicity rather than optimality; also, the batch size can be customized.</p>
+
+<ul>
+<li> Randomly shuffle the items, and recursively sort the first half into a list $S$, while keeping the second half as an unsorted batch.</li>
+<li> <i>Repeat until the batch is empty:</i><br/>
+Randomly choose $A∈\text{batch}$.  Let $G = \{ B∈\text{batch}: |P(A &lt; B) - 0.5| &lt; n^{-0.51ε} \}$.  If $G$ is empty, remove $A$ from the batch and insert into $S$. Otherwise:<br/>
+&nbsp;&nbsp;1. If there is $B∈G$ such that with probability $Θ(1)$ (say ≥0.05), $\mathrm{Compare}(A,B)$ makes $|I_A|$ within $n^{-ε}$ relative error of a power of 2, run $\mathrm{Compare}(A,B)$ and if successful (i.e. $|I_A|$ is within $n^{-ε}$ relative error of a power of 2), remove $A$ from the batch and insert into $S$.<br/>
+&nbsp;&nbsp;2. If there is no such $B∈G$, run $\mathrm{Compare}(A,B)$ for a random $B∈G$.</li>
+</ul>
+
+<p>If our randomization assumption works out (i.e. the distribution of interval lengths and positions is random enough), then throughout much of the process, a typical $A$ can be efficiently compared with a choice of $n^{Θ(1)}$ elements (with $n^{Θ(1)}$ different interval lengths). Thus, we can typically choose a comparison for (1) above, and if we are unlucky with the comparison result, we still get $Θ(\log n)$ chances, thus achieving (if $ε$ is small enough, say 0.01) a $\lg(n!)+O(n^{1-ε})$-comparison algorithm.  With some changes and approximations, the total compute can be made quasilinear:  Given an element $A$, compute promising interval lengths, and then look up $B$s with the right approximate center and interval lengths.</p>
+
+<p>Initially, $\mathrm{Compare}$ will be called primarily on elements with identical intervals. Because the effect of $\mathrm{Compare}$ on length is multiplicative (and multiplication is commutative), the length randomization will initially be $2^{o(\mathrm{depth})}$, but should we get enough randomization of positions, and after we start comparing elements with different interval lengths, lengths should be quickly randomized as well.</p>
+
+<p>We likely get $\lg(n!)+O(n^{1-ε})$ comparisons with probability $1-\frac{1}{(n!)^{Ω(1)}}$.</p>
+
+
+<h3><a id="A4.2"/>4.2&nbsp;&nbsp; Optimizations</h3>
+
+<p>There are number of ways to optimize the comparisons, but the obstacle is that each comparison may end up being unlucky and we have a limited number of comparisons, and about $n^{1-ε}$ elements will be unlucky in every comparison.  To improve $ε$, we can<br/>
+- accelerate the initial randomization (included in the possible $\lg(n!)+n^{0.5+o(1)}$ algorithm below; we expect $o(\log n)$ randomization depth).<br/>
+- be more tolerant of deviations as the interval length shrinks (since we get fewer choices for comparison); this should stretch out choices (for unlucky elements) until roughly length $n^ε$ (corresponding to $Θ(1)$ elements with $Θ(1)$ relative interval overlaps and sizes).<br/>
+- optimize comparisons (both in choosing $A$ and $B$ and in $\mathrm{Compare}(A,B)$).</p>
+
+<p>In $\mathrm{Compare}(A,B)$, by symmetry (i.e. $P(A &lt; B)≈0.5$) the lengths will not significantly depend on whether $A &lt; B$. However, both $A$ and $B$ must be compared with $S$ to get length reduction that is not a power of 2.  This suggest the following comparison protocol.</p>
+
+<p><i>Comparison:</i> If trying to optimize $I_A$, choose $B$ such that after $A$-$B$ and then $A$-$S$ comparison if the comparison results are in the same direction, then $|I_A|$ is close to a power of 2.  If lucky (after doing the $A$-$B$ and $A$-$S$ comparisons), compare $B$ with $S$ until $|I_A|$ and $|I_B|$ are disjoint, or it is sufficiently likely that $B$ is in $I_A$.  Make $I_A$ and $I_B$ disjoint in a reasonable manner.<br/>
+<i>Note:</i>  The approximate required $|I_B|$ for the desired reduction in $|I_A|$ exists and is unique; as $|I_B|$ increases from $|I_A|/2$ to $>>\!|I_A|$, the resulting $|I_A|$ gradually increases from $|I_A|/4$ to $|I_A|/2$. Also, $|I_A|/|I_B| &lt; 2$ as otherwise after $A &lt; B$ and then $A &lt; S[i]$, $|I_A|$ will be reduced in 4 times.<br/>
+<i>Success Probability:</i> At either small enough or large enough $|I_B|/|I_A|$, the probability is ≈1/2 (with an average of 4 comparisons conditioned on success), but the probability is a bit lower at other ratios. Also, by choosing whether to optimize $A$ or use $A$ for optimizing $B$ (and also how to make $I_A$ and $I_B$ disjoint), we should be able to avoid low success probabilities and random use of $\mathrm{Compare}$.</p>
+
+<p>If we assume (probably slightly pessimistically) that the modified $\mathrm{Compare}$ uses (with survivor correction) around 5 comparisons and has 1/3 probability of success, we get $≈(1-ε)/5⋅\lg n$ chances, and $ε ≈ \log_n (1-1/3)^{-(1-ε)/5⋅\lg n} = (1-ε)/5/\log_{3/2} 2 ≈ 0.10$.</p>
+
+<p>Unfortunately, even at a million elements, this should only reduce excess comparisons in several times.  A likely much better approach is to wait until an interval is close to a power of 2 (as we insert other elements), controlling not the individual interval lengths but the distributions of lengths, as we describe later, but first we present two algorithms with asymptotic analysis that we can prove.</p>
+
+
+<h3><a id="A4.3"/>4.3&nbsp;&nbsp; A $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ algorithm</h3>
+
+<p>We prove that sorting is possible with an average of $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ comparisons (which we will later also adapt to the worst case) by using a less efficient randomization that is simpler to analyze.</p>
+
+<p><i>Randomization:</i> Given elements $A$ and $B$ with same large initial interval and uniform joint distribution, we can, with $Ω(1)$ chance, randomize $\max(I_A)$ up to precision $ε|I_A|$ (measured using initial $I_A$) without affecting $\min(I_A)$ as follows.  Compare $A$ with $B$, then do $B-S$ comparisons $\lg ε^{-1}+O(1)$ times, then do $A-S$ comparison, with success if $A&lt;B$ and $A$ is smaller than the element of $S$.  We can do analogously with $\min(I_A)$, or if we have $Ω(1/ε)$ elements with the same initial interval, do both the $\min$ and $\max$, as after doing the one for all elements, we expect $Ω(1)$ fraction of the elements to have a match to do the other.</p>
+
+<p><i>Algorithm:</i>  Starting with $I_A=S$ for a batch of $m$ elements ($m=n^{1-Θ(1)}$), we can with $2^{-Ω(\sqrt{\log m})}$ precision (and $O(m \sqrt{\log m})$ comparisons), randomize the interval for $Ω(1)$ fraction of the elements with the same initial interval.  We can then remove $Ω(1)$ fraction of the elements through uses of Compare that have $Ω(1)$ chance of getting close enough to a power of 2 (using a tolerant enough $2^{-Ω(\sqrt{\log m})}$ relative difference), and then repeat the procedure for each resulting interval.  Unremoved elements are likely to go through $Ω(\sqrt{\log m})$ repetitions (even with $m^{1-o(1)}$ elements per interval), hence $1-2^{-Ω(\sqrt{\log m})}$ chance of removal, and $m 2^{-Ω(\sqrt{\log m})}$ total comparisons above the entropy limit.</p>
+
+
+<h3><a id="A4.4"/>4.4&nbsp;&nbsp; A proof of $\lg(n!) + O(n^{1-ε})$</h3>
+
+<p>We prove that sorting is possible with an average of $\lg(n!) + O(n^{-ε})$ comparisons.  As before, in the algorithm, we have a batch of $m=n^{1-Ω(1)}$ unsorted elements to insert into a sorted list $S$ (now, with $m^{1-Ω(1)}$ expected entropy waste).</p>
+
+<p>The algorithm has three stages:<br/>
+1. Randomization of the interval midpoints with polynomial precision, even relative to the interval lengths.<br/>
+2. Randomization of the interval lengths with polynomial precision for $Ω(1)$ fraction of the elements.<br/>
+3. Using Compare to insert the elements and maintain randomization.</p>
+
+<p>For stage 1, for a small enough $i=Θ(\log m)$, for every element $A$ in the batch, set $\min(I_A)$ to a random value between $-|S|/2^i$ and 0, without changing $\mathrm{length}(I_A)=|S|$ (thus making $I_A$ temporarily inaccurate), and do $i$ 'even' $A-S$ comparisons (based on $I_A$), and then ensure that $I_A$ correctly reflects the possible interval for $A$.  Thus, at the cost of $O(m2^{-i})$ entropy waste, and with polynomial precision relative to the interval lengths (which are now $≈|S|/2^i$), the distribution of intervals is now translation invariant.  The remaining steps of the algorithm will have sufficient symmetry to maintain the approximate translation invariance, allowing us to concentrate on interval lengths.</p>
+
+<p>For stage 2, group the elements into pairs having nearly the same interval, and given a pair $A$ and $B$, randomize $A$ as follows.  Compare $A$ with $B$, then do a small enough $Θ(\log m)$ consecutive $B-S$ comparisons, and then disentangle $A$ and $B$, with the disentanglement favoring longer intervals for comparison with $S$ (random order also works).  Afterwards, do even comparisons with $S$ for elements with longer intervals so that most lengths get within a factor $O(1)$ of each other, with a quickly (polynomially in $\mathrm{length}^{-1}$) decaying tail of elements with shorter intervals.</p>
+
+<p>For stage 3, we perform a small enough $Θ(\log m)$ number of iterations, alternating between removal and rerandomization.  The randomness will guarantee that $Θ(1)$ fraction of the elements can be removed from the batch (and marked for insertion) through Compare, with the successful Compare path using $O(1)$ comparisons, and polynomially small entropy waste per removal and insertion.  The precision of the approximate translation invariance need not be reduced in more than $O(1)$ times per iteration.  During the removal, we will retain (by reserving if necessary) a $Θ(1)$ fraction of elements $A$ with random $\lg|I_A| - \lfloor \lg |I_A| \rfloor$.  For randomization, to handle an element $B$ with nonrandom $\lg|I_B| - \lfloor \lg |I_B| \rfloor$, we can first (if necessary) compare some of these elements with each other and $S$, with $O(1)$ expected comparisons per element, to get randomization of $\lg|I_B| - \lfloor \lg |I_B| \rfloor$ up to precision $ε$ for a desired $ε=Θ(1)$.  We can then choose random $A$ (in terms of $\lg|I_A| - \lfloor \lg |I_A| \rfloor$) with approximately the same interval midpoint as $B$ and $4&lt;\frac{|I_A|}{|I_B|}&lt;8$, and do $A-B,B-S,A-S,A-S$ comparison sequence so that with ≈3/4 probability we get disentanglement with the distributions of $\lg|I_A|-\lfloor \lg |I_A| \rfloor$ and $\lg|I_B|-\lfloor \lg |I_B| \rfloor$ being within $O(ε)$ discrepancy of approximately random with the $\mathrm{poly}(m)$ precision (possibly reducing precision in $O(1)$ times).  Thus, a random distribution of $\lg|I_A|-\lfloor \lg |I_A| \rfloor$ can act as an attractor, reducing nonrandom fraction by a constant fraction per comparison, as desired for the randomization. Proof complete.</p>
+
+<p><i>Combination with the worst case:</i>  We can ensure that the probability of using $>\lg(n!)+n^{1-ε'}$ comparisons is at most $2^{-n^{1-O(ε')}}$ (simultaneously for every $ε'$ that may depend on $n$) while having $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ worst-case comparisons (the latter by using our worst-case $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ algorithm as a fallback).  The reason is that the probability of bad enough behavior in a batch is $2^{-m^{Ω(1)}}$, in which case we can split the leftovers from the batch into batches of size $m^{Ω(1)}$ of elements with the same approximate interval (with few enough exceptions) and repeat the algorithm, with fast enough batch size decrease to allow fallback to the worst case (merging back the batches) with $nm^{-1+Ω(1)}$ interval lengths.  Alternatively, we could have switched to smaller batches or other protective measures if we encountered bad behavior in enough batches.</p>
+
+
+
+
+<h3><a id="A4.5"/>4.5&nbsp;&nbsp; Compute and parallelization</h3>
+
+<p><i>Compute</i></p>
+
+<p>For algorithms in this section (allowing approximations), on unit cost RAM, the compute can be $O(n \log^2 n / \log \log n)$.  We can also achieve $O(c n \log n)$ compute and $\lg(n!)+2^{-Ω(\sqrt{c\log n \log \log n})}$ expected comparisons for every $c≥1$.</p>
+
+<p>The logic for uninserted elements can be complicated (depending on the algorithm), but with sufficient precision, we can efficiently process elements in large groups such that all elements in a group get the same treatment.  For example, we can compare all elements in group 1 against a single specific element, and using the result, split the elements into groups 2 and 3, or arbitrarily pair up and compare elements between group 4 and group 5, yielding groups 6-9.  Also, given an element $A$, we can compute and lookup approximate intervals that have a large enough chance of yielding a length close to a power of 2 (instead of searching through all groups).</p>
+
+<p>Instead, the compute is dominated by finding interval midpoints.  Specifically, we have to compute $O(n \log n)$ interval midpoints (approximately one midpoint per comparison, minus savings from using approximate midpoints for larger intervals) and insert $O(n)$ elements.  For this, we can store the sorted list $S$ using a balanced tree with order statistics and $Θ(\sqrt{\log n})$ branching ratio such that traversing a node takes $O(1)$ expected time (using interval hashing) and updating it takes $O(\sqrt{\log n})$ time — all times $O(\log n / \log \log n)$ nodes per lookup or update, and with $O(n \log n)$ lookups and $O(n)$ updates.  (As an aside, $O(1)$ node update time (and thus $O(\log n / \log \log n)$ insertion time if we have the number of smaller elements than the element to be inserted) is possible by having an overlay for the last $O(\sqrt{\log n})$ updates for the node, with the overlay small enough to be updated using a state machine.)  An alternative implementation is to use a system of overlays with the $k$th overlay having size $O(n \log^{-k} n)$ pointers, updated/rewritten once per $Θ(n \log^{-k-1} n)$ insertions; and to look up the $i$th smallest sorted element, one goes through the overlays (in the order of decreasing $k$), each time getting either the element or an offset into the next overlay.</p>
+
+<p>For the time vs comparisons trade-off, we use approximate midpoints for larger intervals, and the above structure for smaller ones.  For each approximate large interval, we will store and use its approximate midpoint, which will only need to be updated after a large-enough number of insertions.  An insertion affects many overlapping intervals, but for each approximate interval, we can point to $O(1)$ appropriate canonical intervals covering it, and during insertion, check and increment the count (of possible insertions) for each of them.</p>
+
+<p>Instead of using approximate midpoints, we could have obtained $O(n \log n)$ compute with $\lg(n!)+o(\log n)$ average comparisons by applying the algorithm to smaller lists, and then completing the sort using merging of similar sized lists, albeit with numerically (and for a $\lg(n!)+n^{1-Ω(1)}$ algorithm, asymptotically) worse entropy waste vs compute tradeoff.</p>
+
+<p>A stricter computational model is pointer machines (sometimes called pure pointer machines), which correspond to unit cost RAM without integer addition or other such binary operators, which then take logarithmic cost (in bit length) to implement.  Order statistic trees on such machines can be implemented $O(\log n \log \log n)$ per operation cost.  A rough description of their implementation is to take $\sqrt n$ (or a bit fewer) points and compute their order statistics (number of smaller elements) every $\sqrt n$ updates, storing it in a structure with fast ($O(\log n)$) lookup, and then implement the same structure for each of $\sqrt n$ intervals, and also globally for the $\sqrt n$ points and the last up to $\sqrt n$ updates.  This way arithmetic operations use average $O(\log \log n)$ bit length.  Using such trees, we can implement the above sorting algorithms with $O(n \log^2 n \log \log n)$ compute, or (using approximate midpoints) get $\lg(n!)+O(n^{1-ε})+n2^{-Ω(\sqrt{c\log n / \log \log n})}$ expected comparisons with $O(c n \log n)$ compute (for every $c≥1$).</p>
+
+<p>For pointer machines with arithmetic (these do not allow pointer arithmetic; also, we just need addition, subtraction, and comparison), the compute is $O(n \log^2 n)$ (using a binary tree with order statistics), or $\lg(n!)+O(n^{1-ε})+n2^{-Ω(\sqrt{c\log n)}}$ expected comparisons with $O(c n \log n)$ compute (for every $c≥1$).</p>
+
+<p>An interesting question is whether the compute vs comparisons tradeoffs are optimal.</p>
+
+
+<p><i>Parallelization</i></p>
+
+<p>For parallelization, the comparison depth equals the time needed if comparisons can be done in parallel, but take 1 unit of time to complete, with other processing treated as instantaneous.  We assume that an element can be compared with multiple elements simultaneously, though with care, the assumption can likely be eliminated.</p>
+
+<p>Using the algorithm in the above "A proof of $\lg(n!) + O(n^{1-ε})$" subsection, inserting a batch of size $m=n^{1-Ω(1)}$ into a sorted list $S$ of size $n$ with $\lg \frac{(n+m)!}{n!}+m^{1-Ω(1)}$ expected comparisons can be done in parallel with $O(\log n)$ comparison depth (with a fallback to another algorithm for worst-case depth).  For compute, we expect that with $m$-wise parallelism, the clock time (aka depth) using parallel unit cost RAM (allowing concurrent reads) can be $O(\log n)$ if $S$ is given as an array but we just need to specify for each batch element its location in the combined sorted list.  The limit on $m$ ($m=n^{1-Ω(1)}$) guarantees that interval lengths can be known with polynomial precision.</p>
+
+<p>Sorting with $O(\log n)$ comparison depth can be done with $\lg(n!) + n \log^{-Ω(1)} n$ expected comparisons.  We can do this by inserting many items in parallel, at first doubling sorted list size per $Θ(1)$ steps to get length $Ω(n / \log^2 n)$ with $O(n / \log n)$ entropy waste.  Then, we increase the length more gradually and cycle the $\lg(n!)+O(n^{1-ε})$ algorithm as follows.  At the start of a cycle, we have a sufficient supply $T$ ($|T|=Θ(|S|)$ works, with a possibly smaller supply for the final cycle) of random elements with the right interval length scale $d$ ($d=Θ(\log^{0.9} n)$ works), some random elements at longer intervals, and no uninserted elements with shorter intervals.  We insert all elements in $T$ with $d^{-Ω(1)}$ per element expected entropy waste, doing $Ω(|S|/d)$ insertions in parallel.  Note that the interval location randomization works with $\mathrm{poly}(d)$ relative precision even though we are starting with many initial intervals instead of one.  We then replenish the supply and repeat the cycle.  To ensure worst-case $O(\log n)$ comparison depth, we can include a fallback algorithm such as the AKS sorting network.</p>
+
+
+<h2><a id="A5"/>5&nbsp;&nbsp; A possible $\lg(n!)+n^{0.5+o(1)}$ algorithm</h2>
+
+<p>We present a plausible $\lg(n!)+n^{0.5+o(1)}$ average comparison sorting algorithm, with the key idea being waiting to insert an element until its interval grows close enough to a power of 2, setting up the right distribution of intervals beforehand.  Then in the next section give a possible $\lg(n!)+O(n^{0.5-ε})$ combination with the algorithms in the previous section; and in the section after that, give a possible $\lg(n!)+O(\log n)$ refinement of the $\lg(n!)+n^{0.5+o(1)}$ algorithm (which makes our possible $\lg(n!)+O(n^{0.5-ε})$ combination less important).  A caveat is that we use the term "algorithm" loosely, leaving some implementation choices (especially in the distribution shaping below) to the programmer, with the assumption that a straightforward implementation would work, both in theory, and after experimenting, with reasonable constants in practice.  Unlike the algorithms in the previous section, the algorithms here do not work for adding $o(n)$ random elements to an already sorted list.</p>
+
+<p>The sorting algorithm will be: Randomly shuffle the list and sort the first half $S$. To insert the second half, make the distribution of intervals $I_A$ right, and do the optimized insertion (*) below.  To make the distribution of $I_A$ right, we will randomize the intervals at $o(\log n)$ depth (below), and then shape the distribution by withholding some elements and randomizing the rest.  We do not know how well the distribution shaping works, but we expect it to work well enough.</p>
+
+<p>The initial randomization should only need $n^{o(1)}$ entropy waste.  If the distribution shaping works well enough, the entropy waste stems primarily from random interval length mismatches during (*) and is thus $n^{0.5+o(1)}$.</p>
+
+<p>As an aside, the proof for $\lg(n!)+O(n^{1-ε})$ average-complexity sorting also gives $\lg(n!)+O(n^{1-ε})$ for the approach here.  At the cost of $n^{1-ε}$ extra comparisons, we get approximate translation invariance, and for $Ω(1)$ fraction of elements, length randomization with $n^{-ε}$ relative precision, at depth $2ε\lg n + O(1)$ (i.e. length $Ω(n^{1-2ε})$).  Then, withholding and randomization works for distribution shaping.  Also, if distribution shaping can be done at additional depth $o(\log n)$ (with appropriate tails), then even with the poor randomization above, we get sorting with an average of $\lg(n!)+n^{3/4+o(1)}$ comparisons here (using $ε=1/4$), or apparently $\lg(n!)+n^{2/3+o(1)}$ (using $ε=1/3$) if also combined with the idea from the $\lg(n!)+O(\log n)$ algorithm for dealing with interval length mismatches at insertion.</p>
+
+<p><i>Sorting</i></p>
+
+<p>Suppose that $|S|=n$ and we are given an unsorted batch of $n$ elements with the intervals $I_A$ also given such that<br/>
+- $|I_A|$ is typically $n^{1-o(1)}$, or rather $∀d>0 \, P(|I_A| &lt; n^{1-d}) ∈ n^{o(1)-d}$.<br/>
+- $\frac{|I_A|}{2^{\lfloor \lg |I_A| \rfloor}}$ and $A$ are distributed uniformly, or rather $∀i ∀d \, |\{A &lt; S[i]: \frac{|I_A|}{2^{\lfloor \lg |I_A| \rfloor}} &lt; d\}| = d \, i ± n^{0.5+o(1)}$.<br/>
+- the total entropy is within $n^{0.5+o(1)}$ bits of having an effectively random distribution given the interval lengths.</p>
+
+<p>Then, we can sort the items wasting an average of $n^{0.5+o(1)}$ comparisons as follows:<br/>
+(*) Insert all elements in the order of their initial $\frac{|I_A|}{2^{\lfloor \lg |I_A| \rfloor}}$.  This way all elements are inserted when their interval length is close to a power of 2.</p>
+
+<p><i>Notes:</i><br/>
+• If the assumptions are met, the sorting works even with adversarial $A$ and $I_A$, but there, to avoid an extra comparison per element, we may need to use randomized rounding in the binary search during insertion, which does not work for worst-case sorting complexity.  Also, if the total entropy is less than expected given lengths (i.e. $\lg(\frac{(2n)!}{n!} Π_A \frac{|I_A|}{n})$), the difference is simply added to the entropy waste.<br/>
+• Using the updated $I_A$ should be marginally better, but the interaction between different intervals would complicate the analysis.<br/>
+• The uniformity assumption makes the average magnitude of the errors (relative interval length error at actual insertion time) in (*) $n^{-0.5+o(1)}$.<br/>
+• $P(|I_A| &lt; n^{1-d}) ∈ n^{o(1)-d}$ is consistent with $|I_A|/\text{(distance to edge)}$ being $o(1)$ unless $|I_A|=1$, which can be useful for handling elements close to the edges (i.e. the minimum and the maximum).  Also, $P(|I_A| &lt; n^{1-d}) ∈ n^{o(1)-d/2}$ suffices if the uniformity assumption is strengthened appropriately.</p>
+
+<p><i>Randomization</i></p>
+
+<p>To make a 'random' distribution, we can randomly use $\mathrm{Compare}(A,B)$ with $P(A &lt; B)≈0.5$, and with $n^{Θ(1)}$ choices (typically $n^{0.5±o(1)}$ choices if we aim for $O(\log n)$ (or $n^{o(1)}$) total waste), we should get randomization after $Θ(n)$ comparisons (and $O(1)$ average depth), except that initially all $I_A$ are identical.  Thus, with just $\mathrm{Compare}$, we should not expect randomization at a sublogarithmic depth (i.e. with $I_A$ long enough).  However, we conjecture that using a generalization of $\mathrm{Compare}$ to $k=ω(1)$ elements will work: With $k$ elements entangled, we should have about $k$ noncommuting choices for each comparison with $S$.  This should allow $O(\log_k n + \log k)=o(\log n)$ randomization depth, as desired (perhaps assuming that $k$ is not too large as we need enough depth to disentangle the elements).</p>
+
+<p>To be more precise, define the entanglement graph of batch elements by connecting $A$ and $B$ with an edge if $I_A$ and $I_B$ overlap and we know whether $A &lt; B$.  One randomization construction (there are many) is the following:<br/>
+<i>Repeat until we have enough randomization, at which point disconnect the elements:</i><br/>
+If possible, randomly pick and compare $A$ and $B$ with $P(A &lt; B)≈0.5$ that are not connected to each other and with both connected components having size $&lt;k$.  Otherwise, randomly pick $A$ from a component with maximum size, and compare it against the corresponding element of $S$.</p>
+
+<p>For the possible $\lg(n!)+O(\log n)$ algorithm, we need to be more precise.  We first note that after the initial randomization, $Θ(n)$ applications of Compare (with reasonable choices, including in disentangling $A$ and $B$) can be done at $O(1)$ expected comparisons per element and $O(d^{-1})$ expected fraction of intervals reduced in $>d$ times.  We want the initial randomization to have this property as well.  With $2^i-1$ exactly even comparisons (and thus zero entropy waste), $m=2^i$ unsorted elements can be entangled into a tree.  Furthermore, there are $m^{Ω(\log m)}$ (presumably $m^{Θ(\log m)}$) inequivalent trees here.  For a typical tree, we can typically make $Θ(m)$ comparisons with $S$ before it splits into singletons, and the ordering of the comparisons and their results should give $Θ(m \log m)$ bits of entropy, which is large enough for a large enough $m=Ω(\log n / \log \log n)$.  Furthermore, for every tree, disentanglement uses an average of $O(1)$ comparisons per element, and for a typical tree with $m=n^{O(1)}$, we appear to get the right behavior at the tails.  There are atypical trees, such as min-heap, where disentanglement gives a $Θ(d^{-1} \log \min(m,d+1))$ elements with $O(n/d)$ interval lengths, but we can choose not to construct too many of these trees.</p>
+
+<p>With $m$ entangled elements, the probability distribution for an element is piecewise polynomial (in the limit $|S|→∞$) of degree $m-1$, with all piece boundaries occurring on interval boundaries.  And assuming tree structure for the entanglement, we can integrate out the $m$ elements one-by-one, and for polylogarithmic $m$, identify the right element of $S$ for comparison in polylogarithmic time.</p>
+
+<p><i>Distribution Shaping</i></p>
+
+<p>To make the global distribution of $|I_A|/2^{\lfloor \lg |I_A| \rfloor}$ right for (*), we can make a 'random' distribution, and then withhold the right fraction of the elements for each $|I_A|/2^{\lfloor \lg |I_A| \rfloor}$ while randomizing the rest.  This works (with $O(1)$ repetitions) provided that the 'random' distribution is effectively correct up to a constant factor.  To the extent that withholding alters randomization of other elements, we can use gradient descent to find the right corrections.</p>
+
+<p>The complication is that the distribution of lengths may depend on location.  If we could use exact locations, this would likely be easily addressable as follows:  The insertion of an element $A$ will delay insertion of other elements, and if this causes a systematic inefficiency (with the above corrections), we can 'reroll' $A$ to make its error random.  Also, after initial randomization, rerolling an element can presumably be done using $\mathrm{Compare}$ with $O(1)$ expected comparisons.</p>
+
+<p>However, we only have the intervals $I_A$, and while we have enough degrees of freedom (and many different randomization ways), the withholding rates have to be between 0 and 1; and we do not know what is achievable.  Complicating the analysis is that the losses might be concentrated on the outliers, and that the behavior may be different near the top and the bottom of the sorted list.  We will discuss implementation of distribution shaping during the discussion of the possible $\lg(n!)+O(\log n)$ algorithm.</p>
+
+
+<h2><a id="A6"/>6&nbsp;&nbsp; A possible $\lg(n!)+O(n^{0.5-ε})$ combination</h2>
+
+<p> Suppose that the errors in the distribution shaping (above) are sufficiently random:<br/> $∀i_1,i_2,d_1,d_2 \, (0 ≤ i_1 &lt; i_2 &lt; n ∧ 1 ≤ d_1 &lt; d_2 ≤ 2)$ $\big| |\{A: S[i_1] &lt; A &lt; S[i_2] ∧ d_1 ≤ \frac{|I_A|}{2^{\lfloor \lg |I_A| \rfloor}} &lt; d_2\} \, | - (d_2-d_1)(i_2-i_1) \big| =$ $O(((d_2-d_1)(i_2-i_1))^{0.5+o(1)} + n^{0.5-2ε+o(1)})$.<br/>
+Note:  We suspect this is possible.  Also, for comparison, the possible $\lg(n!)+O(\log n)$ algorithm relaxes $d_1$ and $d_2$ into a single $d$, but is much tighter on nonrandomness.</p>
+
+<p>Then, if we make the batch size equal $|S|+n^{0.5+ε}$ and selectively reject $≈n^{0.5+ε}$ elements in (*) (above), we can insert all but these $≈n^{0.5+ε}$ elements with entropy waste $n^{0.5-ε/2+o(1)}$ as follows.</p>
+
+<p>Split $S$ into $n^ε$ nearly equal intervals, and when during insertion, $I_A$ settles on one of the intervals, reject (i.e. cancel the insertion) if the interval is too long, thus reducing the variation in the lengths of these intervals $n^{ε/2-o(1)}$ times, which in turn reduces the length variations of random length $n^{1-o(1)}$ intervals in $n^{ε/2-o(1)}$ times, as needed. (Intuitively, increasing precision in $x$ times requires increasing both spatial and temporal resolutions for corrections in $x^2$ times, thus increasing the corrective term in $x^2$ times.)  Now, we can use the above $\lg(n!)+O(n^{1-ε})$ algorithm to insert the remaining elements with $O(n^{0.5-ε'})$ waste if $ε$ is small enough.</p>
+
+<p>The $ε$ we get in the $O(n^{0.5-ε})$ here is quite small. Using the above $\lg(n!)+O(n^{1-ε})$ analysis and the 3-fold reduction here, $3ε≈(0.5-4ε)/5/\log_{3/2} 2$ (here $0.5-4ε$ represents the range of the available depths), so $ε ≈ 0.016 > 0.01$, but perhaps there are more efficient algorithms.  Also, at a typical point we have around $n^{0.5-ε}$ choices on which element to insert, and in addition, using slightly imbalanced queries gives us many choices for fine-tuning the distributions of lengths, which may give a bigger $ε$.</p>
+
+
+<h2><a id="A7"/>7&nbsp;&nbsp; A possible $\lg(n!)+O(\log n)$ algorithm</h2>
+
+<h3><a id="A7.1"/>7.1&nbsp;&nbsp; Main description</h3>
+
+<p>Surprisingly, it may be possible to sort with an average of $\lg(n!)+O(\log n)$ comparisons.</p>
+
+<p>Starting with a single element, at each stage we will approximately double the length of the sorted list $S$ until all elements are sorted.  Like in the $\lg(n!)+n^{0.5+o(1)}$ algorithm, each stage will consist of randomization and distribution shaping, followed by optimized insertion.  As noted above, we do not know how well distribution shaping works, and we get the $O(\log n)$ bound <i>only</i> if it works essentially as best as general considerations suggest it would.</p>
+
+<p>At all but the last stage, $Θ(|S|)$ elements will be forwarded to the next stage.  We can even amalgamate all but the last stage, doing randomization and optimized insertion in parallel.  In each stage $E(|S|/|I_A|)=O(\log |S|)$.</p>
+
+<p><i>Errors and tolerances before insertion</i></p>
+
+<p>A random element $A$ adds a total $Θ(|I_A|^{-1})$ inefficiency for insertions of other elements that ignore $A$, with $Θ(|I_A|^{-2})$ inefficiency per insertion for $Θ(|I_A|)$ insertions (assuming uniform distribution on $I_A$ and that $|S|/(|S|-|I_A|)=Ω(1)$). This corresponds to $O(\log n)$ entropy waste per stage, but we will get $O(1)$ per stage (and even $O(1)$ total) for nonfinal stages by getting a better than random behavior.</p>
+
+<p>In the final stage, our tolerance for systematic errors in the uniformity of $S$ is relative rms $O(n^{-1/2})$, which corresponds to $O(1/n)$ entropy waste per comparison (and $O(\log n)$ total).</p>
+
+<!-- old text (confusing)
+<p>Our tolerance for systematic errors (e.g. the left half is longer) is $O(\sqrt{|S|})$, except for $\sqrt{n \log n}$ in the last stage.  An element may cause a systematic error at multiple length scales, so the worst case is effective $k \sqrt{\log |S|}$ systematic error from $k$ elements ($O(\log |S|)$ scales and (essentially) the additive squared error across scales).  This does not prevent large corrections as the distribution of interval lengths and entanglement patterns (e.g. shorter intervals for elements near the borders) does not count as systematic errors in the absence of interference with the algorithm.</p>-->
+
+<p><i>Insertion</i></p>
+
+<p>After randomization and distribution shaping, we have a supply of elements waiting to be inserted into the sorted list $S$, with element $A$ having an interval $I_A$ and with essentially nothing known about $A$ beyond that.  When $|I_A|$ approaches a power of 2, we will do a slightly imbalanced $A$-$S$ comparison with one of the intervals being a power of 2.  If we get a power of 2, insert $A$, and otherwise, wait until the next opportunity; this is the key idea for getting much better than $n^{0.5+o(1)}$ inefficiency.</p>
+
+<p>The greedy approach (choose $A$ with the closest ratio to a power of 2) might work, provided that for the final stage, once $|I_A|$ exceeds the power of 2, we continued to treat it as being closest to the power of 2 (but we will do better in the parallelizability subsection).</p>
+
+<p><i>Nonfinal stages</i></p>
+
+<p>For nonfinal stages, we do not need special distribution shaping beyond randomization as we can choose a $Ω(1)$ fraction of the elements with the right distribution.  We can also stop randomization and disentanglement at $O(1)$ effective depth (in terms of interval lengths).</p>
+
+<p><i>An obstacle to $O(1)$ depth:</i>  At a given point, we have to maintain the uniformity of $S$ using a distribution of intervals of a specific (but only up to a multiple of a power of 2) approximate length.  However, at low depth, the available intervals do not add up for the right distribution:  $\min(I_A)=0$ or $\max(I_A)=|S|$ gives us only discrete choices; and for other elements $A$, the locations of available intervals apparently vary smoothly (and we must accept $Θ(1)$ fraction of the elements).  Also, while randomization should only require $O(1)$ effective depth, it appears that (even without depth restrictions) for typical (not necessarily all) unentangled $A$, $\min(I_A)>0 ⇒ \min(I_A)=Ω(|I_A|)$ (and similarly with $\max$).</p>
+
+<p><i>Selective cancellations:</i> We address this by selecting more elements than needed for insertion, and canceling a fraction of insertions that settle to oversubscribed intervals.  For $d=Ω(|S|^{3/4})$ with $d≤|S|$, $Θ(d/|S|)$ fraction of the elements will have insertion cancelled at interval length $Θ(d)$.  If we stop cancellations at $Θ(|S|^{3/4})$ length, plus reasonable behavior at the interval edges, the relative systematic imbalance is $Θ(|S|^{-1/2})$ (corresponding to $Θ(1)$ per stage entropy loss), with $Θ(|S|^{-1/4})$ instantaneous imbalance, and $Θ(|S|^{3/4})$ steps before locations with temporary extra insertions shift a full cycle (assuming $Θ(|S|)$ distance from the edges).  The above entropy loss can be improved in $|S|^{Θ(1)}$ times using polynomially shorter lengths that are still $|S|^{1/2+Θ(1)})$.</p>
+
+<p><i>Correction of random fluctuations:</i>  Given lengths $Ω(|S|^{1/2+4ε})$ (this is not optimal) with $E(|S|/\mathrm{length})=O(\log |S|)$, we can limit the impact of random fluctuations to $|S|^{-ε}$ entropy waste by correcting their effects.  Per $|S|$ insertions, the correction uses (and assumes) $|S|^{1/2+ε+o(1)})$ elements with sufficiently random (in terms of both location and length) intervals of large enough length $|S|^{1/2+2ε+o(1)}$; the length being large enough will ensure that the random fluctuations added by the correction do not themselves need correcting.  The correction works at effective time scale $|S|^{1-2ε-o(1)}$, and inserts elements to even out the random fluctuations.  The correction is chosen to have sufficient precision, while, at the scale of the corrective intervals, being sufficiently smooth that it does not add too much nonuniformity at that scale.</p>
+
+
+<p><i>Final stage</i></p>
+
+<p><i>Underflows and overflows in the final stage:</i> <br/>
+- We can handle underflows (i.e. not enough elements with the right intervals) by proceeding with insertion of slightly larger than desired intervals.  While this merely postpones the underflow, it allows us to average out overflows and underflows.<br/>
+- An overflow by a fraction of $ε$ adds $Θ(ε)$ insertion cost for relevant elements, and therefore overflows must generally by anticipated and prevented, including by prioritizing insertion of items at risk of overflow.<br/>
+- We can handle local overflows (a specific small region of $S$ gets too large) by prioritizing items with small intervals.<br/>
+- We can handle regional overflows (a $Θ(1)$ region of $S$ gets too large), by having large enough $Θ(\sqrt n)$ global underflow, and then for imbalanced comparisons, choosing whether left or right result gets a power of 2, so as to move the overflow between regions.<br/>
+- We can apparently handle global overflows by using distribution shaping before the final stage to make them extremely unlikely.  Afterwards, random fluctuations would generally move overflows and underflows between regions rather than create them uncompensated outright.</p>
+
+<p><i>Alternative handling of overflows in the final stage:</i>  An alternative to the above handling of regional overflows is to avoid them with high enough probability by having a typical deficiency of a large enough $Θ(\sqrt{n \log n})$ number of suitable intervals for insertion.  Thus, we will process $A$ with $|I_A|=Θ(n)$ for insertion while $|I_A|$ is typically $Θ(\sqrt{n \log n})$ too short to be a power of 2.  This deficiency will cause a typical $Θ(\log n / n)$ per element waste for $Θ(n)$ elements, plus $Θ(\sqrt{\log n / n})$ per element waste for the $Θ(\sqrt{n \log n})$ elements at the end, though the latter can be essentially avoided by tapering down the deficiency near the end.  While simpler, the downside is a worse $Θ(\log n)$ term, and $n^{-O(1)}$ chance of using $n^{Θ(1)}$ extra comparisons unless we defensively waste (for infinitely many $n$) $ω(\log n)$ comparisons for the average case.</p>
+
+
+<h3><a id="A7.2"/>7.2&nbsp;&nbsp; Various properties</h3>
+
+<p><i>Optimality:</i>  The $O(\log n)$ inefficiency budget tightly constrains the sorting algorithm possibilities.  The tail of shorter intervals and its $Θ(\log n)$ impact does not appear to be removable, and most likely, an average of $\lg(n!)+Θ(\log n)$ comparisons is really optimal.</p>
+
+<p><i>Distribution of the number of comparisons:</i> The construction can likely be made sufficiently robust such that with probability $>1-2^{-c}$, with the construction independent of $c$, we only use $\lg(n!)+O(\log n)+O(c)$ comparisons.<br/>
+- There is likely a modest $Θ(\log n)$ oscillation in the optimal number of comparisons based on $\lg n - \lfloor \lg n \rfloor$ (some values may have a more convenient distribution of lengths of large intervals).<br/>
+- The impact of the tail of shorter intervals might give $Θ(\sqrt{\log n})$ stdev for the number of comparisons (for $n$ fixed across trials), corresponding to $Θ(1)$ variance per length scale (at length $Θ(d)$, we get $Θ(d)$ intervals, with a total $Θ(d^2)$ events with $Θ(d^{-2})$ variance each).  The distribution appears to be Gaussian-like.<br/>
+- The nonfinal stages can likely be sufficiently robust.  While it may be unneeded, note that while the list (and the set of related elements) is small enough, we can abandon it, start anew with unsorted elements, and once the new list is large enough, disentangle the old elements.<br/>
+- The dynamic prevention of regional overflows in the final stage might have $Θ(1)$ average cost, but the random deviations might have a Gaussian distribution with the correction cost proportional to the squared error, thus giving a linearly exponential tail for the distribution in the number of comparisons.<br/>
+- The behavior for large $c$, including transition into the worst case and tradeoffs between average-case complexity and risk of bad behavior, are unclear.</p>
+
+<p><i>Using biased comparisons:</i>  Entropy waste for a partial sorting algorithm equals the cost of using the algorithm on the unsorted list and then optimally completing the sort using special biased comparisons, measured as follows:  $C(p,A,B)$ ($0&lt;p&lt;1$) returns whether $A&lt;B$ and takes $-\lg p$ bits if $A&lt;B$ and $-\lg (1-p)$ bits otherwise.  The construction for the nonfinal stages suggests that it is possible to sort a list with average cost $\lg(n!)+m^{-Ω(1)}$ (and $m^{-Ω(1)}$ stdev) if the last $n^{0.5+ε}$ comparisons can be of the above biased kind and we start with a length $m \;\, (2≤m≤n/2)$ sorted list and cost $\lg(m!)$.</p>
+
+<p><i>Alternative potential construction for $\mathrm{lg(n!)}+\mathrm{polylog}(n)$ comparisons:</i>  An alternative method of handling 'extraneous' elements in the final stage is to randomly split the $n$ elements into batches of approximate size $n/2,n/4,n/8,...$.  Leftover elements from sorting the $n/2$ batch will go into the $n/4$ batch and so on.  At the end, merge the batches using sequential merging of similar size lists.   However, the merging adds up to inefficiency of $\frac{1}{4} \lg^2 n + O(\lg n)$ comparisons, which is in addition to mutual information between the lists being largely wasted.  Given a single element $A$ moved from an otherwise sorted batch $i$ (with $I_A$ being the interval for $A$ in batch $i$ and with batch size $S_i$) to batch $i+1$ and with no other connections, the expected mutual information (and hence waste) between sorted batch $i$ and sorted batch $i+1$ is $Θ(\frac{\sqrt {S_i}}{|I_A|})$ (assuming this is $O(1)$), which severely limits our ability to move elements between batches.  Also, given $m>\sqrt n$ elements with random intervals of length $Θ(n)$ moved from batch 1 and to batch 2, the expected mutual information is $Θ((m/\sqrt n)^{2/3})$ (assuming $Θ(n)$ batch 1 elements are unmoved, and the interval lengths are at least a constant fraction below the maximum), with most moved elements giving 0 mutual information, but with elements close to an edge of their interval giving approximate alignment between batch 1 and batch 2.</p>
+
+<p><i>Nonadaptability to the worst case:</i>  We do not expect the algorithm to adapt well to the worst case.  For the worst case (as described later), we want to bias comparisons such that structurally unfavorable outcomes get negative entropy waste, thus compensating for undesired structure.  However, the algorithm in this section depends on the right structure with intricate precision, and with key parts not admitting biased comparisons.  On the one hand, randomization and distribution shaping might work.  For insertion, relative underflow by $ε$ has $Θ(ε)$ cost (versus $Θ(ε^2)$ in the average case if after not getting a power of 2 in comparison, we can wait for the interval to grow), while overflow by $ε$ has $Θ(1)$ cost (versus $Θ(ε)$ in the average case).  The precision of the final stage might be avoidable by using the approach with batches of size $n/2,n/4,n/8$ (merging sorted lists at the end).  However, the problem is that when inserting an element with an interval being a power of 2, the worst case might choose any point (and thus create non-uniformity in $S$) without us getting compensation (a bias would destroy the power of 2 property).  The non-uniformity then causes entropy waste.</p>
+
+
+<h3><a id="A7.3"/>7.3&nbsp;&nbsp; Parallelizability</h3>
+
+<p>Surprisingly, the algorithm appears to be well-parallelizable, retaining $\lg(n!) + O(\log n)$ expected comparisons at comparison depth $\sqrt{n \log n}$.</p>
+
+<p>We focus on comparisons by assuming that comparisons can be done in parallel but take $Θ(1)$ clock time (i.e. latency), with other processing being cheap, with one variation forbidding an element from being compared against two other elements at the same time.  Let $d$ be at least as large as a large enough constant times $\log n$.  Absent an unforeseen obstacle (and in both models), we can sort in clock time (aka comparison depth) $d$ (which corresponds to $Θ(n \log n/d)$ parallelism) using $\lg(n!) + O(\log n) + O(nd^{-2}\log^2 d)$ expected comparisons.  It is unclear whether the $\log^2 d$ is removable, but other than that, we expect this is optimal.  The cost of $\sqrt n$ parallelism might be as small as $O(1)$ extra comparisons, but we have not ruled out some nonparallelizable improvement of the constant in $O(\log n)$.</p>
+
+<p>We expect randomization and distribution shaping to be sufficiently parallelizable, with the bottleneck at the insertion.  At $i$ stages before the final stage, we only have $n/2^{Θ(i)}$ elements, which will allow a $2^{Θ(i)}$ times smaller loss from parallelism (until it is small enough, and with an adjustment for small $d$), so we can concentrate on the final stage.  At a typical step, $Θ(n \log n / d)$ elements move closer to insertion (i.e. are compared), or $Θ(n/d)$ per length scale.  The uncertainty from this is typically small compared to the uncertainty from the $Θ(n)$ elements awaiting insertion, except for the point where we make an interval length exactly a power of 2 in the nonparallel algorithm.</p>
+
+<p>We address this by delaying the imbalanced comparisons to make a power of 2 until typical length $Θ(d)$ (at least if $d$ is $O(n^{0.5+ε})$).  (Note that global imbalanced comparisons not reaching a power of 2 can still be used for prevention of regional overflows.)  For a typical element here, $Θ(\log d)$ (corresponding $Θ(\log d)$ length scales) overlapping shorter-interval elements will be moving towards insertion, but this is not a problem in ascertaining the interval length as long as each of their intervals is fully inside or fully outside the interval in question.</p>
+
+<p>At scale $Θ(d)$, overflow by even a single element has $Ω(d^{-1})$ expected cost, and thus needs to protected against.  We will do this by accumulating elements at this scale with a typical absolute underflow a large enough $Θ(\log d)$ (hence the $\log^2 d$ factor in the number of extra comparisons), corresponding to a small enough $d^{-Θ(1)}$ overflow risk.</p>
+
+<p>Once we do an imbalanced comparison, we need to deal with the case that the new length is not a power of 2.  For elements with shorter intervals, we prioritize based on how close in absolute terms the length is to a power of 2, and ensure that for a (typical) element we do not have overflow even if all overlapping elements with the same or higher priority are inserted first.  We insert once the interval becomes a power of 2; and for larger intervals approaching a power of 2, do the imbalanced comparison when it is safe.  An insertion may trigger comparisons for other elements to restore the priority guarantee.  For imbalanced comparisons, we choose sides to avoid clustering of uninserted elements; starting $Θ(d)$ length, we typically need only $O(1)$ comparisons to get either insertion or the priority guarantee.</p>
+
+<p>For the $O(\log n)$ depth, the construction is similar.  Nonfinal stages are amalgamated into one, with the sorted interval relative increase per step gradually reduced from $Θ(1)$ to $Θ(\log^{-1} n)$ (and with the relevant scale for the optimization increased accordingly).  If an element cannot be compared with two other elements simultaneously, elements with long enough intervals can be compared against elements with shorter intervals rather than members of the sorted list $S$.  A fallback can be used to ensure that depth remains $O(\log n)$ even in the worst case.  For example, the AKS sorting network has depth $O(\log n)$ and uses $(1+Θ(1))\lg(n!)$ comparisons, and it being a sorting network, this applies to the worst case.</p>
+
+
+<h3><a id="A7.4"/>7.4&nbsp;&nbsp; Implementation suggestions and distribution shaping</h3>
+
+<p>We expect that average $\lg(n!)+O(\log n)$ comparisons is achievable with quasilinear compute, even simultaneously with the above parallelization and exponentially low probability tail of extra comparisons.  For parallelization of comparisons, we allow compute depth within a $\log^{O(1)} \! n$ factor of the comparison depth.</p>
+
+<p>For distribution shaping, which we should only need for the final stage, we recommend an iterative process to select among different algorithms and refine their parameters.  For now, we can give a description that plausibly works.</p>
+
+<p><i>A distribution quality measure:</i> Given a possible distribution of intervals (for unentangled elements to be inserted in the final stage), we can measure its approximate quality by adding up:<br/>
+(1) The approximate sum of squared of relative differences between expected size and desired size, assuming the insertion is in the order of increasing initial interval lengths, and assuming uniform distributions.  For overflow protection, the desired size is below a power of 2 by a large enough relative $Θ(n^{-1/2})$ amount (or for an alternative construction or just a precaution, $Θ(n^{-1/2} \log^{1/2} n)$).<br/>
+(2) $E(n/ \mathrm{length})$ - cost of random non-uniformities from having small intervals (we get randomness during insertion even for an ideal initial distribution).<br/>
+(3) A measure of nonuniformity of the sorted list during the insertion.</p>
+
+<p>For (3), for each length scale ($O(\log n)$ scales suffice) and approximate location (with resolution corresponding to scale), during simulated insertion, we keep track of non-uniformity at that scale and location.  This can be done with sufficient precision in quasilinear time, as each simulated insertion updates only polylogarithmically (or at some precision loss, logarithmically) many counters.</p>
+
+<p><i>Number of rounds and their sizes:</i> The distribution shaping can have a large enough $Θ(\log n)$ rounds, with a total budget of a large enough $Θ(\log n)$ increase of $E(n / \mathrm{length})$.  The budget can be 1 for the first $ε^{-1} \log n$ rounds, and then multiplied by $1-ε$ per round.  Thus, we defer overly expensive distribution shaping until it is more efficient in future rounds, and also taper off at the end.  The $ε$ should not be very small in practice, but without special logic, we need a logarithmic number of rounds, though $(1-ε)^i \log n$ budget for round $i$ should also work.  However, we suspect that $O(1)$ rounds work if after randomization, a strategic selection of intervals is made smaller by comparisons with the sorted list $S$ (with the comparison results for an element affecting whether we compare it further).  A single round might work if the randomization distribution is good enough and we pay the price in terms of overflow protection and polynomial risk of bad behavior.</p>
+
+<p>For each round, the main primitive is Compare (done on many elements in parallel), always choosing the longer interval in disentanglement.  To improve the $O(\log n)$ term, we can add variations of this Compare, and also do some distribution shaping during the initial randomization.  We will allow one of the two elements to be first compared with the sorted list $S$ up to $O(1)$ times (once or twice may suffice, and $O(\log \log n)$ works for compute), and then choose Compare partner (if any) based on the results (we need comparisons with $S$ to efficiently get a strategic selection of shorter intervals).</p>
+
+<p>For each relevant interval, we compute its contribution to the distribution quality, and add up the contributions to get the impact of a possible Compare.  For quasilinear time, the intervals are processed in hierarchical groups (if we want to, with multiple hierarchies).  For each simulated insertion, we record a measure of the interference cost for each group, with the value of each interval being the sum across its groups.  Also, a Compare can have up to $Θ(n)$ different outcomes, but we might consider a polylogarithmic set of the most likely ones (for example, normalizing probabilities), except for approximating $E(n / \mathrm{length})$ (which concentrates on unlikely bad outcomes but is easy to approximate).  Also, an element might have $\sqrt n$ or more viable Compare partners, but for efficient compute we might get away by comprehensively choosing polylogarithmically many length scales for a partner, and for each scale making a random choice.  If needed, we can consider more partners for elements with shorter intervals (as there are fewer such elements but they have disproportional impact) (and same for more outcomes of Compare).  We can also work backwards from a desired interval length to find a partner, but our distribution shaping does not appear to need that type of precision.</p>
+
+<p>If we pretend that the cost of each interval is unaffected in an optimization round, and that Compare can be used a fractional number of times, then the optimization becomes a linear program, which we can solve or approximate efficiently, and then repeatedly update the interval cost estimates (and the solution) until convergence.  We can then implement the solution up to random error, which should suffice for us.</p>
+
+<p>The expected entropy waste of Compare between $A$ and $B$ (assuming efficient choice of disentanglement and low waste for the first comparison) is $Θ(d^{-1} \log d)$ (or $Θ(d^{-1}$ if we correct for non-uniformity due to non-inserted elements) where $d=\max(|I_A|,|I_B|)$.  For every $\tilde{ω}(n^{3/4}) \; s≤n$, we will use $Θ(s)$ elements with interval length $Θ(s)$, but we stay within $Θ(\log n)$ rather than $Θ(\log^2 n)$ total entropy waste by using primarily much longer Compare partners for $o(n)$ $s$.  As alluded above for nonfinal stages, we do not expect $O(1)$ fixed depth:  Distribution shaping of length $≈s2^i$ intervals appears discontinuous around some integral multiples of $s$ from the edges of $S$ (unless we avoid using elements too close to an edge, but that is worse).  However, by using Compare with much longer (in terms of interval length) partners, we can, with high probability, make a length $s$ interval slightly shorter, and on average compensate for the bias.  The above implementation we hope does all this automatically.</p>
+
+<p>As an aside, the $\lg(n!)+O(\log n)$ bound (if achievable) requires high precision, but even simpler (and more relaxed) versions in this style should perform very well (compared to previous algorithms) in terms of number of comparisons on moderate size lists.  Also, even for large lists in practice, nonasymptotic behavior can be important since $\lg n$ (and the number of comparisons per element) grows slowly.</p>
+
+<!-- old text from 2020 (incomplete, including conceptually)
+<p>For nonfinal stages, we can forgo complicated distribution shaping (perhaps at the cost of increasing the constant in $Θ(\log n)$) by simply scheduling enough elements for insertion and withholding some (unentangled) elements to prevent non-uniformity in $S$.  Initial randomization is as described previously, except that we disentangle elements only up to a large enough fixed depth (measured using entropy), leaving the rest for the final stage.  For each element, we have its probability distribution using its interval, or using its piecewise polynomial for entangled elements.  By adding up their contributions (ignoring interaction), we get a sufficiently accurate entropy loss from doing insertions through numerically almost even comparisons with $S$ that is due to the nonuniformity of $S$.  We then prioritize insertions that avoid and/or reduce the entropy loss for future insertions (under a reasonable interval distribution for upcoming insertions, or even just considering all intervals to be equally likely).  The insertion decision can be cancelled after any comparison, and it can be based on current inefficiency (in terms of not getting a power of 2 and non-uniformity), contribution to future inefficiencies, and with an adjustment for possible cancellation.</p>
+
+<p>For the final stage, after disentangling the elements, we can do distribution shaping through Compare (and a small number of variations of Compare based on the selection of $A-S$ vs $B-S$ comparisons).  For each appropriate combination ($A$, $B$, Compare variation), we can compute its contribution to distribution shaping, and then do gradient descent to compensate for interactions between the contributions, getting a probability for each combination such that the total is good enough.  We then apply all the Compare, and (if needed) repeat $O(1)$ times (or if somehow needed, more times around the edges of $S$).  Ideally (for saving comparisons), the initial randomization (using groups of more than 2 elements) would do most distribution shaping to avoid or reduce the need for Compare afterwards.  We might also solve the fractional version (allow Compare to take $ε$ of $A$ and $B$, which will then be split (based on probabilities) among intervals), and then approximate the fractional distribution up to random error.</p>
+
+<p>The quality of the distribution can be estimated by assuming that elements are inserted in the order approximately based on the interval length $|I_A|$, and estimating the entropy loss from non-uniformity in $S$, the interval lengths not being a power of 2, and some measure of the risk of an overflow.  A simple measure of each of these that is off by a constant factor may work (for overflow, the constant factor need only be about distance ($O(\sqrt{n \log n})$) and must not be too small).  If $|S|$ more than doubles, then for elements with appropriate lengths, we can randomly (or intelligently) choose during which doubling they will be inserted.  During insertion, we can tweak the selection of an element to insert (and also whether the left or right subinterval is a power of 2) using its impact on the distribution shape.</p>
+
+<p>We suspect that the compute can be quasilinear, even simultaneously with the parallelization.</p>
+
+<p>All runtimes are polynomial, and we suspect that with further research, an optimized implementation can achieve a quasilinear run time.  There are $Θ(n^2)$ different intervals on $S$, but with our error tolerances, it suffices to keep track of expectations for $\tilde{Θ}(n)$ intervals.  For each approximate point $s$ on $S$, and each appropriate ratio $r$, we can compute the expected number of non-inserted elements $A$ with $A&lt;s$ and $\frac{|I_A|}{2^{\lfloor \lg |I_A| \rfloor}}&lt;r$.  To compute distribution quality, we then apply the usual squared error for global deviations in $\frac{|I_A|}{2^{\lfloor \lg |I_A| \rfloor}}&lt;r$, and for each $r$ and each length scale (with effectively $Θ(\log n)$ length scales) compute the appropriate squared error for nonuniformity of the distribution of $\{A:\frac{|I_A|}{2^{\lfloor \lg |I_A| \rfloor}}\}&lt;r$ relative to $S$.  Especially if the number of Compare per element is a soft $O(1)$ limit, we also include the $E(|S|/|I_A|)$ penalty term to avoid too many random errors from short intervals.  The number of element pairs suitable for Compare is $\tilde{Θ}(n^{1.5})$, and they are generally non-equivalent (in terms of approximate intervals), but if $\tilde{Θ}(n^{1.5})$ runtime is unacceptable, we might select a few pairs for Compare per element, either pseudorandomly (but with good coverage for comparably sized intervals) or possibly working backward from the goal.</p
+-->
+
+
+<h2><a id="A8"/>8&nbsp;&nbsp; Worst-case complexity of sorting</h2>
+
+<h3><a id="A8.1"/>8.1&nbsp;&nbsp; General notes</h3>
+
+<p>There is often a gap between average-case and worst-case complexity of algorithms.  For example, for finding median, there is a linear gap between the average case ($1.5n+o(n)$ comparisons) and the worst case (at least $(2+ε)n-O(1)$ comparisons)<a href="#ref4">[4]</a>.  We suspect that sorting can be done in worst-case $\lg(n!)+O(n^{1-ε})$ but not $\lg(n!)+O(n^ε)$ comparisons. <!-- not clear: with $\lg(n!) + \tilde{O}(\sqrt n)$ being a plausible optimum.--></p>
+
+<p>Our constructions above, being heavily reliant on probability, do not immediately work for the worst case.  However, some of the algorithms are sufficiently robust that we can bias the comparisons such that either we get enough randomization or we consistently gain information compared to 1 bit / comparison, which will compensate the nonrandomness.  We prove that $\lg(n!)+o(n)$ is possible, and also give a likely construction for $\lg(n!)+O(n^{1-ε})$ comparisons.</p>
+
+<p><i>Previous notes:</i> As an aside, before we had such an algorithm, some results on the number of comparisons are as follows (with the algorithm, $f(x)=0$).   Let $g(n)$ be the minimum number of comparisons to sort $n$ elements in the worst case, and $f(x) = \lim\limits_{i→∞} \frac{g(n)-\lg(n!)}{n}$ ($n=\mathrm{round}(2^i x)$, $i∈ℕ$, $x>0$).  Note that $λz f(2^z)$ has period 1.  Using efficiency of equal size two-way merge, $f$ converges.  Using efficiency of inserting elements into sorted list of size $(1-o(1))2^i$, $f'_{-}(1)≤-f(1)$.  On the interval $[1,2]$, $f'$ and $f''$ are bounded from above.  The latter is because merging two sorted lists, with one $1+ε$ times bigger than the other, incurs $O(ε^2)+o(1)$ worst-case entropy loss per element.  Thus, $f'_{-}(x)≤f'_{+}(x)$ and both of these exist.  An 'efficient' $k$-way merge (of equal size sorted lists) with $k$ not being a power of 2 would give $f(x)=0$ since we could compose a sorting algorithm from $k$-way merges and insertions at size $(1-o(1))2^i$, but perhaps such merge does not exist even for the average case if $k=O(1)$.</p>
+
+
+<h3><a id="A8.2"/>8.2&nbsp;&nbsp; A $\lg(n!)+O(n/\log n)$ algorithm</h3>
+
+<p>We prove that sorting is possible with worst-case $\lg(n!)+O(n/\log n)$ comparisons.  We do this by showing that insertion of $m$ elements into a sorted list $S$ of length $n$ can be done with $\lg((n+m)!/n!)+O(m/\log m)$ comparisons.  By splitting the insertions into batches, we can assume that $m$ is $n^{1-Ω(1)}$.  The algorithm adapts our average case $\lg(n!)+O(n/\log n)$ algorithm by giving our imagined adversary (who returns comparison results and tries to make us fail) incentive (in terms of entropy) to return results that make the basic construction work well.</p>
+
+<p>In the algorithm, while possible, we pick elements $A$ and $B$ from the batch, with the $A$ and $B$ having the same interval and budget (any choice works), and run a version of Compare.  Budget and Compare are defined below.  At the end (i.e. when there are no such $A$ and $B$), we insert all elements into $S$.</p>
+
+<p>Each of the $m$ elements will start with the same large enough amortized $Θ(\log^{-1} m)$ budget for bits of entropy waste ($1000/\log m$ is more than enough for $m=O(\sqrt n)$).  All elements will stay within the budget, except for (1) $m^{-Ω(1)}$ elements taking $O(1)$ extra comparisons, (2) making a safe approximation for entropy waste, and (3) allowing transfer of budget between entangled elements.</p>
+
+<p><i>Effect of budgeting:</i>  Our use of budget allocations below is as follows.  If we want an $A-S$ comparison to return $A&lt;S[i]$ (and similarly for $A>S[i]$), and we allocate a budget of $\lg(1+2ε)$ extra comparisons (for some $ε$) for this, we choose the largest $i$ with $P(A&lt;S[i])&lt;1/2+ε$.  Here (and for updating budgets) we assume all outcomes involving $A$, $B$ (the element entangled with $A$), and $S$ are equally likely; this is because we need to choose $i$ consistently, and the effect of other uninserted elements will be generally small and conservatively accounted at insertion time.  Thus, if we get $A>S[i]$, we save $≈-\lg(1-2ε)$ comparisons compared to the information gain.  Using the accumulated savings (minus losses), we will ensure below that in the paths failing to insert $A$, the budget $b$ for $A$ increases at a multiplicative rate of $1+Ω(b^{-1})$ per comparison, including comparisons of other elements while they are entangled with $A$.  Thus, after $O(b_0^{-1})$ comparisons, where $b_0$ is the initial per-element budget, we get enough budget to insert $A$ outright.  For this number of comparisons (assuming large enough $b_0=O(\log^{-1} m)$), the number of possibilities will be $m^{1-Ω(1)}$, and so at most $m^{1-Ω(1)}$ elements will breach the budget by being left unpaired.</p>
+
+<p><i>Compare:</i>  In Compare, we first compare the two elements, getting $A&lt;B$ (otherwise, swap $A$ and $B$).  Next, let $k$ be the least number of $B-S$ comparisons (all comparisons have the bias below) such that after the comparisons and then one $A-S$ comparison (if lucky on all k+1 comparisons), $A$ can be unentangled with $|I_A|$ close enough to a power of 2 without risking overflow:  $d/(1+0.4b) &lt; |I_A| &lt; d-m$ works with $d$ being a power of 2 and $b$ being the per element budget.  If say, $m>0.1bd$, we give up by removing the elements from the batch before the $A$-$B$ comparison (the complication of up to $m$ elements potentially overflowing the interval is the reason we require $m=n^{1-Ω(1)}$).  Otherwise, we can do $k$ $B-S$ comparisons and then one $A-S$ comparison, and if lucky, remove $A$ from the batch.  If unlucky, then without completing the remainder of the $k+1$ comparisons, proceed to disentangle $A$ and $B$.  For disentanglement, choosing $A$ (for comparison with $S$) iff $|I_A|≥|I_B|$ works.</p>
+
+<p><i>The choice of budget allocations:</i> In Compare, while we are on the desired path, the budget for the $i$th comparison (with $A$-$B$ being zeroth and having zero budget), can be proportional to $2^{i}-1$ (note: $2^i-1.5^i$ also works) and such that the sum of budgets if lucky is $0.4b$ where $b$ is the per-element budget.  When disentangling (having strayed from the path), the per comparison budget (with $A&lt;S[i]$ and $B>S[i]$ being desired) can be 20% of the net savings so far from the current Compare.  This way, straying from the desired path gives us $Ω(i2^{-k}b)$ savings (and $k ≤ \lg b^{-1} + O(1)$), with exponential increase if the disentanglement is delayed.  The budget change from Compare is assigned to the two elements evenly, or if $A$ is removed, $B$ gets the entire budget of $A$, minus the allocation for inserting $A$ into $S$ ($\lg(d/|I_A|)$ above).</p>
+
+<!-- old text from 2020 (less efficient and less beautiful algorithm)
+
+<p>We prove that sorting is possible with worst-case $\lg(n!)+O(n/\log \log \log n)$ comparisons; the running time can be made $O(n \log n)$ [not clear].  We do this by showing that insertion of $m$ elements into a sorted list of length $n$ can be done with $\lg((n+m)!/n!)+O(m/\log \log \log m)$ comparisons.  By splitting the insertions into batches, we can assume that $m$ is $O(n^{1-ε})$.  The algorithm and the proof are not especially complex, but the tradeoff is that we only get $O(m/\log \log \log m)$, which is only 'slightly' $o(m)$.</p>
+
+<p>Specifically, we adapt the average-case $\lg(n!)+o(n)$ algorithm (in section 3) to the worst-case by modifying Compare and by changing 'close to a power of 2'.</p>
+
+<p>Recall that at the start of Compare, $I_A=I_B$, and Compare has $Θ(1)$ chance of reducing $|I_A|$ in $≈r=1/(1-1/\sqrt{2})$ times.  Using the irrationality measure of $r^m$ (and how far away $r^m$ ($m≤n$) is from rational numbers with small denominators), $\lg r$ is at least $2^{-O(n)}$ away from every rational number with denominator $≤n$ (this is presumably far from optimal).  From there, $∀n ∀x ∃N∈2^{O(n)} ∃m \, (1-1/n) &lt; r^N/2^m &lt; 1$.  Let $f_m(x)$ be the least natural number $N$ such that $\frac{x}{r^N}$ is close enough to a power of 2 without risking overflow — for example, $1-\frac{N+2}{N+1} \frac{100}{\log \log \log m} &lt; \frac{x}{2^k r^N} &lt; 1-\frac{N+1}{N+2} \frac{1}{\log \log m}$ works.  (The $\frac{N+2}{N+1}$ factor relaxes the bounds as $N$ decreases, which will permit our use of slightly biased comparisons below.  Note that $N$ is $O(\log \log m)$.)  Every unentangled element $A$ with $f_m(|I_A|)=0$ will be removed from the batch and marked for insertion.</p>
+
+<p>We will bias Compare as follows:<br/>
+* To avoid randomness in disentanglement, let Compare alternatively compare $A$ and $B$ with the sorted list $S$, starting with $A$.<br/>
+* After getting $A&lt;B$ or $B&lt;A$, there is a path involving 2 comparisons with $|I_A|$ decreasing in $≈r$ times.  Increase the probability for the comparisons in this path by $εj/5^{f_m(|I_A|)}$ (with the probability computed using the uniform distribution on $I_A×I_B$ before the $A-B$ comparison) where $j=1$ for the first comparison and $j=2$ for the second comparison, and $ε$ can be for example $1/\sqrt{\log m}$.<br/>
+* For the remaining paths, after three comparisons (including $A$ vs $B$), reduce the probabilities leading to failure to separate $A$ and $B$ in $1+ε_2 1.1^n$ times where $n$ is the number of comparisons so far in the current Compare, and $ε_2$ can be for example $1/\log^2 m$.  Thus, at a low enough cost per Compare, Compare is effectively limited to $O(\log ε_2^{-1})$ comparisons as otherwise we gain $ω(1)$ extra information.</p>
+
+<p>We get the bound on the total number of comparisons by summing up inefficiencies along every path:<br/>
+* For every element $A$, the inefficiency is $O(1)$ comparisons (using the choices above, $O(1/\sqrt{\log m})$ (amortized) plus $\text{depth}/\log^2 m$ plus $O(1)$ for the insertion).<br/>
+* If $|I_A|$ gets close enough (from below) towards a power of 2, we lose only $O(1/\log \log \log m)$ comparisons on $A$ as the inefficiencies involving Compare are small enough.<br/>
+* At most $m^{o(1)}$ $A$ can run out of Compare at comparison depth $o(\log m)$ without settling on an interval close enough to a power of 2.<br/>
+* If $|I_A|$ is used by Compare up to a sufficient depth, we gain $ω(1)$ information (use the effective upper bound on Compare length, and the gain of roughly $εj/5^{f_m(x)}$ information for the worst $x$).</p>
+
+<p><i>Improving the $\log \log \log$:</i> In the algorithm, the incentive for the adversary to give the desired outcome in Compare must be $\log^{-O(1)} m$ so that it cannot be ignored, and then must increase exponentially at each application step, which allows only $O(\log \log m)$ steps.  If $r$ behaves randomly-enough, this would allow approaching a power of 2 within a relative distance $1/\log^{O(1)} \log m$.  To do better, if in Compare, we could choose the order of $A-S$ and $B-S$ comparisons, then under a randomization assumption, a single depth $ε \log \log n$ ($ε=Θ(1)$) Compare can get us within relative distance $\log^{-O(1)} m$ of a power of 2, allowing sorting with $\lg(n!) + n / \log^{Ω(1)} n$ comparisons.-->
+
+
+<h3><a id="A8.3"/>8.3&nbsp;&nbsp; Multiway merge</h3>
+
+<p>Plausibly, merging of $O(1)$ sorted lists cannot be done with $o(m)$ average entropy waste, where $m>1$ is the size of the second largest list, unless all sizes are within $o(m)$ of being equal to the total size divided by a power of 2 (in which case we could simply use merging of similar size lists).  Intuitively, each element has a typical $O(1)$ room to maneuver, and so wastes $Θ(1)$ comparisons absent a special symmetry.  This limit on merging, if true, helps explain why a $\lg(n!)+o(n)$ comparison sorting algorithm has eluded researchers for so long.</p>
+
+<p>However, multiway merge can be done with worst-case $o(m)$ comparisons above the entropy limit, where $m$ is the number of elements excluding the largest list, if the size of the second largest list is $m'=o(m)$ (so there are $ω(1)$ lists; the two largest lists need not be unique, and the size of the second largest list can equal the size of the largest one).  We conjecture that $O(m(m'/m)^ε)$ comparisons above the entropy limit is possible; in any case, expected $O(m(m'/m)^ε)$ (regardless of how the elements are split into lists) is possible with a randomized algorithm.  Specifically, we show that with $m(m'/m)^{Ω(1)}$ entropy waste, the problem reduces to inserting $m$ elements into sorted lists with each list assigned $(m/m')^{Θ(1)}$ unsorted elements.</p>
+
+<p>We keep a distinguished sorted list $S$, and at each stage, insert sorted lists $T_1,...,T_k$ into $S$, with $\max_{1≤i≤k} |T_i|=O(\min_{1≤i≤k} |T_i|)$ and $k=O((|S|/|T_1|)^ε)$, and typically $k=(m/m')^{Ω(1)}$.  We start by making the intervals on $S$ for $T_1[0]$ and $T_1[1]$ disjoint with $k^{-Ω(1)}$ cost, and exponentially growing savings (up to a large $Θ(1)$ and insertion) for disentanglement delay; and repeat with all $T_i$. Unless we get enough savings, we can then group the elements into batches of typical size $k^{Θ(1)}$, with all elements in a batch having approximately the same (in terms of both $\min$ and $\max$) interval.  We can then use a sorting and insertion algorithm for each batch (using either a worst-case bound, or after shuffling the elements, getting expected average case behavior).  We then proceed to disentangle and insert larger elements, roughly in the order of increasing element size, protecting (using incentives that grow with imbalance) against a large enough fraction of some $T_i$ being too clustered around the end of $S$ (thus ensuring that the density of the elements is small enough compared to the density of $S$).</p>
+
+
+<h3><a id="A8.4"/>8.4&nbsp;&nbsp; A $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ algorithm</h3>
+
+<p>We combine the above budgeting approach with the average case $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ algorithm to get sorting with worst-case $\lg(n!) + n 2^{-Ω(\sqrt{\log n})}$ comparisons, and similarly for inserting $m$ items into a sorted list.</p>
+
+<p>The basic component is that we are given a sorted list $S$, $m$ unsorted elements, and a budget for entropy waste $mb$ ($mb^{10}>1$).  The outcome of the component is to insert zero or more elements into $S$ and increase the budget per uninserted element in $1+Ω(1)$ times, with the elements unentangled and with interval lengths $|S|b^{O(1)}$ (as $b→0$).  After using this component, we can then reduce the number of different intervals (characterizing the elements) to $b^{-O(1)}$ by using some of the budget to increase the interval lengths, and then recursively repeat the construction for each interval, until all elements are inserted.  We assume that all interval lengths are $ω(m/b)$.  Also, if necessary, $Ω(1)$ $b$ can be handled by repeatedly using $b=ε$ to get a large enough budget.</p>
+
+<p>The subcomponents of the basic construction are randomization of intervals, Compare with $O(1)$ success chance, and element insertion.  At the end, the lengths will stay large enough unless disentanglement of two elements takes too long, but then if we bias the disentanglement comparisons for exponentially growing savings, we can insert the two elements using the savings.  Separately, since the Compare (to get a length close enough to a power of 2 without risking overflow) takes $O(1)$ comparisons, we can use $Ω(b)$ budget per comparison, and get $Ω(b)$ savings if unlucky, which suffices.  If the randomization succeeds for $Ω(m)$ elements, then we get $Ω(m)$ pairs for Compare, even with the bias, as long as the bias does not depend on the pair.</p>
+
+<p>We now show how to bias comparisons in randomization (from the average case algorithm) such that if it does not succeed for enough elements, then we get $Ω(b)$ savings per element, which suffices.  Randomization of $I_A$ needs only 2 $A-S$ comparisons (one for setting $\min$ and one for setting $\max$), so we can use $Ω(b)$ bias (and get $Ω(b)$ savings on failure) for these.  Each of the two specialized Compare also compares some element $B$ $O(\log b^{-1})$ times, giving it a randomized known location.  If each of the comparisons has $o(\log^{-1} b^{-1})$ bias, and for each approximate interval, we have $1/2±o(\log^{-1} b^{-1})$ yes probability, then these factors (i.e. bias+probability) add up to only $o(1)$ discrepancy for the probability distribution of approximate location of $B$.  This works for us even though $o(1)$ fraction of approximate locations might be excluded.</p>
+
+<p>By doing the randomization for different elements in parallel and ordering the comparisons with $S$ in the order of decreasing interval length, for each approximate interval for $B$, we get the total count $k$ before needing to choose an element of $S$ to compare $B$ further.  For the approximate interval, the bias for yes can start at 0, and increase (resp. decrease) by $(\log^{-2} b^{-1})/k$ for each no (resp. yes) for comparisons with the same approximate interval.  This way we stay within low enough bias for the discrepancy, and also stay within the budget (the net loss from the biases is limited to $(\log^{-2} b^{-1})$ per approximate interval), while ensuring that any large enough imbalance in outcomes creates sufficient net savings even if we end up with zero elements suitable insertion into $S$ in the component.</p>
+
+<p><i>Compute:</i> On unit cost RAM, the compute can be $O(n \log n)$ (allowing approximate midpoints for large intervals) as described in the compute subsection for the related average-case algorithms.  Also, on pointer machines, the compute is $O(n \log n \log \log n)$ (or $O(n \log n)$ for pointer machines with arithmetic), or $\lg(n!)+n 2^{-Ω(\sqrt{\log n})}+n2^{-Ω(\sqrt{c\log n / \log \log n})}$ comparisons with $O(c n \log n)$ compute (for every $c≥1$).</p>
+
+
+<h3><a id="A8.5"/>8.5&nbsp;&nbsp; A plausible $\lg(n!)+O(n^{1-ε})$ algorithm</h3>
+
+<p>We now give a plausible worst-case $\lg(n!)+O(n^{1-ε})$ comparison sorting algorithm by adding safeguards/incentives to the likely average-case algorithm.  Some safeguards are likely unnecessary, and for others, we made arbitrary numerical choices (that we expect to work), and we do not have a proof that we did not miss any safeguards.</p>
+
+<p>As before, we use a batch of $m=n^{1-Ω(1)}$ elements, say $\sqrt n$ (though insertion of smaller batches below should also give $m^{-Ω(1)}$ per-element waste).  Furthermore, since we are not optimizing $ε$, we can choose say $m^{1/8}$ approximate intervals (using uniform grid of size (i.e. number of points) $m^{1/16}$ works), with all logic except final insertion depending only on the approximate interval(s).  We get a $m^{1-ε}$ initial budget for entropy waste ($ε=10^{-9}$ should be small enough), which (also as before) will allow us to use imbalanced comparisons, and increase the budget if the outcome is the smaller interval (technically, the less likely interval assuming random distribution), and vice versa.</p>
+
+<p><i>Simulating randomness:</i> Because we only need to process elements in large batches, we can deterministically simulate random-enough behavior.  $\operatorname{random}(c,d)$ chooses a real number approximately uniformly between $c$ and $d$ (assuming $c&lt;d$), with the uniformity holding for the current group.  The group includes the place in the algorithm, the iteration number, the approximate intervals of the one or two elements we are processing, and if they are entangled, which element is smaller.  In the algorithm, we simulate all randomness this way, and use 'representative' to indicate this use of pseudorandomness.</p>
+
+<p>Each iteration will consist of randomization, followed by possible element removal. $b$ is the current per element budget.  During randomization, for Compare, for disentanglement of $A$ and $B$, we choose $A$ vs $B$ representatively, proportionally to its interval length.</p>
+
+<p><i>Randomization:</i>  Use 10% of net savings (if there are any) from the imbalanced comparisons in the previous randomization iteration to increase element interval lengths: $I_A := (\min(I_A)-\operatorname{random}(0,ε'|I_A|), \max(I_A)+\operatorname{random}(0,ε'|I_A|))$, with $ε'$ chosen to match the budget.  Otherwise, do not touch elements with intervals less than one tenth (or other such fraction) of the largest interval.  For other elements, representatively pick 9/10 fraction, and do Compare between elements with the same approximate interval (without reusing elements).  For the remainder 1/10, again lengthen the intervals but using $10ε'$ in place of $ε'$ (thus using another up to ≈10% of the savings).  Representatively, pick pairs $A$ and $B$, and if it is a match (but unlike the 9/10 fraction, interval lengths can differ), use Compare; and (also only if it is a match) set them aside to avoid reuse until the end of randomization for this iteration.  For elements not used in Compare (excluding those that we do not touch because of their interval is too short), do two comparisons with the sorted list $S$.</p>
+
+<p><i>Randomization incentives:</i>  For each approximate interval, we will keep a predictor for comparisons with $S$, resetting the predictor to 0 at the start of each iteration, and segregating the predictor based on whether the element is entangled, and if so, the approximate interval of the partner element and which element is smaller.  If the outcome is 'yes' (i.e. the element in question is higher then the element of $S$), increase the predictor by $m^{-1/2}$ up to a bound of 1/4 if it is nonnegative and $1.01m^{-1/2}$ if it is negative, and do symmetrically if the outcome is 'no'.  For the comparison, choose the element of $S$ such that the probability of 'yes' (assuming uniform distribution, as modified by the entanglement (if any)) is $≈0.5-\mathrm{predictor}⋅\operatorname{random}(0.999,1.001)$.</p>
+
+<p><i>Notes:</i><br/>
+* $m^{-1/2}$ is chosen to be both large enough for a possible $Θ(1)$ probability change (unless the number of elements is too small to be relevant) and small enough for a $m^{-Ω(1)}$ maximum loss due to the use of the predictor.  The asymmetry between 1 and 1.01 ensures that for $ε_2$ relative deviation in the choice of the element of $S$, we get $Θ(ε_2)$ savings, while allowing our adversary only a small (but $Θ(1)$) imbalance before we get significant savings.  We immediately use a $Θ(1)$ fraction of (what would otherwise be) savings for randomization.<br/>
+* Compare with approximately equal interval elements should guarantee (absent large savings) randomization of locations, but on its own, the randomization of lengths is too slow.  For Compare with different intervals, our opponent might with some success choose an adversarial distribution, such as by slightly shifting interval midpoints as a function of length, leaving only a small but $Ω(1)$ fraction of approximate lengths for each approximate midpoint.  However, within that fraction, the opponent likely cannot stop randomization since (after position randomization) we have $ω(1)$ choices.</p>
+
+<p><i>Element removal:</i>  Take a pseudorandom subset consisting of 1% (or other small enough fraction) of remaining elements, and try to get intervals close to a power of 2.  We do not use all elements to ensure that the remainder remains randomized.  For getting close to a power of 2, we look for triples of elements $A,B,C$ such that after a path of ≤10 comparisons (or other not too small number), we might get an interval close enough to a power of 2 (without risk of overflow, even with the below incentives).  We then use this path, choosing incentives such that we either get close enough to a power of 2 (and remove an element from the batch) at the cost &lt;b/2, or get $Θ(b)$ savings ($0.0004b$ works for 10 comparisons).  Intervals less 10% of maximum interval are not used, but otherwise we pick $A,B,C$ representatively, and if it is a match, use them, without reuse of matched elements until the next iteration.  Disentanglement can use exponentially growing savings in case of failure.<br/>
+<i>Note:</i>  Using triples rather than pairs of elements makes removal much more tolerant of flawed randomization.</p>
+
+<!-- attempt from Aug 2021; is not likely to work; as discussed in a note about non-adaptability to the worst case for the $\lg(n!)+O(\log n)$ algorithm (section title from summer of 2020, text from Aug 2021)
+<h3>8.5&nbsp;&nbsp; Towards a $\lg(n!)+n^{0.5+o(1)}$ algorithm</h3>
+To be written. [alternate title: Towards a better algorithm]
+
+Waiting for intervals to grow until they are close to a power of 2 appears to have a transformative effect on the average case (as witnessed using our possible $\lg(n!)+O(\log n)$ algorithm), and we expect this to help the worst case as well, but how much is unclear.  Randomization and distribution shaping can likely be adapted to the worst case with reasonable success (with tricky but doable bits for setting and exploiting the right structural incentives).  For insertion, relative underflow by $ε$ has $Θ(ε)$ cost (versus $Θ(ε^2)$ in the average case by using imbalanced comparison and if not getting a power of 2, waiting for the interval to grow), while overflow by $ε$ has $Θ(1)$ cost (versus $Θ(ε)$ in the average case).  The real problem though may be maintaining the uniformity of the sorted list $S$ during insertion.  Once we get a power of 2 (or so) interval, the worst case may send the element anywhere in the interval, and using significantly biased comparisons would break the property of being close to a power of 2.
+
+To avoid the need for extreme precision in the final stage, we can split the $n$ elements into batches of approximate size $n/2,n/4,n/8,...$.  Leftover elements from sorting the $n/2$ batch will go into the $n/4$ batch and so on.   We can even have $Θ(n)$ leftover elements at \tilde{O(\sqrt n)}$ cost if their intervals are long enough and otherwise well-behaved.  After getting sorted, the batches are then merged using nearly-equal size merges.  Mutual information between batches becomes waste at the merging time.
+
+Given an element $A$ forwarded to the second batch (and similarly for other batches), we can, at a convenient time (and once the sorted list of the new batch is large enough), use comparisons with the sorted list to classify $A$ as follows:
+- with high probability, the mutual information concerning $A$ becomes effectively 0.  The probability of having $>d$-fold (up to a limit) length reduction is $θ(d^{-1}$.
+- with probability $Θ(\sqrt n / |I_A|)$ (assuming $|I_A|=Ω(\sqrt n)$, we lose an expected $0(1)$ bits due to mutual information, with a tail of smaller losses.
+Furthermore, we can bias the comparisons to appropriately handle the worst case.
+-->
+
+
+<h2>References</h2>
+
+<p><a id="ref1">[1]</a> Stefan Edelkamp and Armin Weiß. QuickXsort: Efficient Sorting with n log n - 1.399n + o(n) Comparisons on Average. <i>CSR 2014</i>: pp. 139–152.<br/>
+<a id="ref2">[2]</a> Kazuo Iwama and Junichi Teruyama.  Improved Average Complexity for Comparison-Based Sorting. <i>WADS 2017: Algorithms and Data Structures</i> pp. 485-496.<br/>
+<a id="ref3">[3]</a> Dmytro Taranovsky. Sorting with an average of $\lg(n!)+o(n)$ comparisons. <a href="https://cstheory.stackexchange.com/questions/41493/sorting-with-an-average-of-mathrmlgnon-comparisons">https://cstheory.stackexchange.com/questions/41493/sorting-with-an-average-of-mathrmlgnon-comparisons</a> .<br/>
+<a id="ref4">[4]</a> Dorit Dor and Uri Zwick. Median Selection Requires $(2+\epsilon)n$ Comparisons. <i>SIAM Journal on Discrete Mathematics</i>, 2001, Vol. 14, No. 3 : pp. 312-325.</p>
+
+</body>
+</html>

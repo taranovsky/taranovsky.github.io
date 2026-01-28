@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Reflective Sequences</title>
+	<style type="text/css">
+		p {white-space:pre-line}
+	</style>
+</head>
+
+<body lang="en-US">
+
+<p style='text-align:right'>Dmytro Taranovsky
+March 10, 2015
+Modified: October 31, 2016
+Small change: December 14, 2016</p>
+
+<h1 style='text-align:center'>Set Theory with Reflective Sequences</h1>
+
+<p><b>Abstract:</b>  We extend the language of set theory through reflective sequences of ordinals, develop a hierarchy of reflective sequences, obtain limits on infinitary indiscernibles, and propose axioms for reflective sequences.</p>
+
+<p><b>Contents:</b>  <a href="#A1">Introduction</a>, <a href="#A2">Reflective Sequences</a>, <a href="#A3">Limits on Infinitary Indiscernibility</a>, <a href="#A4">Axiomatization of Long Reflective Sequences</a>, <a href="#A5">Extension to Reflective Functions</a>, <a href="#A6">Further Extensions</a>.</p>
+
+<p><b>Note:</b> For reader's convenience, the text now is also incorporated into <a href="http://arxiv.org/abs/1203.2270">Reflective Cardinals</a> paper.</p>
+
+
+<h2><a id="A1"/> Introduction </h2>
+
+<p>Within the language of set theory, one reaches higher and higher expressive power by climbing higher in the cumulative hierarchy of V.  But how can we go further once the language allows quantification over the whole V?  Intuitively, we would want to continue the hierarchy above V, except that all sets are already in V.  The solution is to label a cardinal κ such that V<sub>κ</sub> is sufficiently close to V, and continue the hierarchy above V<sub>κ</sub>.  V<sub>κ</sub> represents V, and with κ labeled in an extended language, hierarchy above V<sub>κ</sub> corresponds to higher order set theory.</p>
+
+<p>To go further, we can iterate higher order set theory by picking λ>κ with V<sub>λ</sub> representing V, and then μ>λ, and continuing to longer sequences of ordinals.  Thus, continuing the cumulative hierarchy above V corresponds to labeling certain ordinals that are sufficiently similar to Ord &mdash; in other words, certain ordinals with sufficiently strong reflection properties &mdash; while staying within V.</p>
+
+<p>How do we choose the right κ?  The answer is that we postulate a certain degree of symmetry and reflection in V.
+<b>Convergence Hypothesis (general form):</b> For an appropriate type of objects, all objects of that type with sufficient reflection properties are, to a certain degree, indistinguishable from each other.
+<b>Convergence Hypothesis (ordinals):</b> If α and β are ordinals with sufficiently strong reflection properties, then φ(S, α) ⇔ φ(S, β) whenever rank(S) &lt; min(α, β) and φ is a first order formula of set theory with two free variables.
+<b>Definition:</b> κ is a <i>reflective cardinal</i>, denoted by R(κ), iff (V,∈,κ) has the same theory with parameters in V<sub>κ</sub> as (V,∈,λ) for every cardinal λ>κ with sufficiently strong reflection properties.
+<b>Example:</b>  In L (assuming 0<sup>#</sup>), every Silver indiscernible has sufficient reflection properties, which allows us to define R<sup>L</sup> in V.
+<b>Note:</b>  A formalist can treat the Convergence Hypothesis as a guiding principle to get good systems of axioms.  A formalist can ask, for example, whether we want the Convergence Hypothesis to hold in V, and if yes (or maybe), investigate how far it can hold and how to axiomatize it.  A counterexample to the Convergence Hypothesis would be a property that 'toggles', with an explanation of why it toggles.</p>
+
+<p>To the extent that it holds, the Convergence Hypothesis allows us to define new reflective notions without ambiguity.  We specify a notion by stating its type (example: a pair of ordinals) along with the class of predicates for which it agrees with all objects (of the same type) with sufficient reflection properties.  See my <a href="http://arxiv.org/abs/1203.2270">Reflective Cardinals</a> paper for analysis, axiomatization, and theory of reflective cardinals.  Here, I will develop a theory of infinite reflective sequences.
+<b>Definition:</b> Given a length condition P (such as having length ω), an increasing sequence of ordinals S satisfying P is <i>reflective</i> (denoted by R<sub>P</sub>(S) or simply R(S)) iff
+&nbsp;&nbsp;(1) the theory of (V,∈,S) with parameters in V<sub>min(S)</sub> is correct, that is it agrees with (V,∈,T) for every T satisfying P and having sufficient reflection properties and min(T)>min(S), and
+&nbsp;&nbsp;(2) for every α&lt;sup(S) S\α is reflective under the above criterion (where the length condition is modified to correspond to S\α if S\α is "shorter" than S).
+A variation on the notion is to omit the second condition.</p>
+
+<p><i>Notes about R:</i>
+• We use R rather a single element of R for two reasons:
+&nbsp;&nbsp;- We want to be able to express predicates, such as the satisfaction relation of (V,∈), and not just statements.
+&nbsp;&nbsp;- For infinite reflective sequences, it is unclear if (or how) an example is definable, and we want the intended semantics of the language to be unambiguous.
+• There is a hierarchy notions related to R based on the degree of "correctness" required (one example is to allow just Σ<sup>V</sup><sub>2</sub> φ in the definition as opposed to Σ<sup>V</sup><sub>&lt;ω</sub> φ).  Essentially, our choice for R(x) is to require just enough correctness to maximize expressiveness of (V,∈,x) for predicates that do not depend on x.
+• In every extension here, R will correspond to a single type of objects (for example, sequences of ordinals of length ω).  However, these notions form a hierarchy, and an alternative, which we will use informally, is to use R(x) in place of R<sub>type(x)</sub>(x), thus having just a single symbol R.</p>
+
+
+<h2><a id="A2"/> Reflective Sequences </h2>
+
+<p>To understand the hierarchy of reflective sequences, imagine a process of picking ordinals with sufficient reflection properties, and with the process itself having sufficient reflection properties.  Let S be a resulting sequence.  Here are some stages in the process:
+<b>1.</b> n ordinals for finite n.  This is well-understood (see "Reflective Cardinals" reference for theory).
+<b>2.</b> ω ordinals.  See "Reflective Cardinals" for some results.  There is a refined hierarchy based on the degree of correctness we require.  We have good axiomatization (specifically, through iterations of reflective cardinals) up to about correctness in L<sub>sup(S)</sub>(V<sub>sup(S)</sub>), and through an analogue of Prikry forcing, we may be able get up to M(V<sub>sup(S)</sub>) (where M is a mouse operator and assuming sufficient structure above M).  However, under reasonable assumptions, full correctness in V contradicts V=HOD, which makes analysis and finding of canonical models difficult.  A reasonable conjecture is that the Σ<sub>2</sub> truth predicate of (V<sub>sup(S)</sub>, ∈, S) corresponds to enumeration of all ordinal definable reals.
+<b>3.</b> α ordinals for countable α.  We expect R to be closed under subsequences that preserve order type.
+<b>4.</b> ω<sub>1</sub> ordinals.  Assuming the Continuum Hypothesis (CH), we cannot require closure of R under all subsequences of the same length. Even without CH, this limitation holds at ω<sub>2</sub>.
+<b>5.</b> α ordinals for a fixed ordinal α >ω<sub>1</sub> (min(S)>α).
+<b>6.</b> More complicated conditions about the length of S, such as |S|=min(S). S excludes its limit points.
+<b>7.</b> Length of S has sufficiently strong reflection properties relative to S. S excludes its limit points.
+<b>8.</b> To go beyond (7), we assume that S includes its limit points at places with sufficient (relative to S) degree of reflectiveness.  One may then state conditions on the length of S such as "S includes exactly ω limit points, and they are cofinal in S" or "S has maximum element and it is the only element such that S below it is stationary".
+<b>9.</b> Length of S has sufficiently strong reflection properties relative to S.  This notion is axiomatized in "Axiomatization of Long Reflective Sequences" below.</p>
+
+<p>To go beyond what is expressible with S, we mark some points on S that have sufficient (relative to S) degree of reflectiveness, analogously to how S is obtained by marking some ordinals with sufficient reflectiveness in V.  To go further, we then add a third type of marking, and in general, for each ordinal in S, we can assign a degree of reflectiveness through a function f:S→Ord\{∅}.   For a limit α, f(x)=α corresponds to x receiving all markings &lt;α.  In the definition of reflectiveness, use f in place of S, min(dom(f)) in place of min(S) (and min(dom(T)) in place of min(T)), sup(dom(f)) in place of sup(S), and in place of S\α, use f↾(Ord\α) modified to make f(min(dom(f)\α)) equal 1.  Here are some notions. (Here S=dom(f).)</p>
+
+<p><b>10.</b> For a fixed ordinal α, f(sup(S))=α (and hence sup(S)∈S), and sup(S) is the only ordinal κ with f(κ)=α (and min(dom(f))>α).
+<b>11.</b> f(sup(S))=sup(S), and sup(S) is the only ordinal κ with f(κ)=κ.
+<b>12.</b> To go beyond f(κ)=κ, we modify the condition &mdash; that f(κ)=α+1 implies that κ has sufficiently strong reflection properties relative to f that is clipped to α &mdash; by invoking an ordinal notation system (for ordinals ≥κ) or just a comparison method between f(λ) and f(κ), and considering f clipped below f(κ) as defined through the comparison method.  Below (in "Extension to Reflective Functions") we axiomatize the following: There is only one ordinal κ with f(κ)=(κ<sup>+</sup>)<sup>HOD</sup>, and it equals sup(dom(f)).</p>
+
+<p> For reflective cardinals, an axiomatization essentially states the degree of correctness (relative to other reflective cardinals) and existence of enough reflective cardinals, and it can be extended with large cardinal axioms applied to reflective cardinals.  For reflective sequences, we also need to state enough axioms for the sequence as a whole, or the axiomatization would be too incomplete.  Just like large cardinal axioms for cardinals, there are various axioms for reflective sequences.</p>
+
+<p>The type of f and many of its basic properties can be formalized using inner models.  For example, for notion 11 we can require that there is an inner model M of ZFC such that 
+&nbsp;- dom(f) is the set of measurable cardinals in M
+&nbsp;- for every κ in the domain of f, f(κ) is the Mitchell order of κ in M
+&nbsp;- M has only one cardinal κ such that o(κ)<sup>M</sup>=κ and it is the largest measurable cardinal in M.
+From inner model theory, it appears that without restricting the class of f that satisfy the requirement, M can be taken to be an iterate of the minimal inner model with these cardinals.  The possibilities for M and iteration are sufficiently rich to get any reasonable f corresponding to this notion (notion 11 in this case).  One can also similarly state requirements on M for other notions.</p>
+
+<p>If f satisfies the condition above (with M an iterate of the minimal model), then the theory of (L(f),∈,f) is independent of f, which is one example of the Convergence Hypothesis, and moreover, we can study this theory to get a better understanding of f.</p>
+
+<p>Our axiomatization involves a strengthening of the above condition by asserting that elements of a reflective sequence are, in a sense, infinitary indiscernibles.  To do that, we need to know how much infinitary indiscernibility is possible in V.</p>
+
+
+<h2><a id="A3"/>Limits on Infinitary Indiscernibility</h2>
+
+<p>The axiom of choice sharply limits the amount of infinitary indiscernibility.</p>
+
+<p><b>Theorem:</b>  For every uncountable sequence of distinct reals X, there is X-definable f:V→ω such that for every S⊂Ord of order type ω<sub>1</sub> there is X,S-definable T⊂S of order type ω<sub>1</sub> with f(T)≠f(S).
+<b>Notes:</b>
+• This implies that for every κ≥ω<sub>1</sub>, the partition relation κ → ω<sub>1</sub><sup>ω<sub>1</sub></sup><sub>ω</sub> fails for a function f definable from X.  
+• For definability, Δ<sup>V</sup><sub>2</sub> definability more than suffices.
+• If T could be made S-definable, the axioms below would be inconsistent, but a weakening to (essentially) lightface version would be unaffected.
+• <i>Acknowledgment:</i>  I would like to thank Hugh Woodin for outlining a proof of a weaker version of the theorem with exponent ω<sub>2</sub>.
+<b>Proof:</b>
+Using X, we can define a sequence X′ of subsets of ω of length ω<sub>1</sub> that does not have a perfect subset.  Thus, the following game (this is the standard game for the perfect subset property) is undetermined:
+Player I: Each move consists of zero or more zeroes and ones.
+Player II: Each move is 0 or 1.
+Player I wins iff if the concatenation of the moves belongs to the set (X′).
+However, analogously to the standard proof of analytic determinacy from sharps (which can be found in, for example, Wikipedia <a href="https://en.wikipedia.org/wiki/Determinacy">Determinacy</a> article (accessed October 30, 2016)), the partition relation would make the game determined as follows.  The tree T<sub>X′</sub> corresponding to the game will have ω<sub>1</sub> branches at the root, each corresponding to an element of X′, and no further branches.  The open auxiliary game requires player II to play the subtree of T<sub>X′</sub> corresponding to the play so far (including all initial segments of the play), and a mapping of the subtree into ordinals, such that the mappings are consistent with each other and agree with the Kleene-Brouwer order.  Player I wins the auxiliary game and has a definable strategy: For example, pick the least move that gives maximum reduction of the rank of the remaining game.  Let g(S) return move given position where S is the set of ordinals used in the tree.  If we attempt to use S to convert the strategy into a strategy for the original game, the failure will give us the required T.  While g returns elements of 2<sup>ω</sup>, it can be converted into f:V→ω as follows: f(S)=2n+(g(S))<sub>n</sub> where n = min(m: ∃T⊂S T∈Def(X′,S) ∧ |T|=ω<sub>1</sub> ∧ (g(S))<sub>m</sub>≠(g(T))<sub>m</sub>)) where Def(X′,S) can be for example definability from X′,S in V<sub>sup(S)+1</sub>.</p>
+
+<p><b>Corollary:</b> There is a definable predicate P such that for every set of ordinals S of order type at least (2<sup>2<sup>ω<sub>1</sub></sup></sup>)<sup>+</sup> there are subsets T<sub>1</sub> and T<sub>2</sub> of order type ω<sub>1</sub>*2 such that such that P(T<sub>1</sub>)≠P(T<sub>2</sub>).
+<b>Proof Sketch:</b> Here is one such P: P(S) iff {S<sub>i</sub>:i&lt;ω<sub>1</sub>} agrees with {S<sub>i</sub>:ω<sub>1</sub>≤i&lt;ω<sub>1</sub>*2} with respect to all predicates that are definable in V<sub>sup(S)</sub> using parameters that are subsets of ω<sub>1</sub>.</p>
+
+<p>In the absence of a convincing theory, lack of closure under subsets would cast doubt on whether the notions of reflective sequences are well-defined.  However, we can weaken closure under subsets by requiring the subsets to be definable, and that may give us what we need to axiomatize R.
+<b>Note:</b>  It is also possible that the convergence hypothesis holds for statements but not for statements with arbitrary sets as parameters.  In that case, R would be ill-defined in V but might have a preferred well-defined theory, and its lightface version (requiring correctness only for statements without parameters) would be well defined.  If the 'boldface' version is ill-defined or otherwise undesirable, the systems of axioms below can be modified for the lightface version by requiring the relevant theories to agree without parameters (as opposed to with parameters), and analogously for a strengthening of the lightface version that allows countable sequences of ordinals as parameters.</p>
+
+<p>Assuming determinacy of games on ordinals of length ω<sub>1</sub> and ordinal definable payoff, κ → κ<sup>ω<sub>1</sub></sup><sub>2<sup>λ</sup></sub> holds for every regular countably closed κ and λ&lt;κ for functions definable from a countable sequence of ordinals.  See my "Reflective Cardinals" paper for a proof sketch of a more general proposition using Extended Determinacy Maximum. <i>Question:</i> Can similar relations can be obtained from much weaker assumptions?</p>
+
+<p>Partition relations with exponents &gt;ω<sub>1</sub> might be consistent by restricting to definable subsets.  A strengthening of the strong partition relation (restricted to definable partitions and subsets) is to also require the homogeneous set to have enough limit points and require the same of the subset, and this can be strengthened further by requiring the sets to be in an appropriate filter. Here is a key proposition to investigate: 
+<b>Conjecture:</b> There is an ordinal κ, a normal nonprincipal κ-complete ultrafilter U on κ, and S∈U such that for every T⊂S with T∈U and T ordinal definable from S and a countable set of ordinals, (V, ∈, T) and (V, ∈, S) have the same Σ<sup>V</sup><sub>2</sub> theory with parameters in V<sub>min(S)</sub>.
+<i>Question:</i>  Is this conjecture consistent?
+If consistent and nonrestrictive, this property can be used in axiomatization of long reflective sequences of ordinals as follows.</p>
+
+
+<h2><a id="A4"/>Axiomatization of Long Reflective Sequences</h2>
+
+<p>Here is an axiomatization corresponding to notion 9 above.  Its consistency and truthfulness are unclear.</p>
+
+<p><b>Language:</b> ∈, R (unary predicate)
+<i>Definition:</i> Theory(M, ∈, S; W) (where M is transitive, S⊂M and W⊂M) is {"φ",w: w∈W ∧ (M,∈,S)⊨φ(w)} where φ has 1 free variable and may use relational symbols '∈' and 'S' (unary predicate).
+<i>Definition:</i> OD<sub>S</sub>(C) is the class of sets ordinal definable (without using R) from S and elements of C.
+<i>Definition:</i> R<sub>1</sub>(κ) ⇔ ∃S∈R κ∈S
+<i>Note:</i> sup stands for supremum.
+<b>Axioms:</b>
+<b>1.</b> ZFC
+<b>2.</b> ∀x∃y∀z(z∈y⇔z∈x∧R(z))
+<b>3.</b> R(S) ⇔ R<sub>aux</sub>(S) ∧ ∀α&lt;sup(S) R<sub>aux</sub>(S\α)
+&nbsp;&nbsp;&nbsp; where R<sub>aux</sub>(S) ⇔ S≠∅ ∧ S⊂Ord ∧ ∀T∈R ∀κ∈R<sub>1</sub>\(sup(S∪T)+1) Theory(V<sub>κ</sub>, ∈, S; V<sub>min(S∪T)</sub>) = Theory(V<sub>κ</sub>, ∈, T; V<sub>min(S∪T)</sub>)
+<b>4.</b> (schema; n is a natural number) ∃κ∈R<sub>1</sub> ∃S∈R κ=sup(S) ∧ V<sub>κ</sub> ≺<sub>Σ<sup>R</sup><sub>n</sub></sub> V
+<b>5.</b> ∃S∈R ∃U∋S (a normal nonprincipal κ-complete ultrafilter on κ=sup(S)) ∀T∈OD<sub>S</sub>(Ord<sup>ω</sup>) (T⊂S ∧ T∈U ⇒ R(T)).</p>
+
+<p style="margin-bottom:0px"><i>Notes:</i></p>
+<ul style="padding-left:20px;margin-top:0px">
+<li> (3) specifies the type of R and the degree of correctness required.  The intended semantics is that members of R have sufficiently strong reflection properties so as to (if possible) render R unambiguous in V.  As mentioned above, the general underlying hypothesis is that for an appropriate type, all objects of that type with sufficiently strong reflection properties are sufficiently indistinguishable from each other.
+</li><li> R<sub>aux</sub> and R have the same expressive power (the definition of R<sub>aux</sub> in (3) could just as well have used R<sub>aux</sub>; R<sub>1</sub> is {min(S):S∈R<sub>aux</sub>}), but R is more natural (and is different from R<sub>aux</sub>). Other than that, (1)-(4) are essentially standard, and the combinatorial properties are obtained from (5).
+</li><li> (4) is a strengthening of replacement for formulas with R, and it also ensures that sup(S) has essentially the same properties as members of S.
+</li><li> A weakening of (5) (if one objects to requiring measurable cardinals in V) is to require U to be an ultrafilter on a smaller model ZFC, as long as it contains HOD(V<sub>κ</sub>, S).
+</li><li> It is unclear whether the property in (5) holds for all members of R.  Its weakening to Σ<sup>V</sup><sub>n</sub> predicates holds, but it is unclear whether U can be chosen independent of n.
+</li><li> In (5), it is unclear whether the ultrafilter itself can be chosen to have a canonical theory with parameters in V<sub>κ</sub>.
+</li><li> A strengthening of 5 is to also require S∈<i>i</i><sup>U</sup>(R) to hold (where <i>i</i><sup>U</sup> is the embedding corresponding to U).
+</li><li> These notes also apply to the extension to reflective functions below (except the part about S∈<i>i</i><sup>U</sup>(R)).
+</li></ul>
+
+<p>Using the theorem above, the axioms imply that there is no OD(Ord<sup>ω</sup>) uncountable sequence of distinct reals.</p>
+
+<p><i>Question:</i>  Is it consistent/provable/true that ∃κ>0 ∀f:κ→κ ∃T∈R∩P(κ) ∀α&lt;κ T<sub>α+1</sub>>f(T<sub>α</sub>)?
+If yes, what about the stronger ∀S∈U ∃T⊂S T∈R∩U (where U is as in axiom 5 above)?
+<i>Notes:</i>
+* The same question can be asked about extensions to reflective functions using the domain of the function in place of T.
+* The statement (either weaker or stronger form) is natural and appears to fill in the gap created by the lack of closure of R under subsequences.  However, we do not know whether there are 'pathological' counterexamples to the statement.
+* If true but unprovable, the statement is a good addition to the axioms.</p>
+
+<p>Here are possible outcomes for the axioms:
+a. The axioms are inconsistent.  One would then search for a suitable replacement, and if it is found, try again.
+b. The axioms are consistent but restrictive (for example, they contradict a true large cardinal axiom).  One would then also look for replacement (though models for the axioms may also be interesting).
+c. The axioms are consistent but too incomplete because the underlying notion is ill-defined.  One can still study models with the axioms, and appreciate the underlying symmetry and beauty.
+d. The axioms are consistent but too incomplete.  One would then search for additional axioms.  Good axiomatization is key evidence that the underlying notion is well-defined.
+e. The axioms form the core of the theory, but it can still be extended, analogously to ZFC forming basic axioms for set theory.</p>
+
+
+<h2><a id="A5"/>Extension to Reflective Functions</h2>
+
+<p> We can go beyond notion 9 by having a coherent system of measures instead of a single measure.  For an ordinal κ, measure U(κ,α) (note that its Mitchell rank need not be α) will witness that there are enough ordinals λ&lt;κ with f(λ)=α (or if α≥κ that f(λ) corresponds to α).  For transformations of f, besides reducing its domain, we can downgrade some of the labels.  A complication is that in the transformed f, we may have, for example, an ordinal with label 2 without enough label 1 ordinals below it.  We resolve it by recursively relabeling ordinals, each time keeping as much structure as is compatible with the labels for lower ordinals.  The proposed axiomatization for notion 12 is as follows.</p>
+
+<p><b>Language:</b> ∈, R (unary predicate)
+<i>Definition:</i> κ∈R<sub>1</sub> ⇔ ∃f∈R "f is a nonempty function with dom(f)⊂Ord" ∧ κ=min(dom(f)).
+<i>Note:</i> See above for definitions of Theory(M, ∈, S; W) and OD.
+<b>Axioms:</b>
+<b>1.</b> ZFC
+<b>2.</b> ∀x∃y∀z(z∈y⇔z∈x∧R(z))
+<b>3.</b> R(f) ⇔ R<sub>aux</sub>(f) ∧ ∀α&lt;sup(dom(f)) ∃β>α R<sub>aux</sub>(f↾(Ord\β))
+&nbsp;&nbsp;&nbsp; where R<sub>aux</sub>(f) ⇔ f≠∅ ∧ (f is a function) ∧ dom(f)⊂Ord ∧ ran(f)⊂Ord ∧ ∀g∈R ∀κ∈R<sub>1</sub>\(sup(dom(f)∪dom(g))+1) Theory(V<sub>κ</sub>, ∈, f; V<sub>min(dom(f)∪dom(g))</sub>) = Theory(V<sub>κ</sub>, ∈, g; V<sub>min(dom(f)∪dom(g))</sub>).
+<b>4.</b> (length condition) ∀f∈R {κ∈dom(f): f(κ)=(κ<sup>+</sup>)<sup>HOD</sup>} = {sup(dom(f))}
+<b>5.</b> (schema; n is a natural number) ∃κ∈R<sub>1</sub> ∃f∈R κ=sup(dom(f)) ∧ V<sub>κ</sub> ≺<sub>Σ<sup>R</sup><sub>n</sub></sub> V
+<b>6.</b> (key combinatorial principle) There is f ∈ R and a sequence of ultrafilters U such that:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i. dom(U) = {(κ,α): κ∈dom(f) ∧ α&lt;f(κ)}
+&nbsp;&nbsp;&nbsp;&nbsp;ii. U(κ,α) is a κ-complete normal nonprincipal ultrafilter on κ
+&nbsp;&nbsp;&nbsp;iii. ∀(κ,α)∈dom(U) (κ,α)∉dom(<i>i</i><sup>U(κ,α)</sup>(U)) ∧ ∀β&lt;α <i>i</i><sup>U(κ,α)</sup>(U)(κ,β) = U(κ,β) (coherence condition; <i>i</i> is the embedding corresponding to the ultrafilter)
+&nbsp;&nbsp;&nbsp;iv. Given a function g:Ord→Ord\{∅} with dom(g)⊂dom(f), define g′ (with dom(g′)=dom(g)) as follows: g′(κ)=min(g(κ), sup(α+1: α=0 ∨ ∃β>0 <i>i</i><sup>U(κ,β)</sup>(g′)(κ) = α)).&nbsp;  <i>Key Condition:</i>  ∀g∈OD<sub>f</sub>(Ord<sup>ω</sup>) g′(sup(dom(f))) = f(sup(dom(f))) ⇒ R(g′).</p>
+
+<h2><a id="A6"/>Further Extensions</h2>
+
+<h3> General </h3>
+
+<p style="margin-bottom:0px">To extend the language further, some of the possibilities are:</p>
+<ol style="margin-top:0px">
+<li> Extend the length condition to a higher ordinal.
+</li><li> Extend R to a different type of objects.
+</li><li> Find a different property in the set-theoretical universe.
+</li><li> Find something other than sets that is not reducible to sets.</li>
+</ol>
+
+<p> The axioms above are essentially independent of the length condition, and by using (non-overlapping) extenders in place of ultrafilters, we can go up to a strong cardinal (though the resulting system might well be inconsistent or otherwise false).  On the other hand, our semantic development depends on being able to compare f(κ) with f(λ).  We can likely go beyond (κ<sup>+</sup>)<sup>HOD</sup> by, for example, using R to define a higher ordinal and requiring correctness relative to R in the axioms to define R'.  To potentially go much further, note that we depend only on the correctness of theory with appropriate parameters rather being able to compare all f(κ) and f(λ), and it is possible that there is unique privileged theory here.</p>
+
+<p><i>Question:</i>  Does the convergence hypothesis apply to the class of iterates of the minimal inner model with a strong cardinal?</p>
+
+<p>If yes, then we have a corresponding extension to the language of set theory, essentially corresponding to maximal canonical non-overlapping f.</p>
+
+<h3>Overlapping Extenders</h3>
+
+<p>We can try to go even further by allowing f to overlap, that is by letting f(κ)≥λ for λ>κ and λ∈dom(f).  This may be analogous to overlapping extenders in the models beyond a strong cardinal &mdash; for example two cardinals strong up to the same measurable cardinal may correspond with f(κ) = f(λ) = min(dom(f)\(λ+1)) (with κ&lt;λ) &mdash; but there are other possibilities as well, and the right framework is unclear.</p>
+
+<p>For overlapping f, we must impose a restriction on the type of overlap.  Otherwise, let x<sub>0</sub>&lt;x<sub>1</sub>&lt;x<sub>2</sub>&lt;... be an infinite sequence of ordinals such that ∀i&lt;ω f(x<sub>i</sub>) ≥ sup(x<sub>i</sub>:i&lt;ω).  Let y<sub>i</sub>=min(α: f(α)≥x<sub>i</sub>).  Without restrictions on overlapping, we would have y<sub>0</sub>&lt;y<sub>1</sub>&lt;...&lt;x<sub>0</sub>, and repeating the process with y in place of x, we get z<sub>0</sub>&lt;z<sub>1</sub>&lt;...y<sub>0</sub>, and so on, leading to infinite regress.  One restriction is to prohibit infinite overlap &mdash; that is to prohibit x<sub>0</sub>&lt;x<sub>1</sub>&lt;... with ∀i&lt;ω f(x<sub>i</sub>)≥x<sub>i+1</sub>.  However, this restriction is too limiting, and there is a better alternative.  Note that if κ &lt; λ &lt; μ and κ is &lt;λ-strong and λ is &lt;μ strong, then κ is &lt;μ strong.  Analogously, we require that ∀κ∈dom(f)∀λ∈dom(f) (κ&lt;λ ∧ f(κ)≥λ ⇒ f(κ)≥f(λ)).</p>
+
+<p>The right general framework is to have a rich system of embeddings to witness f, perhaps using iteration trees.  For an example, suppose f(κ)=λ+1 where λ=min(dom(f)\(κ+1)) and μ>λ and μ∈dom(f).  If we remove all ordinals strictly between κ and μ from dom(f), then we should be able to arrange f(κ)=μ+1, and the system should have an embedding to witness that.  However, we do not yet know how to axiomatize such systems.  Below, we attempt an axiomatization for limited degree of overlap and without the ability to move f(κ) upward.  The later restriction might make the system too incomplete, but (if consistent) it should still show important structure.</p>
+
+<p><b>Language:</b> ∈, R (unary predicate)
+<i>Note</i>: See "Axiomatization of Long Reflective Sequences" above for definitions of Theory(M, ∈, S; W) and OD.
+<b>Axioms:</b>
+<b>1</b>,<b>2</b>,<b>3</b> as above ("Extension to Reflective Functions").
+<b>4.</b> (schema; <u>n</u> is a natural number) There is f ∈ R, κ<sub>max</sub>=sup(dom(f)), a sequence of extenders E, and an ultrafilter U such that:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i. dom(E) = {(κ,α): κ∈dom(f) ∧ α&lt;f(κ)}
+&nbsp;&nbsp;&nbsp;&nbsp;ii. E(κ,α) is a normal short extender such that the corresponding embedding <i>i</i><sup>E(κ,α)</sup> is α-dom(E)-S strong and has critical point κ.  Here S is the satisfaction relation for Σ<sup>R,V</sup><sub><u>n</u></sub> formulas.
+&nbsp;&nbsp;&nbsp;iii. ∀(κ,α)∈dom(E) (κ,α)∉dom(<i>i</i><sup>E(κ,α)</sup>(E)) ∧ ∀β&lt;α <i>i</i><sup>E(κ,α)</sup>(E)(κ,β) = E(κ,β) (coherence condition)
+&nbsp;&nbsp;&nbsp;iv. U is a κ<sub>max</sub>-complete normal nonprincipal ultrafilter on κ<sub>max</sub>.
+&nbsp;&nbsp;&nbsp;&nbsp;v. V<sub>κ<sub>max</sub></sub> ≺<sub>Σ<sup>R</sup><sub><u>n</u></sub></sub> V and Theory(V,∈,R,f;V<sub>κ<sub>max</sub></sub>) = Theory(<i>i</i><sup>U</sup>(V),∈,<i>i</i><sup>U</sup>(R),f;V<sub>κ<sub>max</sub></sub>), where Theory is restricted to φ with <u>n</u> unbounded quantifiers.
+&nbsp;&nbsp;&nbsp;vi. Given a function g:κ<sub>max</sub>→Ord, define g′:κ<sub>max</sub>→Ord as follows: g′(κ) = min({g(κ), sup(α+1: ∃β <i>i</i><sup>E(κ,β)</sup>(g′)(κ) = α)} ∪ {sup(α+1: α&lt;g′(λ) ∧ ∀γ&lt;g′(λ)∃β <i>i</i><sup>E(λ,β)</sup>(g′)(λ)≥γ ∧ <i>i</i><sup>E(λ,β)</sup>(g′)(κ)≥α): λ&lt;κ ∧ g′(λ)≥κ}}.&nbsp;  Let g′′ = g′↾{κ:g′(κ)>0}.&nbsp;  <i>Key Condition:</i>  ∀g∈OD<sub>f,R</sub>(Ord<sup>ω</sup>) ({λ∈dom(g′′): g′′(λ)=κ<sub>max</sub>}∈U ⇒ Theory(V,∈,R,g′′;V<sub>κ<sub>max</sub></sub>) = Theory(V,∈,R,f;V<sub>κ<sub>max</sub></sub>)), where Theory is restricted to φ with <u>n</u> unbounded quantifiers.  Furthermore, if g↾dom(f) = f, then g′′ is f.</p>
+
+<p style="margin-bottom:0px"><i>Notes:</i></p>
+<ul style="padding-left:20px;margin-top:0px">
+<li> If the system is inconsistent, it may still be useful as an outline of how the axioms can look like.
+</li><li> A schema was used to get the most natural stopping point at the price of some syntactic complexity.  However, expressiveness using R goes only slightly beyond what is expressible with a single f∈R (assuming the relevant objects are in V<sub>min(dom(f))</sub>), and there is a natural mild weakening of 4 that avoids the schema and goes just beyond what is expressible about f without using R:<br/>
+&nbsp;&nbsp;4.ii - let S be the satisfaction relation for (V,∈,f) formulas (which is definable using R and f).  It is unclear whether omitting S entirely would cause much harm.<br/>
+&nbsp;&nbsp;4.v - simply require that <i>i</i><sup>U</sup>(R)(f) holds, and as a partial substitute for the remainder, add axiom 5 (from "Extension to Reflective Functions") to the axioms (or a related statement/schema).<br/>
+&nbsp;&nbsp;4.vi - instead of using Theory, just require that g′′∈R; also, prohibit use of R in defining g.
+</li><li> α-dom(E) strongness ensures that the embeddings witness not only the absolute largeness of f(κ) but also the structure of f between κ and f(κ).
+</li><li> In 4.vi, note that if κ∉dom(f), then there is no E(κ,β), and sup(∅)=∅.
+</li><li> In 4.vi, "g′′ is f" is used to avoid having to write out some properties twice (once for f and once for g′′).
+</li><li> The difference of 4.vi from Extension to Reflective Functions 6.v is the treatment of overlapping f.  If f(λ)>λ, then the structure of f between λ and f(λ) must be witnessed using E(λ,α) and hence by f below λ, and we apply the same requirement to g′.  Thus, if the necessary structure below λ is erased, we correspondingly reduce g′ in the region between λ and f(λ).
+</li></ul>
+
+<p>For a model M with overlapping extenders, there may be multiple reasonable ways to represent M by f, and there is additional structure and complexity once M has a cardinal κ with a measure that concentrates on &lt;κ-strong cardinals.  One option is to let R apply to models directly (and for now, dropping the analogue of the second condition in the definition of R).  Here is an example: R = {code(M): M<sub>0</sub> elementarily embeds into M and (V,∈,code(M)) has the correct theory with parameters in V<sub>κ</sub> where κ is the least measurable cardinal in M}, where M<sub>0</sub> is (for example) the minimal inner model with a measurable limit λ of &lt;λ-S-strong cardinals where S is the set of &lt;λ strong cardinals, and code(M)=V<sub>δ</sub><sup>M</sup> for the least δ such that M=L(V<sub>δ</sub><sup>M</sup>).</p>
+
+<p>The study of reflective constructs has only just begun.</p>
+
+<p style="text-align:center">REFERENCE</p>
+
+<p>"Reflective Cardinals" by Dmytro Taranovsky (2012), <a href="https://arxiv.org/abs/1203.2270">arXiv:1203.2270</a>.</p>
+
+</body>
+</html>

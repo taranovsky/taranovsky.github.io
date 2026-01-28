@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="DESCRIPTION" content="Presents a new file system architecture">
+<meta name="KEYWORDS" content="file systems, metadata, computers, operating systems"><title>File System Architecture</title></head>
+
+<body lang="EN-US">
+<p align="right" style="text-align: right;">Return to my <a href="index.html">home
+page</a><br>
+Dmytro Taranovsky<br>
+June 6, 2002<br>
+Slightly Modified: March 4, 2003<br>
+This document describes how file systems should work in the future.</p>
+<h1 align="center" style="text-align: center;">File System Architecture</h1>
+<p>Generalized file system provides a simple and unified way to access
+resources. The basic unit is a file. A file consists of essential
+metadata, nonessential metadata, and some information. Unless the file
+is a directory, the information is given "as is" and not analyzed by the
+file system. Essential metadata can be edited only by the file system
+driver and other privileged programs since improper editing may make
+the file unusable. Nonessential metadata contains information useful
+for indexing systems (the indexing systems are ordinary programs, and
+not a part of the file system.). Nonessential metadata have a nested
+structure.</p>
+<p>A directory (also known as a folder) is a file that may contain
+other files inside the file. (Empty directories and files are allowed.
+A directory is considered a file so that the file system can be
+flexible, so that special features can be supported, and so that
+manipulation of directories is simple.) Since the file system is
+flexible and extensible, different directories may have different
+physical implementation. Essential metadata may include file size; date
+created, last modified, and last accessed; directory structure; and
+special storage properties. Metadata of a directory may apply to files
+inside the directory.</p>
+<p>The general services that the file system provides are: copy file,
+move file, create file of specified structure, delete file, and change
+file structure and storage properties. In addition, the file system
+allows viewing and editing of metadata (metadata may be viewed and
+edited directly or in a structured way) and file content. (File
+managers view metadata (and sometimes the main file) of directories to
+display and manipulate files.) Files can be viewed starting at the
+beginning, starting at some offset, or for some storage media, at the
+desired locations directly. Files can be appended or overwritten either
+at the beginning or starting at some offset. Some storage media may
+also allow direct editing. Files can also be truncated. Some storage
+media may allow direct deletion of desired parts. File editing may be
+disabled in some directories. A quota may limit the file
+sizeoverwriting at the end of the file is stopped when the quota is
+reached. A file (usually, a directory) can reserve space so that
+essential modifications will not be prevented by low disk space. When
+the reserved space (including the information stored in the file) equals
+the quota, the file is limited to it present location and the reserved
+space. Except for the file system and privileged programs (the
+privileges can be granted by the user who may modify the directory),
+editing of directories is limited to editing nonessential metadata, the
+main file (excluding the files contained in it), the files in the
+directory, and using general and special file system services.</p>
+<p>A symbolic link (a.k.a. a shortcut) is an empty file that points to
+a file. The link may indicate either an absolute location or a location
+relative to the location of the link. Unless requested otherwise, a
+reference to a symbolic link is a reference to the file to which the
+link points.</p>
+<p>Files are identified by their path, such as
+/filesystem/folder/file. For example, name1/name2 identifies file name2
+inside the file name1. Copying the file copies the contents of the
+identified file to the identified path. The file may then or during
+copying be converted to the appropriate structure for files in that
+location.</p>
+<p>When a program wants to use the file system, the operations for the
+file system are first sent to the main security manager. The security
+manager obtains from the file system the full path of the source and,
+when appropriate, the destination, and then decides whether to grant
+access. The security manager can also couple access with special
+actions by appropriate processes (such as auditing). A program using
+the file system may act as an emulator so that legacy programs that do
+not know how to use the file system can use the emulation to access the
+file system.</p>
+<p>In addition to the main security manager, a file may have its own
+security system. Such additional security systems are necessary for
+accessing files across a network. Security can come in the form of a
+secret file name (on the internet, some <i>username:password@domain</i>
+are secret) in the form of a password (such as a password for a password
+protected archive), or through digital signatures. The client accessing
+a file system may specify the process to call when a file (usually, a
+directory) requests identification. (The process may, in turn, request
+an identification or password from the user.)</p>
+<p>Special features of the file system include compression (various
+types), archiving (zip, tar, rar and other archives), check sums and
+digital signatures, error correction codes (various types, in addition
+to error correction in the hardware), and encryption (various
+strengths). The features are implemented as plug-ins (with interfaces)
+to the main part of the file system. The features are applied to single
+files (including directories). For example, what appears as a large
+file to the main file system may appear as a disk volume to the NTFS
+plug-in. Plug-ins achieve transparency by implementing the file
+system services. Multiple levels of plug-ins are supported (but they
+may be inefficient) because plug-ins are transparentthe NTFS plug-in
+appears as the main file system to a zip-archive plug-in on a file in
+the NTFS. An internal rights management system (that decides which
+rights each plug-in has) prevents faulty plug-ins from damaging
+anything but the file they work on. (The system is necessary since not
+all plug-ins are reliable.) </p>
+<p>An archive is a directory optimized for operations as a whole,
+instead of (as in typical directories) operation on the files inside the
+directories. For some plug-ins (such as a database with various
+views), some symbolic links may be virtual instead of real files. For
+example, a music database plug-in may show virtual folders and links to
+allow access to files based on the various information (such as artist
+name) they contain.</p>
+<p>It is possible copy a file in parts and to split a file in parts.
+Each part (itself, a file) includes the identification of a file and a
+part of the data. The head part can often be opened by itself. A
+special service exists to merge (and possibly delete the parts) the
+parts into a whole file. The merge should be successful as long as the
+(possibly overlapping) parts include all of the data of the original
+file. Transfer of files by parts may be necessary when the internet or
+some other connection is unreliable.</p>
+<p>Defragmentation is a type of file conversion where the file type
+remains the same but the physical locations of data are rearranged for
+improved performance. Among special services are verification of the
+validity of the file structure and repair of damaged files.
+Additionally, external programs can read the file as a whole, repair
+what they have read, and then, with special privileges, save the
+repaired file. Journaling of services and actions, support of multipart
+files, and file repair minimizes the damage to the file system in case
+of hardware problems (such as a power failure). The file system is
+responsible for ensuring that faulty requests will not lead to a
+corruption of the file system or unexpected results but instead be
+responded with the appropriate failure message(s). The clients are
+responsible for being functional even when the file system fails to
+respond properly. </p>
+<p>The file system is flexible and extensible, often through plug-ins.
+A list of bookmarks can be viewed as either a file or as a folder of
+bookmarks. A Microsoft Word document with embedded images can be viewed
+as a directory with the embedded objects being files in the directory.
+Whatever the physical implementation may be, the logical structure is
+simple and coherent, providing for transparent access of resources.</p>
+</body></html>

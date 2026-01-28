@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Mathematical Research Statement</title>
+</head>
+<body>
+
+<p style="text-align:right">Dmytro Taranovsky<br/><!--October 3, 2018; modified Feb 15, 2022--> (draft)</p>
+
+<h2 style="text-align:center">Research statement for mathematics and computer science</h2>
+
+<h2>Mathematics</h2>
+
+<p>My mathematical research spans diverse areas, but most important are my contributions to our understanding of infinity.</p>
+
+<p>1. <a href="https://arxiv.org/abs/math/0504375">Extending the Language of Set Theory</a> and <a href="http://arxiv.org/abs/1203.2270">Reflective Cardinals</a>.  The language of set theory is the de facto formal language of mathematics, but it has a key limitation: While a set is an arbitrary collection of objects, there is no such thing as the set of all sets (as informally, it would be bigger than itself), and one cannot quantify over properties for which there is no set of all objects satisfying the property.  My research addresses this issue by introducing reflective cardinals, which are sets that in a certain sense approximate the set theoretical universe V.  I give an intuitive definition, interpretation of higher order set theory, and formal axiomatizations.  I explore the relations between different axioms and extend the notion to even higher levels of expressiveness.</p>
+
+<p>2. <a href="https://taranovsky.github.io/OrdinalNotation.html">Ordinal Notation</a>. Key to infinitary set theory is the notion of ordinals.  Ordinals include natural numbers, and also intuitively numbers you get when you keep counting past infinity (denoted ω): 0,1,2,3,...,ω,ω+1,ω+2,...,ω2,ω2+1, ω2+2,...,ω3,...,ω<sup>2</sup>,...,ω<sup>3</sup>,...,ω<sup>ω</sup>,... .  Stronger theories generally prove existence of more ordinals.  Having a reasonable description of the canonical ordinals in a theory qualitatively enhances our understanding of the theory; it is like having a precise map instead of just partial descriptions.  The obstacle is that as the strength increases, the complexity can quickly become intractable, and to a large extent, progress in ordinal analysis is about managing complexity and makes things simpler.  My contribution is to create a framework that reduces complexity for ordinal representations and to create ordinal notation/representation systems that are conjectured to reach much stronger theories, including plausibly ZFC (the standard axioms for set theory) and beyond.  I also give detailed a analysis of the representation systems, though key parts remain conjectural.<br/>
+I also created <a href="https://taranovsky.github.io/OrdinalArithmetic.py">OrdinalArithmetic.py</a> implementing arithmetic and other operations for the main ordinal notation system.  Besides its functional value, the module uses well-written concise code.  (A <a href="http://www.mtnmath.com/ord/">competitor</a> (its code remains available on the Internet Archive) using a much weaker ordinal notation system and otherwise comparable functionality used over 10 times as many lines of code.)</p>
+
+<p>3. <a href="https://taranovsky.github.io/FinitismPaper.html">Finitistic Properties of High Complexity</a>.  In this paper, I prove connections between infinite and finite but sufficientlty large.  I formalize and answer which undecidable problems we can solve (in unlimited time) if we have access to a sufficiently fast-growing sequence, or to multiple sequences each sufficiently fast-growing relative to the previous ones.  Perhaps most strikingly, I give an interpretation of second order arithmetic that arguably uses only finite numbers, though the intricate use of largeness can be arguably be regarded as infinity in disguise.</p>
+
+<p>4. <a href="http://arxiv.org/abs/math/0605138">Constructive Mathematical Truth</a>.  As a believer in objective mathematical truth, I reject the intuitionistic philosophy, but that has not stopped me from appropriating intuitionistic logic to define and explore constructive truth in arithmetic and intuitionistic analysis — in an intertwining of classical and constructive mathematics.  The definition used is the most natural one if we want only classically true arithmetical statements to be constructively true, and use continuity for second order quantifiers.  A key interesting result (among others) is that constructive arithmetical truth is highly nonarithmetical, and I conjecture has the same complexity as second order arithmetic.  The complexity stems from requiring constructively true arithmetical statements to be classically true and from the handling of constructive implication.</p>
+
+<p>5. <a href="https://taranovsky.github.io/BoundedArithmetic.html">Arithmetic with Limited Exponentiation</a>.  Weak mathematical theories can be surprisingly powerful, and my paper explores just how much can be done in theories so weak that they are interpretable in Robinson arithmetic Q and thus fail to prove that exponentiation is total.  I successfully capture a number of principles about integers, real numbers (including nonrecursive real numbers), and functions of any finite number of higher types.</p>
+
+<p>6. Incompleteness in set theory.  Many basic questions (such as the Continuum Hypothesis) are undecidable in the standard axiomation of set theory (ZFC).  In a number of FOM (Foundations of Mathematics mailing list) postings, I explore these issues and give a vision for addressing the incompleteness.  Here are some (excluding those that discuss the above papers or are more about philosophy of mathematics):<br/>
+"On the Continuum Hypothesis" (<a href="https://cs.nyu.edu/pipermail/fom/2006-May/010554.html">part 1</a> and <a href="https://cs.nyu.edu/pipermail/fom/2006-May/010555.html">part 2</a>; gives a strong argument that GCH is true), <a href="https://cs.nyu.edu/pipermail/fom/2012-March/016266.html">Strength of Logical Principles</a>, <a href="https://cs.nyu.edu/pipermail/fom/2012-February/016198.html">Definability and Natural Sets of Real Numbers</a>, <a href="https://cs.nyu.edu/pipermail/fom/2016-October/020147.html">On the Nature of Reals</a>, <a href="https://cs.nyu.edu/pipermail/fom/2018-September/021250.html">Re: the notion of "effectively complete"</a>.</p>
+
+<p>7.  Miscellaneous contributions (excluding philosophy of mathematics, and MathOverflow contributions):<br/>
+• <a href="https://taranovsky.github.io/DeterminacyMaximum.html">Determinacy Maximum</a> — introduces, analyzes, and defends a strong determinacy hypothesis for infinite games.<br/>
+• <a href="https://taranovsky.github.io/SequencesOfTuringDegrees.html">Determinacy and Fast-growing Sequences of Turing Degrees</a> — shows that under appropriate assumptions, all sufficiently fast-growing sequences of Turing degrees (even sequences of length ω<sub>1</sub>) are indistinguishable, and explores related results.<br/>
+• <a href="https://web.mit.edu/dmytro/www/BTEE.html">Elementarily self-embeddable models of ZFC</a> — gives striking conservation results where adding a nontrivial elementary self-embedding <i>j</i> of the universe (avoiding Kunen inconsistency by using only some of the ZFC axioms for <i>j</i>-formulas) corresponds to various traditional large cardinal axioms.<br/>
+• <a href="https://taranovsky.github.io/Sphericity.html">Asymptotic optimal sphericity</a> — asymptotic behavior of polyhedra that have maximum sphericity for their number of faces, and related problems, plus a series of conjectures on the hypothetical fractal that is the limit of (the distribution of nonhexagonal faces in) highest sphericity polyhedra as the number of faces approaches infinity.<br/>
+• Defined a finite analogue of infinite models (<a href="http://www.cs.nyu.edu/pipermail/fom/2005-November/009318.html">link</a>).<br/>
+• <a href="https://cs.nyu.edu/pipermail/fom/2014-July/018041.html">Coins and Infinite Ordinals</a> gives a formally valid intuitive visualization for some ordinal notation systems.<br/>
+<!--• "Physical Theories and Hypercomputation" and "Testing Hypercomputers" discuss possibilities for hypercomputation.--> <!--might be out of scope-->
+• Used probability to make conjectures in number theory about representability of numbers as sums of powers and primes (<a href="http://cs.nyu.edu/pipermail/fom/2005-October/009210.html">link</a>).  Among other things, I conjecture that every sufficiently large odd natural number is representable as p<sup>2</sup>+q<sup>3</sup>+r<sup>5</sup> for prime p,q,r.<br/>
+• Proved an equivalence between WKL<sub>0</sub> and a determinacy hypothesis (<a href="http://www.cs.nyu.edu/pipermail/fom/2006-February/010060.html">link</a>).</p>
+
+<p>8.  A selection of contributions published on MathOverflow (for more, see my <a href="https://mathoverflow.net/users/113213/dmytro-taranovsky">user page</a>):</p>
+
+<p><b>Logic and related fields:</b><br/>
+<i>Addressing the incompleteness in set theory</i>:<br/>
+• <a href="https://mathoverflow.net/questions/469841/periodicity-in-the-cumulative-hierarchy">Periodicity in the cumulative hierarchy</a> suggests how higher types should behave in the universe of hereditarily natural sets.  For the usual universe satisfying the axiom of choice, see <a href="https://mathoverflow.net/questions/384685/independence-through-forcing-vs-generic-collapses">Independence through forcing vs generic collapses</a>.<br/>
+• <a href="https://mathoverflow.net/questions/385592/determinacy-of-symmetric-games">Determinacy of symmetric games</a> presents and explores a conjecture for determinacy of a large class of games involving the uncountable.<br/>
+<i>Inner models and large cardinals:</i><br/>
+• Suggested an alternative development of fine-structural inner models (in set theory) that uses indiscernibles rather than ultrafilters (<a href="https://mathoverflow.net/questions/427685/inner-model-theory-using-indiscernibles">link</a>).<br/>
+• <a href="https://mathoverflow.net/questions/356597/inner-models-with-all-sets-generic">Inner models with all sets generic</a> (explored natural inner models over which every is set is generic).<br/>
+• <a href="https://mathoverflow.net/questions/351134/0-in-weak-theories-vs-large-cardinals-in-l">0<sup>#</sup> in weak theories vs large cardinals in L</a> connects some of the strongest natural axioms for the constructible universe L with the weakest theories transcending L.<br/>
+• <a href="https://mathoverflow.net/questions/279724/complexity-of-l-mathrmcf">Complexity of L[cf]</a> — analyzed expressibility of the contructible universe L augmented with the cofinality quantifier.<br/>
+<i>Infinite computation:</i><br/>
+• <a href="https://mathoverflow.net/questions/357397/ittms-with-higher-types">ITTMs with higher types</a> extends infinite time Turing machines to tapes of higher types, and analyzed their expressiveness.<br/>
+• <a href="https://mathoverflow.net/questions/280638/cardinal-register-machines">Cardinal register machines</a> gives a simple-looking extension of register machines to infinite cardinalities and analyzes its surprising power.<br/>
+<i>Axiomatization of decidable theories:</i><br/>
+• Proved that the axiomatization of the real numbers (real closed field) cannot be weakened to that of an ordered field with least upper bounds for parameter-free definable bounded sets (<a href="https://mathoverflow.net/questions/383259/is-this-theory-the-complete-theory-of-the-real-ordered-field/385212#385212">link</a>).<br/>
+• <a href="https://mathoverflow.net/questions/434659/axiomatization-of-s2s">Axiomatization of S2S</a> gives a reasonable axiomatization of S2S, and its general extension to MSO theories of trees.  S2S is the MSO (monadic second-order) theory of the infinite binary tree, and is one of the most expressive decidable theories known, with many other theories interpretable in S2S, but a reasonable axiomatization has been lacking.  I also wrote the S2S wikipedia <a href="https://en.wikipedia.org/wiki/S2S_(mathematics)">article</a>.<br/>
+<i>Proof theory (other):</i><br/>
+• <a href="https://mathoverflow.net/questions/278822/%ce%a00-1-proof-ordinals">Π<sup>0</sup><sub>1</sub> Proof Ordinals</a> connects the hierarchy of natural Π<sup>0</sup><sub>1</sub> statements to existence of lage numbers.<br/>
+• Gave additional examples of infinite descending consistency chains (<a href="https://mathoverflow.net/questions/320665/infinite-descending-consistency-chains">link</a>).<br/>
+<i>Other (logic):</i><br/>
+• Gave examples of natural properties with a high quantifier complexity (<a href="https://mathoverflow.net/questions/281894/examples-of-statements-with-a-high-quantifier-complexity">link</a>).
+• <a href="https://mathoverflow.net/questions/466235/complexity-of-transfinite-5-in-a-row-and-other-games">Complexity of transfinite 5-in-a-row and other games</a> analyzes complexity of various transfinite board games.<br/>
+• Came up with the theories extending ZFC\P + V≠L that have arbitrarily large transitive models, but at most one model of each ordinal height (<a href="https://mathoverflow.net/questions/190902/classifying-set-theories-whose-standard-models-sharing-the-same-ordinals-are-equ">link</a>, extending <a href="https://mathoverflow.net/questions/438081/minimum-transitive-models-and-v-l">this</a>).<br/>
+• <a href="https://mathoverflow.net/questions/285991/determinacy-and-polynomial-time-degrees">Determinacy and polynomial time degrees</a> — showed that all sufficiently closed computational complexity classes (including E<sup>A</sup> and E<sup>B</sup> for arbitrary sufficiently powerful oracles A and B) are in a sense indistinguishable.</p>
+
+<p><b>Other:</b><br/>
+• Conjectures on optimal asymptotic solution lengths in various permutation puzzles (<a href="https://mathoverflow.net/questions/454454/diameters-of-permutation-groups-with-transitive-generators">here</a> and <a href="https://mathoverflow.net/questions/320016/permutation-groups-with-diameter-on-log-n">here</a>).<br/>
+• Conjectures on existence of Hamilton cycles in random graphs without local obstructions (<a href="https://mathoverflow.net/questions/427292/hamilton-cycles-in-random-graphs-with-just-enough-connectivity">link</a>) and finding such cycles in linear
+ time (<a href="https://cstheory.stackexchange.com/questions/51741/finding-hamilton-cycles-in-random-graphs">link</a>).<br/>
+• Pursuit evasion:  Conditions for successfully escaping from infinitely many dumb slow pursuers (<a href="https://mathoverflow.net/questions/177364/escape-the-zombie-apocalypse/328213#328213">link</a>).  See also my article <a href="https://mathoverflow.net/questions/329886/pursuit-evasion-with-many-slow-pursuers">Pursuit-evasion with many slow pursuers</a> and <a href="https://mathoverflow.net/questions/395071/escaping-from-infinitely-many-pursuers/432641#432641">here</a>.<br/>
+• Attemps at defining natural fractional exponential growth rates (<a href="https://mathoverflow.net/questions/281619/analytic-tetration-and-natural-rates-of-growth">Analytic Tetration and Natural Rates of Growth</a> and <a href="https://mathoverflow.net/questions/283816/fractional-exponentiation-with-different-bases">Fractional exponentiation with different bases</a>).<br/>
+• Computed asymptotic probability that two random maps commute (<a href="https://mathoverflow.net/questions/143058/what-is-the-probability-two-random-maps-on-n-symbols-commute/425841#425841">link</a>).</p>
+
+
+<h2>Computer Science</h2>
+
+<p>1. "Space-Efficient Circuit Evaluation" (<a href="http://arxiv.org/abs/1208.2217">link</a>) proves that uniform circuits of size n can be evaluated in space O(n / log n), and showed that for a large class of computational models, Time(O(n)) is in Space(O(n log log n / log n)).  However, the reductions are not practical as they use exponential time.</p>
+
+<p>2. Proved that comparison-based sorting is possible with lg(<i>n</i>!) + <i>o</i>(<i>n</i>) comparisons <a href="https://taranovsky.github.io/ComparisonSorting.html">(link)</a>, even in the worst case.  Relative to the lower bound, this wastes an average of <i>o</i>(1) comparisons per element.  For the average case, I proved lg(<i>n</i>!) + <i>O</i>(<i>n</i><sup>1-ε</sup>) comparisons and gave a potential construction for lg(<i>n</i>!) + <i>O</i>(log <i>n</i>) comparisons.</p>
+
+<p>3. A number of smaller (in length) contributions are on the Theoretical Computer Science Stack Exchange (my user page is <a href="https://cstheory.stackexchange.com/users/46806/dmytro-taranovsky">here</a>):<br/>
+• Showed undecidability of single-player games with randomness and 3 bits of hidden state (<a href="https://cstheory.stackexchange.com/questions/53893/undecidability-of-games-with-limited-hidden-state">link</a>).<br/>
+• Explored complexity of reachability in fractal mazes (<a href="https://cstheory.stackexchange.com/questions/52040/complexity-of-reachability-in-fractal-mazes-with-traps">link</a>), with various modications leading to a variety of complexity classes.<br/>
+• Showed that linear time in-place stable sort is possible when the keys are O(log n) bit size integers (<a href="https://cstheory.stackexchange.com/questions/51722/linear-time-in-place-stable-sort">link</a>).  A previous paper almost showed this, but explicitly left out the hardest case.<br/>
+• Proposed an algrebra with various operations on complexity classes (<a href="https://cstheory.stackexchange.com/questions/41450/an-algebra-of-complexity-classes">link</a>).<br/>
+• Came up with a computational model, resembling Turing machines, with a very tight time hierarchy theorem (<a href="https://cstheory.stackexchange.com/questions/39766/how-fine-grained-can-the-time-hierarchy-theorem-be-in-a-reasonable-model">link</a>), essentially with only an additive logarithmic overhead.<br/>
+• Made conjectures on fine-grained speed-ups from using randomness (<a href="https://cstheory.stackexchange.com/questions/39227/fine-grained-complexity-of-bpp">Fine-grained complexity of BPP</a>).<br/>
+• Combining previous results, showed that a sliding blocks puzzle is complete for linear space (<a href="https://cstheory.stackexchange.com/questions/39141/is-sliding-blocks-linear-space-complete">link</a>).<br/>
+• Collected some open problems where a seemingly much larger complexity class has not been proved to exceed the smaller class (<a href="https://cstheory.stackexchange.com/questions/39046/complexity-class-equalities-on-the-edge-of-inconsistency">link</a>).</p>
+
+<!--old version (never uncommented):
+- explores our best guess on how much randomness can benefit computation
+-  builds on previous work to give a more precise complexity characterization of sliding blocks puzzle.
+•  A computational model with a very strong additive time-hierarchy theorem.-->
+</body>
+</html>

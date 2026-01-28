@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+
+	<title>Sphericity</title>
+
+    <script type="text/javascript"
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">  
+	</script>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+		tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+	});
+	</script>
+	<style type="text/css"> h2 {font-size:100%} </style>
+</head>
+<body>
+<p style="text-align:right">Dmytro Taranovsky<br/>Last modified:  October 18, 2021</p><!-- some changes Nov 17, 2022-->
+
+<h1 style="text-align:center">Asymptotic Optimal Sphericity</h1>
+
+<p><b>Abstract:</b> We prove that the maximum sphericity for polyhedra with $n$ faces is at least $1 - \frac{5 \sqrt{3} π}{27n} - O(n^{-3/2})$, and conjecture it to be $1 - \frac{5 \sqrt 3 π}{27n} - C_1 n^{-3/2} + (C_2±o(1)) n^{-5/3} \log^{2/3} n$.  We discuss in detail the conjectured fractal-like behavior of nonhexagonal faces for maximum sphericity polyhedra, and similar behavior and bounds for other optimization problems on the sphere such as the Thomson problem.</p>
+
+<p><b>Contents:</b><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;• Introduction<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;• General properties and small $n$<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;• Polyhedra with $O(1)$ nonhexagonal faces<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;• Computation of the hexagonal limit<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;• A construction for $1 - \frac{5 \sqrt{3} π}{27n} - O(n^{-3/2})$ sphericity<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;• An attempt at the matching upper bound<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;• The conjectured sphericity fractal<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;• Some related problems<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;• The Thomson problem<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;• Higher dimensions</p>
+
+<h2>Introduction</h2>
+
+<p>Sphericity is defined as $π^{1/3}(6V)^{2/3}/S$ given volume $V$ and surface area $S$.  The simplicity of the maximization formulation (maximum volume for $n$-faced polyhedra with given surface area) conceals the rich structure of such polyhedra as $n→∞$.  Computing the maximum sphericity for small $n$ is hard even though by the decidability of the real closed field, it is an algebraic multiple $π^{1/3}$.  However, asymptotics can bring a sense of clarity, and here apparently, a convergent large scale fractal structure of the polyhedra.  The four asymptotic terms are:<br/>
+&nbsp;&nbsp;1 &nbsp;-&nbsp; the maximum sphericity is 1 (the sphere).<br/>
+&nbsp;&nbsp;$\frac{-5 \sqrt{3} π}{27n}$ &nbsp;-&nbsp; the hexagonal limit, corresponding to same-sized regular hexagonal faces, which we (re)derive here.<br/>
+&nbsp;&nbsp;$-C_1 n^{-3/2}$ &nbsp;-&nbsp; a fractal-like structure due to non-existence of a parallel incompressible vector field on a sphere (the main subject here).<br/>
+&nbsp;&nbsp;$(C_2±o(1)) n^{-5/3} \log^{2/3} n$ &nbsp;-&nbsp; savings from using area deformations rather than defect lines at small scales (quantization costs are smaller).</p>
+
+<p>We take the readers through the rich picture, both for sphericity and for other optimization problems on the sphere.  The hexagonal limit was known previously, but the $O(n^{-3/2})$ term and the main content of the paper is new.  <!-- For readability, we mostly use a slightly informal style.--> $o,O,Θ,Ω,ω$ are from the <a href="https://en.wikipedia.org/wiki/Big_O_notation">Big O Notation</a>.</p>
+
+
+<h2>General properties and small $n$</h2>
+
+<p>Maximum sphericity convex <!-- todo: check that convexity is unnecessary --> $n$-polyhedra (i.e. with $n$ faces) are known to have an inscribed sphere tangent to all faces at their centroids.  Moreover, this applies to local optima (Schoen 1986 citing Steinitz 1928); for example, moving the tangent point towards the face center (even without moving the planes of the other faces) increases the sphericity.  That maximum (and not just supremum) sphericity exists follows from compactness and monotonicity, as one can always increase sphericity by truncating the sharpest corner.  Maximum sphericity $n$-polyhedra are conjectured to be simple (i.e. 3 edges incident on each vertex), and unique up to similarity transformations.  Conjecturally, only $n=4$ or 5 has any triangles; only $n=5-11,13$ has any quadrilaterals; no faces have 8 or more edges; the first heptagon appears at $n=33$.</p>
+
+<p>Per (Schoen 1986) (elaborated with additional text and illustrations at (Schoen, website)), for small $n$, maximum sphericity $n$-polyhedra tend to be somewhat irregular, but usually with some symmetry, and sometimes indicate a bigger symmetry that is broken.  Most of the polyhedra are produced from the previous one by truncating a vertex, or an adjacent group of 2-4 vertices, and reoptimizing for sphericity.  As of this writing, the maximum has only been proved for $n=4,5,6,12$.  Only n=4, 5 (a trigonal prism), 6, 12, 32 (conjecturally; a truncated icosahedron) are vertex-transitive; and only 4, 6, 12 are face-transitive (and regular).  The regular octahedron and icosahedron should maximize sphericity for their numbers of vertices (and even edges or faces+edges) but not faces.</p>
+
+<p>Imposing a symmetry constraint tends to have a significant sphericity cost, except for appropriate $n$; see "The Roundest Polyhedra with Symmetry Constraints" (Lengyel, Gáspár, Tarnai 2017).</p>
+
+<p>Highest sphericity among Archimedean solids is the snub dodecahedron, and among Archimedean and Catalan solids, the disdyakis triacontahedron (the dual of the truncated icosidodecahedron).  Modifying the parameters should yield the highest sphericities among vertex transitive and face transitive polyhedra, respectively.  Both polyhedra have the largest number of faces in their classes (at 92 and 120, respectively).</p>
+
+
+<h2>Polyhedra with $O(1)$ nonhexagonal faces</h2>
+
+<p>For some moderate $n$, <a href="https://en.wikipedia.org/wiki/Goldberg_polyhedron">Goldberg polyhedra</a> might give the best sphericity; these use hexagons and 12 pentagons with rotational icosahedral symmetry.  (Some definitions of Goldberg polyhedra also allow octahedral symmetry with 6 squares, and tetrahedral symmetry with 4 triangles; all vertices have degree 3.)  Having hexagons and 12 pentagons is particularly efficient, and pentagons 'repel' each other (as each creates a local angle deficiency), hence icosahedral symmetry.  For other moderate $n$, we might get 12 well-separated pentagons, but without the symmetry.</p>
+
+<p>However, projecting a regular hexagonal grid on a sphere creates distortion, but for best sphericity, we want almost all faces to approximate regular hexagons of the same size.<br/>
+- Approximately, local distortion is proportional to region width squared, with loss per unit area proportional to distortion squared.<br/>
+- I conjecture that $n'$ nonhexagonal faces (and no holes) cannot get us within $o(\frac{1}{n'n})$ sphericity of the hexagon ideal (note: $Θ(\frac{1}{n'n})$ &nbsp;$(4≤n'&lt;\sqrt{n})$ is possible by allowing nonadjacent pentagon-heptagon pairs below).</p>
+
+<p>$O(1)$ hexagons can fill in a triangular face by using degree four vertices to add a handle (with tiny size to avoid wasting surface area), so let us assume that the polyhedron is simply connected.</p>
+
+<p>Given a triangulation of a combinatorial sphere with equilateral triangles and $O(1)$ topological defects (vertices of degree other than 6), we can use a conformal mapping to get a spherical polyhedron with all but $O(1)$ of the triangle angles being within $ε$ of 60° (so all but $O(1)$ triangles are close to equilateral; the $O(1)$ depends on $ε$ and the number of defects).  The dual will have all but $O(1)$ faces approximate regular hexagons. However, the triangles (or hexagons) have different sizes, and as we approach a singularity (i.e. defect), size goes $x→Θ(x^c)$ if angle is increased in $c$ times ($x$ (approaching 0) is size; $c$ can be below 1).  Nonconformal mappings should give better sphericity, but due to distortion, we are still $Θ(1/n)$ below the hexagon ideal.</p>
+
+
+<h2>Computation of the hexagonal limit</h2>
+
+<p>For a polyhedron with an inscribed sphere of radius $r$, $V=\frac{r}{3} S$ (and $\frac{r}{n} S$ in $n$ dimensions), where $S$ is the surface area.  Thus, given $r=1$ and average distance from the sphere center to the surface $1+ε$ (with the averaging using the solid angle), we get sphericity $1 - ε + O(ε^2)$. In turn, $ε=d^2/2-O(d^4)$ for (root mean square) distance $d$ from the tangential point. Given a regular $m$-gon face tangent at its center and with $\frac{4π}{n}$ solid angle, side length $s=\sqrt{\frac{16π}{mn} \tan \frac{π}{m}}+O(n^{-1})$, and $ε=(\frac{1}{16}\cot^2 \frac{π}{m}+\frac{1}{48}) s^2+O(n^{-2}) = $$ (\cot \frac{π}{m} + {\frac 1 3}\tan \frac{π}{m}) \frac{π}{mn} + O(n^{-2})$.  <!-- Note: I did not check the sign of the O, but that is not required for the Big O notation. --> Thus, idealized (1-sphericity)*n approaches $\frac{5 \sqrt 3 π}{27}$ for $m=6$ (and $\frac{π}{3}$ for $m=4$, and $\frac{2\sqrt{3} π}{9}$ for $m=3$).  For small $n$, some computations are in (Goldberg 1935).</p>
+
+
+<h2>A construction for $1 - \frac{5 \sqrt{3} π}{27n} - O(n^{-3/2})$ sphericity</h2>
+
+<p>We will use an approximately regular hexagonal grid (i.e. faces are hexagons) with $Θ(\sqrt n)$ topological defects; note that radius/typical_edge_length is $Θ(\sqrt n)$.  A single adjacent pentagon-heptagon pair can delete a ray in a hexagonal grid (for visualization, see (Abrego 2020)); and intuitively, we need to delete $Ω(\sqrt n)$ rays to cover a large convex region of the sphere.  A nonadjacent pair can delete more but with a quadratic area (relative to distance) of $Θ(1)$ distortion, so we will not use them.</p>
+
+<p>At unit grid size, deleting a ray requires $Ω(1/r)$ relative distortion at distance $r$, and thus has cumulative cost $Ω(\log r)$ (relative to local unit distortion) unless the geometry or other defects cancel the distortion earlier.  This threatens to add a logarithmic factor to the $O(n^{-3/2})$ bound (if we use $Θ(\sqrt n)$ defects at $Ω(n^{-2} \log n)$ per-defect cost), which we will avoid by carefully grouping defects as follows.</p>
+
+<p>Recursively partition the sphere into roughly $n^{1/3}$ pieces, each time cutting a piece along a geodesic (or otherwise with short length), and efficiently reducing maximum piece diameter.  From top to bottom, given a piece, choose an approximately parallel unit vector field, and uniformly rotate it for low angle with the vector field of the parent piece.  Fill the leaf pieces with an approximate regular hexagonal grid (with the right unit size) oriented parallel to the vector field.  Then, recursively (bottom up), join sibling pieces, warping a narrow strip near the separating geodesic for alignment of the grids, with $O(\sqrt n d^3)$ topological defects per join, where $d$ is the diameter of the piece (for unit sphere radius).  Note that the defects concentrate along the boundaries of the larger pieces, and the effective radius of distortion for each defect is limited by the distance between the defects, hence $Θ(n^{-2})$ average cost per defect.</p>
+
+
+<h2>An attempt at the matching upper bound</h2>
+
+<p><i>Conjecture:</i> For every triangulation of a radius $R$ sphere into $n$ triangles, $Ω(\sqrt n)$ triangles have $Ω(1)$ relative difference from being an equilateral triangle of area $4πR^2/n$. (MathOverflow question:  https://mathoverflow.net/questions/391508/covering-the-sphere-with-an-approximately-planar-grid )</p>
+
+<p>Assuming the conjecture, each maximum sphericity convex polyhedron with $n$-faces must have $Ω(\sqrt n)$ faces with $Ω(1)$ relative deviation from being a regular hexagon of the right size, as otherwise its dual can be converted into an impossible triangulation.  But each such face has $Ω(n^{-2})$ sphericity cost $mdash; see computation of the hexagonal limit above; for a given solid angle, the regular hexagon is most efficient (caveat: standalone, the circle is most efficient, and we did not include the proof that using a mixture of say heptagons and pentagons canot exceed the hexagonal limit), and if solid angles are different, the disparity leads to lost sphericity.  Thus, we are $Ω(n^{-3/2})$ sphericity below the hexagon ideal.</p>
+
+<p>To see that the conjecture should be true, note that approximately equilateral triangles have a locally unique triangulation topology (assuming no hinge vertices), allowing a grid-based local coordinate system and a global coordinate chart, with (under the coordinates) isometric connections.  For a simply-connected region, the coordinate systems can be chosen to agree on all points of overlap.  Furthermore, for a 'sturdy' convex region and similar triangle sizes, a single coordinate system gives correct distances within a factor of $1+ε$, which makes it approximately planar.  However, a long thin strip can easily bend.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;Next, a nonsimply connected region can have topological defects. A topological defect is characterized by a dislocation and holonomy (which affects how dislocation propagates); orientation is preserved for us. If all defects have zero holonomy, then the dislocations are additive, and due to the intrinsic curvature (for example, circles on spheres have low perimeters for their areas), we need $Ω(\sqrt n)$ coordinate dislocation (assuming similar triangle sizes) to cover a large convex area of the sphere. Nonzero defect holonomy, being quantized, ordinarily gives many distorted (or wrong-sized) triangles, but I do not have a simple characterization to complete the proof.</p>
+
+<p>Here is a generalization of the conjecture to $d>1$ dimensions:  Given $n$ points on a $d$-sphere of area $n$, for at least $Ω(n^{1-1/d})$ points, the nearby space must have $Ω(1)$ difference (in terms of distances) from being isometric to a portion of the Cartesian grid.  (The 'space' involves both the points and the empty space; the Cartesian grid consists of points with integral coordinates.)</p>
+
+
+
+<h2>The conjectured sphericity fractal</h2>
+
+<p>The conflict between Euclidean and spherical geometry should create a fractal-like behavior:<br/>
+- at large scales, defect lines are more efficient than area deformations,<br/>
+- denser defect lines are more efficient per defect,<br/>
+- but we also need finer lines to reach all areas of the sphere.</p>
+
+<p>We <i>conjecture</i> as follows.</p>
+
+<p><i>Convergence:</i> Optimal large scale behavior converges, giving us a picture of the topological defects in the optimal sphericity $n$-polyhedron.  Let $T$ denote locations with high density of topological defects (in the limit).<br/></p>
+
+<p><i>Parameterization:</i> $T$ is determined by the cost per unit length of joining planar hexagonal grids as a function of the angle of misalignment and the direction of the grid.  These costs can be approximated computationally.  A number of problems besides sphericity will have different costs, but with similar topological and qualitative behavior.  For parameterized problems (such as $r^{-s}$ potential below), at some parameter values, we will have two solutions for $T$ (or more, if there are more parameters), but the set of such parameter values has measure zero, and should not include any algebraic values (unless one uses contrived parameterizations or goes outside the domain).</p>
+
+<p><i>Basic structure:</i>  $T$ has 12 connected components, corresponding to equal area regions (60° holonomy).  Each component is a tree.  $T$ has zero area; no end of $T$ is in $T$.  Topologically (with a possible exception for the degree of the root), each connected component of $T$ looks like a binary tree that branches (i.e. every branch branches) at every rational interval, with large denominators corresponding to small branches.  Each path is differentiable except at all branch points.</p>
+
+<p><i>Flow:</i>  We have conservation of flow — angle of misalignment between grids; corresponds to area (solid angle) of drainage.  At each root (i.e. when the angle crosses 30°), the flow adds up to 60° and cancels out (though in a sense, the cancellation happens everywhere).</p>
+
+<p><i>Symmetry:</i>  The number of components and distance minimization would suggest an approximate icosahedral symmetry, with 5 branches joined at each of the 12 roots (with each branch roughly bisecting an icosahedral face).  Any symmetry is approximate as branches spontaneously break the symmetry (and repel each other) and do not have a symmetric effect on opposite sides.  However, assuming 24° misalignment per unit length costs less than roughly $2 \cos \frac{π}{5}$ of 12° misalignment (which is somewhat probable), it becomes favorable to join two or four of the branches into pairs.  As the savings increase, it becomes profitable to elongate the joined branches.  It is unclear if there is an approximate symmetry (especially if the deviations are large), but one possibility is an approximate pyritohedral symmetry, with one direction of the deviation from regularity (on the pyritohedral continuum) if there are 4 branches at each root, and the other if there are 3 branches.</p>
+
+<p><i>Branch angles and sizes:</i>  Branch angles depend on the parent flow $α$ and child flow $β$, locally minimizing cost of flow.  Under isotropy, this corresponds to conservation of momentum (nonrelativistic), where speed equals cost per unit flow per unit length.  For (differentiable) anisotropy, the conservation still holds if we add a sideways component to the flow momentum.  Typically (in terms of diversion of flow) $\min(β,α-β)=Θ(α)$, in which case the angles are $Θ(\log^{-1/2} α^{-1})$ (by optimization using $Θ(\log α^{-1})$ speed for flow $α$); for other $β&lt;α/2$, its angle is still $Θ(\min(1,\sqrt{\frac{\log(α/β)}{\log(1/α)}}))$.  For every interval on $T$ with $O(1)$ relative reduction in flow, the distribution of side branch sizes has approximately power law behavior (possibly with a logarithmic or so correction, and without constraining the size of the largest branch).</p>
+
+<p><i>Isotropy:</i> For small flow $α$, we get approximate isotropy:  Grid-induced relative cost anisotropy is $O(\log^{-1} α^{-1})$ per unit angle (deformations can use preferred alignments at scales below the inter-defect distance). Also, $T$ has small typical angles, and a constant-speed detour does not change your average angle.  As an aside, if we manually inserted (see parameterization above) flow-independent smooth $Θ(1)$ anisotropy for small $α$: the first order term (change in cost per change in angle) would mostly cancel out (average direction being fixed), leaving rotation within $Θ(1)$ factor of random drift (which is still a bias for the preferred directions); the second order term would create local (not necessarily positive) correlations between branch directions that do not persist across scales (depending on sign, it may favor straight or curved branches).</p>
+
+<p><i>The complement of $T$:</i> The complement of $T$ is connected and contains a dodecahedral skeleton, but otherwise tree-like, with unique paths between points and the skeleton.  Almost all points (all but zero area) lie on the ends.  At almost all ends and on uncountably many points on each path, the compass direction of the path diverges with unbounded winding angles.  I do not know whether path lengths are finite.  A flow $α$ branch perpendicular to the boundary (and not too far from it) would push/perturb the boundary by a typical angle $Θ(\log^{-1} α^{-1})$ (based on savings from the branch versus extra length).  This is not enough for infinite lengths, unless branches are nearly parallel to the boundary, in which case the perturbation angles are greater.</p>
+
+<p><i>The end of branching:</i> For finite $n$, branching of defect lines ends at typical flow $Θ(n^{-1/3} \log^{5/6} n)$ — length $Θ(n^{-1/6} \log^{2/3} n)$ and defect-free region width $Θ(n^{-1/6} \log^{1/6} n)$.  At this scale, optimal branching cost for a region (roughly proportional to $\mathrm{area}⋅\mathrm{length}$ for $O(\log^{-1/2} n)$ angles) has the same order of magnitude as region deformation cost (roughly proportional to $\mathrm{area}⋅\mathrm{width}^4$).  Due to these savings on branching, optimal sphericity is $1 - \frac{5 \sqrt 3 π}{27n} - C_1 n^{-3/2} + (C_2±o(1)) n^{-5/3} \log^{2/3} n$.  By scale symmetry, there should be no terms between the $C_1$ and $C_2$.<br/>
+<u>Further terms:</u> Further terms (hidden in the above $o(1)$) might bring only polylogarithmic extra precision, starting with a likely $O(n^{-5/3} \log^{1/6} n)$ term due to extra distances at branch ends.  Quantization cost is apparently lower at $O(n^{-2})$ per branch join and $O(n^{-2} \log^{1/3} n)$ per branch end, plus quantization savings.  In many problems, the quantization pseudorandom noise is (by approximate independence) polynomially lower than the quantization cost, which can be partially expressed here through various bounds on nonmonotonic or oscillatory behavior.</p>
+
+
+<h2>Some related problems</h2>
+
+<p><i>Unit circle packing on a sphere:</i> Despite its superficial similarity (especially for small $n$), unit circle packing on a sphere (<i>Tammes problem</i>) likely has different asymptotic behavior due to apparent inability to smooth out fractional distances at $o(1)$ relative cost.  We have $\frac{π\sqrt{3}}{6}-O(n^{-1/3})$ density, using regions of width $Θ(n^{-1/6}R)$ (at sphere radius $R$), with each region approximately hexagonally packed, and with higher scale structure (above $Θ(n^{-1/6}R)$) less important for the packing density.  The slow convergence helps explain why it takes hundreds or thousands of circles to overcome the close-to-optimal packing density of just 12 circles; see (Clare and Kepert 1986, 1991).</p>
+
+<p><i>Maximum volume polyhedra that can be cut from a sphere:</i><br/>
+- If the number of vertices is fixed, this is quite similar to sphericity (see below) (even if the fractal shape is mildly different).<br/>
+- If the number of faces is fixed, then (most faces being approximate regular hexagons now) $ε$-sized deformations appear to have $O(ε)$ rather than $O(ε^2)$ relative cost, unless the deformations are conformal. Conformal mapping theory suggests that we can still get within $O(n^{-3/2})$ volume of the hexagonal limit (this does not generalize to higher dimensions). (And we can easily get $O(n^{-7/5})$ by using regions of width $Θ(n^{-1/10})$ and conformal mappings.)</p>
+
+<p><i>Minimum length equal area partitions of the sphere:</i>  Using area-preserving deformations (see Thomson problem), we can get within $Θ(1)$ total perimeter of the hexagonal limit (for unit sphere radius).  This is presumably optimal.</p>
+
+<p><i>Sphericity for given numbers of vertices and edges:</i><br/>
+* If the maximum sphericity polyhedron must instead have a given number of vertices, we get sphericity within $O(n^{-3/2})$ of the idealized triangle lattice.  The resulting polyhedron need not have an inscribed sphere, but using a circumscribed sphere (though presumably suboptimal) works well enough for the bound.<br/>
+* Approximately square lattice appears to be best when $n_V+kn_F$ is fixed for $≈2.8&lt;k&lt;≈24.5$ (sphericity depends more on the number of faces $n_F$ than the number of vertices $n_V$).  For approximately square lattice, we cannot just freely place face planes (like for hexagons) or vertices (like for triangles).  However, we can approximate uniform curvature, and though I did not verify it, there appears enough degrees of freedom to allow $O(ε)$ deformations at $O(ε^2)$ relative cost and get the $O(n^{-3/2})$ bound.  The corresponding sphericity fractal should consist of 8 equal-area regions, perhaps with an approximate octahedral symmetry.</p>
+
+
+<h2>The Thomson problem</h2>
+
+<p>The Thomson problem asks for the minimum electric potential of $n$ classical electrons on the unit sphere, where the potential between each unordered pair of particles at distance $r$ is $r^{-s}$, with $s=1$.  We will consider other $s$ as well, with the potential $-\log r$ for $s=0$ and $-r^{-s}$ for $s>0$ (i.e. repulsive field with power law strength).</p>
+
+<p>For $s&lt;-2$, the particles will be evenly divided between two antipodes.  For $s=-2$ (corresponding to sum of squared distances), any arrangement with the center matching the center of the sphere will have the same potential (Copher 2020). </p>
+
+<p>For $s>-2$, we expect the distribution to approximate the triangle grid (or hexagonal, if you look at Voronoi regions), with a fractal-like set of defects set analogous to the sphericity fractal.</p>
+
+<p>If $s→∞$, the behavior at the largest scale is unclear (compare the Tammes problem), though it should still converge for fixed $s$, and with smaller scale behavior resembling the sphericity fractal.  One possibility is chaotic behavior for scales above $s^{-Θ(1)}$ (though still deterministic and continuous in $s$, except for a measure 0 set of $s$).</p>
+
+<p><i>Defining the lattice limit:</i>  Given a lattice or otherwise sufficiently regular distribution on the plane, we can compute the expected product of charge densities as a function of inter-charge distance $r>0$ (formalized as a distribution (expected value given a compact continuous distribution of $r$) to handle divergence for specific $r$). Then, given a sphere or another surface, the <i>idealized lattice potential</i> is obtained by integrating over (unordered) pairs of points on the surface using the geodesic distance to get the expected product of charge densities, and the actual distance to convert the product into the contribution for potential.<br/>
+<i>Notes:</i><br/>
+* This also works in higher dimensions.<br/>
+* If the desired number of points is fixed, we first implicitly rescale the lattice to have the same area density.<br/>
+* If we want a nonuniform continuum limit charge distribution on a surface, we can first rescale the metric in the integral to make that distribution uniform (without changing actual or geodesic distances).  This is especially useful for nonspherical $d$-dimensional surfaces with $s&lt;d$, where the poppy-seed bagel theorem does not apply.</p>
+
+<p><i>Cancelling long-distance interactions:</i>  For $s≤d$ (number of dimensions), local potentials are exceeded by long-distance potentials, but we can (mostly) cancel them out as follows.  We will use sturdy ($O(1)$ perimeter^2/area) equal area regions with the electron in the center of the region, and add a uniform positive charge to make the total charge zero.  This way, all regions have zero net charge and dipole moment, leaving only quadrupole-quadrupole interactions, whose potential falls as $r^{-4-s}$, and higher.  For $s≥d$, we can avoid local divergence by zeroing out potential for inter-charge distance $&lt;ε$; the choice of $ε$ does not affect the differences between potentials as along as all configurations have inter-electron distances above $ε$ and curvature is fixed (or $s&lt;d+2$ and $ε→0$).</p>
+
+<p><i>Modified idealized lattice potential:</i>  If for small $s$, the idealized lattice potential does not give the right cancellation, here is a modification (or if it agrees, a computation/approximation method) using cell-based computations.  Essentially, given a remote cell, all points in the cell will be given the same weight.  In two dimensions, the difference will be (at most) $O(1)$ for $s>0$, $O(\log n)$ for $s=0$ and $O(n^{-s/2})$ for $s&lt;0$, which does not affect the below theorem for $s≥-1$ (or $s>d-3$ in $d$ dimensions).  To avoid local divergence, no modification is made for $s≥d$.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;Consider a $d$-dimensional periodic charge distribution (with periodicity in $d$ dimensions), with each cell having zero net charge and dipole moment.  Pick a cell center.  For every center within distance $&lt;π$ (assuming unit sphere radius) of the cell center, place the two cells on the sphere and at the same geodesic distance and relative orientation between the two centers as they were on the plane/space, and compute their interaction potential (assigning half to the current cell).  The choice of the projection does not affect the asymptotic analysis as long as areas are preserved (or charge densities modified accordingly) and we have low distortion near the above geodesic (which is also used for transporting orientations; if we do not get better cancellation elsewhere, Lambert cylindrical equal-area projection with the geodesic is reasonable).  Add up the potentials using weighting $(\sin θ \, / \, θ)^{d-1}$ for inter-center geodesic distance $θ$ (this compensates for the spherical geometry), then include the internal potential for the initial cell, and multiply by sphere area over cell area to get the ideal spherical potential.  A (perhaps more natural) alternative that agrees to sufficient precision for us is to use all pairs of points (with distance $&lt;π$ and weighting as above) instead of region centers, using the geodesic between the points to place their cell(s) on the sphere (the normalization factor is now sphere area over cubed cell area provided that the first point is restricted to one cell).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;Nonzero net charge is handled by adding uniform compensating charge to the grid, and then removing its contribution, which depends only on the total charge, to the sphere potential.  Nonzero dipole moment can be handled by translating the cell boundaries by a fractional amount.  For the triangle grid, each cell is the hexagon of the dual grid. </p>
+
+<p><b>Theorem:</b> For the Thomson problem with $s>-3/2$ (and two dimensions), there is a configuration within $O(n^{(1+s)/2})$ potential of the modified triangle grid ideal.  For $s=-3/2$, we get $O(n^{-1/4} \log n)$, and for $-3/2>s>-2$, we get $O(n^{s/6})$.<br/>
+<b>Notes:</b><br/>
+* For $s≤-3/2$, optimality of the above depends on whether there are additional cancellations of long-distance potential changes beyond those in the proof here.<br/>
+* Just like for sphericity, the difference from the modified triangle grid ideal is expected to be $C_1 n^{(s+1)/2} - (C_2±o(1)) n^{s/2+1/3} \log^{2/3} n$ ($C_1$ and $C_2$ depend on $s$) for $s>-1$.  For $-1>s>-3/2$, we should get $C_1 n^{(s+1)/2}±O(n^{s/6})$, and for $s=-1$, $C_1±o(n^{-1/6} \log^2 n)$.<br/>
+<b>Proof sketch:</b><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;We refine the sphericity construction to use equal-area deformations (which correspond to incompressible flow). Normalize the grid interval at $Θ(1)$ by rescaling distance, and then normalize the force between two charges to be $Θ(1)$ at distance $Θ(1)$ (i.e. at typical distance between adjacent charges).  At distance $r$ from a given nearby defect, the displacement is $O(1)$, with $O(1/r)$ gradient (deformation) and $O(1/r^2)$ second order correction.  Furthermore, we do not need deformations at scales above the inter-defect distances.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;Now, given two charges at distance $r_0$ between each other and distance $Θ(r)$ from the defect, the uncompensated change in quadrupole-to-quadrupole (and higher) potential is $O(r_0^{-s-3}/r^2)$: This corresponds to $r_0^{-s-4}$ base for the potential, $r$-fold reduction due to small deformation size, and $r/r_0$ reduction due to cancellation of local first order effects (below).  The contribution between charges at disparate distance scales from the defect is smaller.  Thus, the cumulative cost is $O(\log r)$ if $s>-1$, $O(\log^2 r)$ if $s=-1$, and $O(r^{-1-s})$ otherwise, which suffices.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;In more detail, consider two cells at distances $r_1$ and $r_2$ ($r_1≤r_2$) from the defect, at distance $r_0$ from each other.<br/>
+Case 1: $r_0$ is $Ω(r_1)$ (and thus $Ω(r_2)$).  The change in quadrupole moments is $O(r_1^{-1})$ and $O(r_2^{-1})$, and the change in distance is $O(1)$.  Thus, the change in potential is $O(r_1^{-1} r_2^{-4-s})$, which is small enough.<br/>
+Case 2:  $r_0$ is much smaller than $r_1$.  We get sufficient cancellation of the linear component because an area-preserving linear transformation equals a product of shear transformations (of comparable magnitude) along the symmetry (reflection) axes of the lattice.  Specifically, the interaction potential between two cells centered (before deformation) at 0 and $C$ equals the integral over points $a$ and $b$ (within range) of the potential of the six point system:  $-a,0,a,C-b,C,C+b$ with charge 1 at $0$ and $C$ and charge -1/2 at $±a$ and $±b$ (the arithmetic on points is done before the deformation; $|C|=r_0$).  The change due to deformation can be decomposed into:<br/>
+- $O(1)$ shear linear transformations, each of magnitude $O(r_1^{-1})$ (at distance 1), and where for each, all but $O(r_0/r_1)$ fraction of the six-point systems are matched with a system that exactly compensates the length changes<br/>
+- translation of the $(-b,C,b)$ triple by $O((r_0/r_1)^2)$ (dependent on the triple)<br/>
+- movement of points by $O(r_1^{-2}d^2)$ where $d=O(1)$ is the distance to the relevant center point.<br/>
+Each of these has a small enough impact on the potential.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;Also, regarding the total modified idealized lattice potential, we rely on small distance changes compared to what the ideal assumes (smaller scales as above; for all scales, $O(1)$ grid intervals effective change due to area preservation), and use isotropy of the quadrupole moment for regular $n$-gons to deal with large-scale orientation changes.</p>
+
+
+<h2>Higher dimensions</h2>
+
+<p>Similar constructions exist for $d$-dimensional spheres and polyhedra approximating them.  For all $d$, we can get within $O(n^{1-1/d})$ defects of any fixed $d$-dimensional lattice, with smoothing of deformations as above.  This amounts to $1-C n^{-2/d}-O(n^{-3/d})$ sphericity ($C$ depends on the lattice).  If the lattice is optimal, the optimal choice of defects should converge to a $d-1$ dimensional fractal.</p>
+
+<p>Typically (across problems), at misalignment angle $α$, the relative cost per defect is still $Θ(\log (1/α))$ (where $α$ is small and the cost at large angles is normalized at $Θ(1)$). And $O((1/α)^{1/d-ε})$ relative cost suffices to get within the cost of having $O(n^{1-1/d})$ unit-cost defects.</p>
+
+<p>For $d=8$, the $E_8$ lattice is generally optimal, and for $d=24$, the Leech lattice is. For other $d>2$, especially not too small $d$, it is unclear if there is an optimal lattice (which may depend on the optimization criteria).  If not, then the divergence from the Euclidean $d$-dimensional limit might be less, as instead of $d-1$-dimensional defect streams, we might tweak the arrangements to avoid defects (less likely, the divergence can be more than in the lattice case due to difficulty of smoothing deformations).</p>
+
+<p>For $r^{-s}$ potential, the quadrupole-quadrupole potentials exceed local connections for $d≥s+4$, perhaps giving a new behavior (unless we get a higher cancellation).  For $d&lt;s+3$, using our smoothing of deformations, we are within $O(n^{(d-1+s)/d})$ potential of the lattice limit/ideal, at least if the lattice has enough reflection symmetries to get the cancellation used in the proof of the theorem.  For $d≥s+3$, the quadrupole-based divergence from the nonmodified lattice limit might be larger.  It is plausible that we have enough cancellations (and costs if we do otherwise) to give the fractal-like optimal behavior all the way for $s>-2$.</p>
+
+<h2>References</h2>
+
+<p>(Abrego 2020) Abrego, Andoni. "Particles and fields from topological defects in spacetime mesh."  <a href="https://community.wolfram.com/groups/-/m/t/2030734">https://community.wolfram.com/groups/-/m/t/2030734</a> . Accessed: Oct 6, 2021 (and available on the Internet Archive).<br/>
+(Clare and Kepert 1986) Clare B.W. and Kepert D.L. "The closest packing of equal circles on a sphere." Proc. R. Soc. Lond. A405329–344 (1986). <a href="https://doi.org/10.1098/rspa.1986.0056">doi:10.1098/rspa.1986.0056</a>.<br/>
+(Clare and Kepert 1991) Clare B.W. and Kepert D.L. "The optimal packing of circles on a sphere." J Math Chem 6, 325–349 (1991). <a href="https://doi.org/10.1007/BF01192589">doi:10.1007/BF01192589</a>.<br/>
+(Copher 2020) Copher, Jessica.  "Sums of Squared Distances between Points on a Unit n-Sphere." (2020) <a href="https://arxiv.org/abs/2001.02745">arXiv:2001.02745</a>.<br/>
+(Goldberg 1935) Goldberg, Micahel. "The isoperimetric problem for polyhedra." Tôhoku Math. J. 1935, 40, 226–236.<!-- available https://www.jstage.jst.go.jp/article/tmj1911/40/0/40_0_226/_pdf as of Oct 6, 2021--><br/>
+(Lengyel, Gáspár, Tarnai 2017) Lengyel, András; Gáspár, Zsolt; Tarnai, Tibor. "<a href="https://www.mdpi.com/2073-8994/9/3/41">The Roundest Polyhedra with Symmetry Constraints</a>." Symmetry 9(3) (2017): 41. <a href="https://doi.org/10.3390/sym9030041">doi:10.3390/sym9030041</a>.<br/>
+(Schoen 1986) Schoen, Alan. "A defect-correction algorithm for minimizing the volume of a simple polyhedron which circumscribes a sphere."  Proceedings of the second annual symposium on Computational geometry, August 1986, pp 159–168. <a href="https://doi.org/10.1145/10515.10533">doi:10.1145/10515.10533</a>.<br/>
+(Schoen, website) Schoen, Alan.  "Roundest Polyhedra." <a href="https://schoengeometry.com/a_poly.html">https://schoengeometry.com/a_poly.html</a> .  Accessed: Oct 6, 2021.</p>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=windows-1252">
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <title>Quantum Mechanics</title>
+</head>
+<body>
+<p align="right" style="text-align: right;">Back to Dmytro Taranovsky's <a
+ href="index.html">home page</a>.<br>
+Dmytro Taranovsky<br>
+Created: <st1:date month="8" day="2" year="2000">August 2, 2000</st1:date> <br>
+Last Modified:<st1:date month="1" day="18" year="2002">January 18, 2002<br>
+Minor Editing:  January 28, 2003</st1:date></p>
+<h1 align="center">Quantum Mechanics</h1>
+<p>In quantum mechanics, each system is in a superposition of its basis
+states. For example, particles assume a superposition of all positions <b>r</b>
+and (using a different basis) a superposition of momenta <b>p</b>. The
+principle of superposition applies, so time evolution is linear. A
+vector is a superposition of the basis vectors, so quantum systems are
+represented by vectors. The quantum state of the universe can be
+approximated to the desired precision by a vector in a
+finite-dimensional vector space and can be stated exactly either as a
+sequence of such vectors by using increasingly detailed approximations
+or as a vector in an infinite dimensional Euclidean space.<br>
+Note: h-bar has been omitted from the equations in accordance with <a
+ href="Foundations.html">Foundations of Physics</a>.</p>
+<p>Each system is represented by a vector (with complex-valued
+components) normalized to one. Observation is represented by a
+Hermitian (O<sub>ab</sub>=O<sub>ba</sub>*) matrix/operator O. As a
+result of observation, the vector becomes one of the orthonormal
+eigenvectors of O. ("a" is normalized to 1 means &lt;a, a&gt;=1. A set
+of vectors is called orthonormal when every vector is normalized to 1
+and for every 2 different vectors their inner product is 0.) The
+observation gives an eigenvalue (&#955;) corresponding to the eigenvector.
+The amplitude of the transfer from p to q, &#968; =&lt;q|p&gt; = &lt;p,
+q&gt; = sum of p<sub>j</sub>q<sub>j</sub><sup>c</sup> for all <i>j</i>
+such that p<sub>j</sub>and q<sub>j</sub> are components of p and q. (for
+real <i>a</i> and <i>b</i>, (a+b<i>i</i>)<sup>c</sup>= (a-b<i>i</i>); <i>i<sup>2</sup></i>=-1).
+(For functions, &lt;p, q&gt;= integral of p(r)q(r)<sup>c</sup> over the
+domain, where r is the argument of the functions.) The probability of
+the transfer to a given eigenvector, P, is |&#968;|<sup>2</sup>. The
+expectation value is S(P<sub>i</sub>&#955;<sub>i</sub>) where the summation
+is over all eigenvectors and can be shown to equal &lt;p|Op&gt; for
+state p. According to the principle of superposition, observation
+should yield a superposition of results, not a single result. Thus,
+quantum mechanics cannot apply completely to the observer. (Quantum
+mechanics can, however, be applied to an "observer" that cannot feel by
+stating that an observation leads to an entanglement (relation) between
+the observer and the system observed.)</p>
+<p>Time dependence of systems is described by the linear differential
+equation: <b><i>i</i>*&#966;&#8242;(t)=H&#966; </b>where &#966;(t) is the state at time t
+and H, called Hamiltonian, is a Hermitian matrix/operator. (<i>i<sup>2</sup></i>=-1).
+Therefore, &#966;(t)=e<sup>-iHt</sup>&#966;(0). Hamiltonian is an observable--it
+is energy.</p>
+<p><b>Theorem:</b> Quantity represented by O is conserved if and only if
+physical laws are invariant under the operator e<sup>i&#955;O</sup> for every
+real &#955;.<br>
+<b>Corollary:</b><span style=""> Setting O=H, invariance of physical
+laws in time (since e<sup>-iHt</sup> is time translation) shows
+conservation of energy.</span><br>
+<b>Note: </b>Conserved quantities have the same eigenvectors as
+Hamiltonian (H) and thus commute with H.<br>
+<b>Specific Example:</b> If a system is isolated, H does not depend on
+time since d&#966;/dt depends only on &#966; and physical laws, and physical laws
+are invariant of time. If H is invariant of time, and if a state (&#966;<sub>i</sub>)
+is an eigenvector of H, the time dependence can be shown to be e<sup>-iEt</sup>&#966;<sub>i</sub>
+where E is energy of the system, which is the corresponding eigenvalue.
+Since the probability distribution of &#966;<sub>i</sub> does not change in
+time, it is called a stationary state. Since Hermitian matrices have a
+full set of orthonormal eigenvectors, every system is a superposition
+of stationary states with coefficients of time independent magnitude.
+Thus, (and since energy of stationary states is time independent)
+energy is conserved.</p>
+<p>Sometimes, certain quantum states need not be distinguished. In that
+case, the basis states are arranged in several collections, such that
+states in a collection are not distinguished but the collections
+themselves are distinguished. The collections can then be considered as
+basis states. (The amplitude for a collection is the sum of the
+amplitudes for the basis states of the collection.) An observation can
+be partial, that is treating collections as basis states. A partial
+observation does not affect the relative value of states in a
+collection.</p>
+<p>Quantum mechanics provides the framework for individual theories. A
+quantum theory is created by stating information about the Hamiltonian
+and relating the basis states to human observations.</p>
+<p>We now build the quantum theory for non-relativistic particles. A
+finite collection of particles is given. Each particle has a type (such
+as electron or proton). Each type is either fermion or boson. Each
+state is a doubly differentiable superposition of the following states (<b>r</b>):</p>
+<p style="margin-left: 56.9pt;">Each particle has a position (an
+ordered triple of coordinates) and a spin (either true or false).
+(Thus, a state for a system of <i>n</i> particles has 3<i>n</i> real
+valued components and <i>n</i> Boolean components.) We are given the
+total potential energy of the system (U) as a function of the state (<b>r</b>).</p>
+<p>The quantum state is subject to the following restriction: An
+interchange of any two fermion particles of the same type multiples the
+state by -1. An interchange of boson particles of the same type does
+not change the state. (According to quantum mechanics, particles of the
+same type are identical and their interchange cannot be observed.)</p>
+<p>The Hamiltonian H is the sum of the kinetic and potential part. The
+potential part is the operator U, that is (U&#966;)(<b>r</b>)=U(<b>r</b>)&#966;(<b>r</b>).
+Let <b>&#966;</b>(i, j) be the distribution of coordinate <i>j</i> (one of
+the 3 spatial coordinates) of particle <i>i</i>. It is computed by <b>&#966;</b>(i,
+j)(<i>x</i>)=the appropriate integral of &#966;(<b>r</b>) over the region
+where the coordinate <i>j</i> of particle <i>i</i> is equal to <i>x</i>.
+(Theorem:<span style=""> </span><b>&#966;</b>(i, j) is normalized.)<span
+ style="">  </span>The kinetic part is the sum of K(i, j) (kinetic
+energy operator) for all particles <i>i</i> and coordinates <i>j</i>,
+where K(i, j)(<b>r</b>)=-(&#8706;<sup>2</sup><b>&#966;</b>(i, j)(<i>x</i>) /&#8706;<i>x</i><sup>2</sup>)/2<i>m<sub>i</sub></i>
+where <i>x</i> is the coordinate j of particle i and <i>m<sub>i</sub></i>
+is mass of particle i.<span style=""> </span>The basic theory is now
+stated and can be specified further.</p>
+<p>Thus, for a single non-relativistic particle of mass <i>m</i>, H=<b>p</b><sup>2</sup>/2<i>m</i>+U,
+where U(<b>r</b>) is potential energy at <b>r</b>, and momentum, <b>p</b>=-i(&#8706;/&#8706;x+&#8706;/&#8706;y+&#8706;/&#8706;z).
+(For a free non-relativistic particle with energy E and momentum <b>p, </b>the
+wavefunction is &#966;(<b>r</b>,t) = C*e<sup>-i(Et-<b>p·r</b>)</sup>.)</p>
+<p>Two fermions of the same type cannot assume the same quantum state
+(the superposition of the 3 coordinates and the spin) because then
+their exchange would not affect the system and thus will not multiply
+the state by -1. It can be proved that because spin is a superposition
+of two values, at most two fermions of the same type can assume the
+same superposition of coordinates. Other fermions may have to assume
+states of higher energy.</p>
+<p>Energy is quickly observed. Thus, systems tend to assume states of
+definitive energy. In reality (but not in this theory), systems can
+emit and absorb photons (light) and change between states of different
+energy. The energy of the photon can be found from the conservation of
+energy. Spontaneously, systems eventually emit photon(s), if such
+emission is possible. The emission and absorption cannot be properly
+described here because photons move with a relativistic speed <i>c</i>.
+However, non-relativistic approximations for the transition rates exist.</p>
+<p>The theory above is further specified by stating the particle types
+and the potential energy. The following specification correctly
+predicts large parts of chemistry. Each particle has a mass (<i>m<sub>i</sub></i>,<i>m<sub>i</sub>&gt;0</i>)
+and electric charge (a real number <i>q<sub>i</sub></i>). The
+potential energy is the sum of potential energies (U<sub>{i, j}</sub>)
+for all <i>unordered</i> pairs {<i>i, j</i>} of particles ({<i>i, i</i>}
+is not counted). U<sub>{i, j}</sub>=kq<sub>i</sub>q<sub>j</sub>/d(i,
+j)-G<i>m<sub>i</sub>m<sub>j</sub></i>/d(i, j) where <i>d</i> is
+distance between its arguments, k is the Coulomb's constant and G is
+the gravitational constant. (The second term is very small and can
+usually be ignored.) The particles are electrons and nuclei of atoms.
+Electron is a fermion and has electric charge of -1. Nuclei are
+classified by proton number (<i>p</i>) and neutron number (<i>n</i>).<i>p</i>
+and <i>n</i> are nonnegative integers; <i>n+p</i>&gt;0. Charge of
+nucleus is <i>p</i>. Mass is roughly proportional to <i>n+p</i>;
+tables of nuclides have more precise masses; mass of a proton (<i>p</i>=1,<i>n</i>=0)
+is approximately 1.67*10<sup>-27</sup>kg; mass of an electron is about
+9.11*10<sup>-31</sup>kg. A nucleus is a fermion if and only if n+p is
+odd.</p>
+<p>Unfortunately, calculations are often difficult, so elaborate
+approximation techniques are used. For example, many systems are
+numerically analyzed as a small perturbation (deviation) from systems
+for which the time dependence was solved. Generalized functions are
+used as idealization of particular conditions (a sharp change in the
+potential is idealized as an instantaneous change). In non-relativistic
+mechanics, the stationary states are non-normalizable: The wavefunction
+density must be the same everywhere in space and hence cannot be
+normalized to one. Instead, the system is typically represented by the
+coordinates of the center of mass and the coordinates of all particles
+but one relative to the center of mass. The time evolution (dependence)
+of the system is then separated into time dependence of the center of
+mass (which can be easily computed since momentum is conserved) and the
+evolution of the coordinates relative to the center of mass of all
+particles but one. The later is usually normalizable, and the equations
+of motion can be derived from the theory.</p>
+<br>
+</body>
+</html>

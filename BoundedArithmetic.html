@@ -1,0 +1,420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Arithmetic with Limited Exponentiation</title>
+	<script type="text/javascript"
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+	</script>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+		tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+	});
+	</script>
+	<style type="text/css">
+		p {white-space: pre-line}
+		@page {margin: 1.0in}
+	</style>
+	<!-- Note:  Text justification is not used because it sometimes leads to very long spaces.-->
+</head>
+<body>
+<p style="text-align:right">Dmytro Taranovsky<br/>December 1, 2015<br/>Modified and Expanded: December 17, 2016</p>
+
+<h1 align="center" style="font-size: 180%">Arithmetic with Limited Exponentiation</h1>
+
+<p><b>Abstract:</b>  We present and analyze a natural hierarchy of weak theories, develop analysis in them, and show that they are interpretable in bounded quantifier arithmetic $\text{IΔ}_0$ (and hence in Robinson arithmetic Q).  The strongest theories include computation corresponding to $k$-fold exponential (fixed $k$) time, Weak König's Lemma, and an arbitrary but fixed number of higher level function types with extensionality, recursive comprehension, and quantifier-free axiom of choice.  We also explain why interpretability in $\text{IΔ}_0$ is so rich, and how to get below it.</p>
+
+<p><b>Contents:</b>
+<a href="#A1">1 Introduction and the Power of Quantifiers</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A1.1">1.1 The Hidden Strength of Unbounded Quantification</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A1.2">1.2 Restricted Quantifier Theories</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A1.3">1.3 Importance of Interpretability in $\text{IΔ}_0$</a>
+<a href="#A2">2 A Weak Theory and its Variations</a></a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A2.1">2.1 Axioms and Discussion</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A2.2">2.2 Relation with Complexity Classes</a>
+<a href="#A3">3 The Main Theory and its Extensions</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A3.1">3.1 Axioms and Basic Properties</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A3.2">3.2 Extensions</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A3.3">3.3 Formula Expressiveness</a>
+<a href="#A4">4 Real Numbers and Analysis</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A4.1">4.1 Introduction and Real Numbers</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A4.2">4.2 Continuous Functions</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A4.3">4.3 Reverse Mathematics</a>
+<a href="#A5">5 Proof of Interpretability in $\text{IΔ}_0$</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A5.1"> 5.1 Setup</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A5.2"> 5.2 First Proof</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A5.3"> 5.3 Second Proof</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A5.3"> 5.4 Further Remarks</a>
+</p>
+
+<p><b>Outline:</b>  In <a href="#A1">section 1</a>, we explain that alternations of unbounded quantifiers is what makes interpretability in $\text{IΔ}_0$ so rich, and that we can go below that by using logic with restricted alternations of unbounded quantifiers.  Next (<a href="#A2">section 2</a>), we discuss a relatively simple theory (using numbers, words, and predicates) and include relations with computational complexity classes. Then (<a href="#A3">section 3</a>), we introduce the main theory, or rather a hierarchy of theories, using numbers, functions, and operators, and with extensions to higher types.  Our choices aim to get the most in power, expressiveness, and convenience while staying within bounded quantifier definitions for the base theory and within interpretability in $\text{IΔ}_0$ for all extensions.  In <a href="#A4">section 4</a>, we outline analysis and reverse mathematics in the theories, including a treatment of continuous functions without recursive comprehension and an equivalence for the intermediate value theorem.  Finally (<a href="#A5">section 5</a>), we prove that the theories are all interpretable in $\text{IΔ}_0$ (and hence in Q).</p>
+
+<h2><a id="A1"/> 1 Introduction and the Power of Quantifiers </h2>
+
+<h3><a id="A1.1"/> 1.1 The Hidden Strength of Unbounded Quantification </h3>
+
+<p>Part of foundations of mathematics is finding weak systems that capture much of mathematics, as well as understanding the relations between different systems and theorems.  Exponential Function Arithmetic (EFA) captures most arithmetic, but can we go further by limiting exponentiation?</p>
+
+<p>Formally, we can define weaker systems, such as $\text{IΔ}_0$ (IDelta_0), which is arithmetic with bounded quantifier induction.  However, we encounter surprising behavior.
+<b>Definition:</b>  $a_b^c$ is $a\text{^}a\text{^}...\text{^}a\text{^}c$ ($b$ exponentials).
+$\text{IΔ}_0$ has length $n^{O(1)}$ proof that $2_n^2$ exists.  More generally, given a model, a cut is a nonempty initial segment of the model that is closed under successor.
+For every $k$, $\text{IΔ}_0$ proves that there is a cut $I$ such that:
+* $I$ is closed under '$+$' and '$⋅$', and
+* for every $i∈I$, $2_k^i$ exists.
+Thus, even in a very weak system, we can in a sense iterate exponentiation any fixed finite number of times.  The proof is simple:
+Set $I_0 = ℕ$, set $I_{n+1}(x) ⇔$ ($I_n$ is closed under $y→y+2^x$).  To get closure under '$+$' and '$⋅$', choose $\{n: ∃m∈I_{k+2} \, n&lt;2^{2^m}\}$.</p>
+
+<p>The issue is not the induction — $\text{IΔ}_0$ is interpretable Robinson Arithmetic Q, which has just a few of the properties of successor, addition, and multiplication.  (For a good background, see "Interpretability in Robinson's Q" [Ferreira 2013].)  Nor is it the totality of addition and multiplication; Q is interpretable in its weaker variant where we only require closure under successor [Švejdar 2008].</p>
+
+<p>Instead, the strength comes from alternation of unbounded quantifiers.  Meaningfulness of quantifiers over natural numbers implies a certain ability to do an unbounded search over natural numbers, and that ℕ (the set of natural numbers) has certain attributes of a completed totality.  The combinatorial strength of this principle is the partial ability to do exponentiation.  Another way to view it is that unbounded quantifiers gives us access to higher types, and each higher type gives an exponential speed up.  For example, set $F_0(f) = f*f$, $F_{n+1} = F_n*F_n$ ('*' is composition), so $F_n(f) = f^{2^{2^n}}$.  This speed up characterizes the inherent strength of a basic ability to use higher types.</p>
+
+<h3><a id="A1.2"/> 1.2 Restricted Quantifier Theories </h3>
+
+<p>Ordinary mathematics uses quantifiers in a limited way, and in particular uses only a very small number of unbounded quantifier alternations. By restricting quantifiers, we may restrict exponentiation while still capturing much mathematical practice.  Specifically, given a notion of bounded quantifier or $Σ_0$ formulas, and a fixed small $k$, we can restrict the language to boolean combinations of $Σ_k$ formulas.  There are different formalizations, but the following formalization may be best in terms of nonrestrictiveness and its closure properties:
+- A $Σ_{i+1}$ formula is of the form $∃x_1 ∃x_2 ... ∃x_n φ$ where φ is a boolean combination of $Σ_i$ formulas.
+- For the deduction system, use sequent calculus limited to boolean combinations of $Σ_k$ formulas.</p>
+
+<p>Using cut elimination and the subformula property of cut-free proofs, and assuming that all axioms remain expressible, provability in the original theory agrees with the restricted theory for expressible formulas.  The original theory may have an iterated exponential speed-up of proofs, but (at least if $k$ is not too small) that speed-up should only be likely for sentences that (perhaps indirectly) involve very large numbers.</p>
+
+<p><b>Notes:</b>
+* One downside is that different reasonable proof systems might no longer be related up to polynomial size equivalence, but given a reasonable system $S$ for $k$ unbounded quantifiers and a reasonable system $T$ for $k+1$ unbounded quantifiers, $S$-proofs should be transformable with polynomial expansion into $T$ proofs.  (Both claims are conjectural.)
+* Intuitively, in the epistemic system corresponding to the proof system, the extent of natural numbers is fuzzy, and for $Σ_k$ $φ$, $φ(n)$ is meaningful for every concrete natural number $n$, but because of the fuzziness, the meaningfulness of $∀n φ(n)$ is unclear.
+* A different formalization is to limit validity to boolean combinations of $Σ_k$ sentences, and use a proof system based on sentences rather than open formulas.  Note that a $k-1$ quantifier formula may correspond to a $k$ quantifier sentence.</p>
+
+<p>Using cut elimination, the consistency of $\text{IΔ}_0$ restricted this way is provable in EFA.  Moreover, $\text{IΔ}_0$ restricted to boolean combination of $Π^0_k$ formulas does not have length $n$ proof of existence of $2_{k+5}^n$.</p>
+
+<p>Regarding expressiveness of restricted quantifier languages, for many statements k=1 suffices — most number theory theorems are $Π^0_1$ or have natural $Π^0_1$ strengthenings.  However, it is annoying to always modify statements this way, and $k=2$ allows one to speak of (for example) an algorithm having linear time without specifying a proportionality constant.  For second order theories (using predicates), basic axioms on real numbers appear to need at least $k=3$, and $k=4$ allows general $Π^1_2$ statements (and $k=5$ — $Π^1_3$).  $Π^1_3$ statements are useful for exceptional theorems, $Π^1_2$ formulas, flexibility, and for allowing an extra quantifier for formulation in a weak base theory.</p>
+
+<p>An alternative is to allow arbitrary formulas but limit the cut rule to restricted formulas, thus treating unrestricted formulas as having limited epistemic validity.  This should get systems that — provably in EFA + iterated exponentiation — are equivalent to (for example) $\text{IΔ}_0$, yet with consistency provable in EFA.  However, absence of modus ponens is problematic, and allowing the cut rule for arbitrary sentences (but not open formulas) would allow length $n$ existence proof of about $2_{\log^\star(n)}^n$.  (One gets a cut-free proof that $I_k$ is closed under successor, and does cut elimination on $I_k(0), I_k(0)⇒I_k(1), I_k(1)⇒I_k(2), ..., I_k(n-1)⇒I_k(n)$.)</p>
+
+<p>Let us define the <i>exponential index</i> of a theory as
+maximum $k$ such that existence of $2_k^n$ has a proof of length $n^{O(1)}$.</p>
+
+<p><b>Challenge:</b>  Find natural theories with small exponential indices that capture much of mathematics.</p>
+
+<p>If $S$ is a natural theory of exponential index $k$, then I conjecture that provably in a weak base theory, if $2_{k+2}^P$ exists, then $S$ has no inconsistency (i.e. a natural number coding an $S$-proof of $0=1$) less than $P$.</p>
+
+<p>Besides exponential index, theories vary by the amount of induction, and one can intuitively associate a computational complexity class with a theory based on exponential index and the complexity corresponding to permitted induction.  For theories with multiple types, there may be an ambiguity about which types to consider as numbers.  By combining exponential index with the amount of induction we may ensure that we get the same complexity regardless of whether we use (say) unary or binary numbers.  However, I do not have a formalization of this concept.</p>
+
+<h3> <a id="A1.3"/> 1.3 Importance of Interpretability in $\text{IΔ}_0$ </h3>
+
+<p>Setting the exact number of quantifiers may be arbitrary.  Instead, we may step back and simply ask that theory has a finite exponential index if the number of unbounded quantifiers is fixed.  However, a theory may show strength in ways other than exponential index (for example, through $Π^0_1$ strength), and the right formal measure is that the theory is interpretable in $\text{IΔ}_0$.  Moreover, we want there to be a formula in $\text{IΔ}_0$ interpreting satisfaction for bounded quantifier formulas (whose length is in some definable cut) so that for restricted quantification we would not need to worry about such formulas.</p>
+
+<p>It is surprising how much can be interpreted in $\text{IΔ}_0$ — including Weak König's Lemma and much of mathematical analysis.</p>
+
+
+<h2><a id="A2"/> 2 A Weak Theory and its Variations </h2>
+
+<h3><a id="A2.1"/> 2.1  Axioms and Discussion </h3>
+
+<p>Infinite objects can be interpreted using either predicates or functions.  Using predicates leads to simpler axioms.  However, in the absence of recursive comprehension, functions give much more flexibility.  Functions are also more natural work with directly.  In this section, we will give a simpler theory using predicates, and in the next section we will switch to using functions.</p>
+
+<p>Even for finite programs, it is often useful to talk of input-time-output relation without noting implementation, and the natural language for this is to use infinite sets.  Also, restricted exponentiation prevents equivalence of binary and unary numbers, so for maximum usability we want three types:
+1. ordinary or unary numbers — as in physical sizes; closed under '$+$' and '$⋅$'. One extension is to require closure under quasipolynomial functions, specifically $n→\lfloor n^{\log n+1}\rfloor$ ($n>0$), and extend bounded quantifier comprehension accordingly.
+2. words or binary numbers — as in data that a program can manipulate.
+3. sets or predicates on words.</p>
+
+<p><b>Language:</b>  Standard, except that we restrict to boolean combinations of $Σ_k$ formulas using $k=3$ (see above).  We can also use a different or infinite $k$. 
+<b>Axiomatization:</b>
+* Basic axioms.
+* Induction (PIND): Every nonempty set has a word of minimum length.
+* Bounded quantifier comprehension:
+$∀P \, ∃Q \, ∀w \, (Q(w) ⇔ φ(P,w))$ where $φ$ is a bounded quantifier formula ($P$ may be a tuple of variables; $w$ is a word).
+<b>Note:</b>  The choice of "basic axioms" is unimportant and does not affect the theory as long as we can derive $\text{S}^1_2$ for binary numbers and that unary numbers are those whose exponent exists as binary.  Also, a bounded quantifier is one of $∃s&lt;t$, $∃v⊂t$, $∀s&lt;t$, $∀v⊂t$, where $t$ is a unary term ($t$ does not use $v$ or $s$; $t$ may use '$+$' and '$⋅$'), $s$ is unary, and $v$ is binary (so $v⊂t ⇔ v&lt;2^t$).</p>
+
+<p>Its exponential index is at least 5: Define $I_0$ = {$x$: $2_3^x$ exists as a binary number}, $I_1$ = {$x$: $I_0$ is closed under $y→y+2^x$}, and $I_2$ = {$x$: $I_1$ is closed under $y→y+2^x$}.  Membership in $I_2$ is $Π^0_3$ and hence meaningful for constants, allowing us to prove say $I_2(100)$. The exponential index rises to 9 if unary numbers are closed under quasipolynomial functions, and the system is extended to make sets with bounded word length count as numbers and behave accordingly, and we allow sentences with five blocks of unbounded quantifiers.  (5 and 9 are lower bounds; I do not have a proof of optimality.)</p>
+
+<p>One extension is to allow recursive comprehension.  Even Weak König's Lemma can be added, but then we would lose optional interpretability of predicates as equivalence classes of programs.  We will defer discussion to a later section.  There is a hierarchy of systems based on how many times exponentiation can be effectively applied (and on other restrictions on comprehension and induction).  A good project (partially accomplished here) would be to catalog some of these systems of arithmetic and analysis, show that their consistency is provable in EFA, and see how much mathematics can be done in them.</p>
+
+<h3><a id="A2.2"/> 2.2  Relation with Complexity Classes </h3>
+
+<p>Bounded quantifier formulas correspond to the polynomial hierarchy PH, or relativized PH if the formula has a free set variable.  There are natural comprehension schemes that (assuming basic comprehension) correspond to different complexity classes:
+<i>Note:</i> Here, φ is bounded quantifier, and we can even pick a single polynomial time computable φ. PSPACE and EXPTIME are reducible to the formula shown; counting hierarchy can be reached level by level by using the previous level as a free variable.  P is a free second order variable.  The comprehension schema is that $Q$ is a set (or for counting hierarchy, a numeric function coded by a set).
+* counting hierarchy: $Q(w) = |\{v&lt;w: φ(P,v)\}|$
+* PSPACE: $Q(w) = φ(P, \{v: Q(v) ∧ w-\text{len}(w) &lt; v &lt; w\})$
+* EXPTIME: $Q(w) = φ(P, \{v&lt;w: Q(v)\})$
+* exponential hierarchy:  Treat quantifiers over sets containing only words of restricted length as bounded.
+* In the other direction (corresponding to $\text{S}^1_2$), one can restrict comprehension to polynomial time P, but allow induction for NP formulas.</p>
+
+<p>For the second order theory, the inclusions are proper (except possibly counting hierarchy v PSPACE) because there are oracle separations between the classes.  However, for the first order theory, the only inclusion known to be proper is PH v. exponential hierarchy.</p>
+
+<p>Capturing the counting hierarchy is useful to define acceptance probability of a polynomial time randomized (or even quantum) computation.  Acceptance probability (after rescaling to get an integer) is complete for #P, which is conjectured to be outside PH; however approximations are in PH.  For quantum computation, even approximations are not known to be in PH.  Capturing #P also corresponds with the ability to do integration (under certain assumptions).</p>
+
+
+<h2><a id="A3"/> 3 The Main Theory and its Extensions </h2>
+
+<h3><a id="A3.1"/> 3.1 Axioms and Basic Properties </h3>
+
+<p>The theory will have 4 types:
+* unary numbers, as in physical sizes; this type is used for convenience and intuitive appeal; $n$ is unary iff $2^n$ exists as binary
+* binary numbers, as in digital data; below, by numbers we will mean binary numbers
+* functions: map numbers into numbers
+* operators: map functions into functions.</p>
+
+<p><b>Notes:</b>
+* The axioms will not mention unary numbers but they exist in a definitional extension by letting binary $2^n-1$ code unary $n$ (or one can use a different coding as long as unary $n$ → binary $2^n$ is bounded quantifier).  One can also additional types of numbers, such as small numbers — say $n$ is small iff $2^n$ exists as unary (again with bounded-quantifier coding).
+* Many $Π^0_2$ number theory theorems will need to weakened as: For every unary number there is a binary number such that the bounded-quantifier relation holds.
+* One can add hyperoperators (mapping operators into operators) and in general any fixed finite number of higher operator types.  Throughout the paper, we will indicate (sometimes briefly) how to extend the axioms and proofs to higher types.
+* Because pairing will be codable, arity of functions and operators does not matter.
+* By default, $m$ and $n$ will be numbers, $f$ and $g$ functions, and $F$ and $G$ operators.
+* Equality is primitive only for numbers. $f=g$ means $∀n f(n)=g(n)$, so $f=g$ is not a bounded quantifier formula.
+* All functions and operators are total.
+* The language is very expressive.  For example, under the set-theoretical interpretation, the Continuum Hypothesis is equivalent to
+$∃F \, ∀f,g \, ∃n \, F(n,f)=g ∨ F(n,g)=f$  &nbsp;($n$ is a natural number and $f$ and $g$ are functions).</p>
+
+<p>Define $μ(x&lt;n:φ(x))$ as the least number $x&lt;n$ such that $φ(x)$ holds, and $n$ if there is no such number.</p>
+
+<p><b>Axioms:</b>
+<b>1.</b> Basic arithmetical axioms.  Include constants 0 and 1, and functions '$+$', '$⋅$', and $x→x^{\text{len}(x)}$ (len is bit length; $\text{len}(x) = \lfloor \text{lg} \, x \rfloor + 1$, except that $\text{len}(0)=0$).
+<b>2.</b> Induction for bounded quantifier formulas.  Equivalently, $∀n f(n)=f(n+1) ⇒ ∀n f(n)=f(0)$.
+<b>3.</b> Extensionality: $∀n \, f(n) = g(n) ⇒ ∀m \, F(f)(m) = F(g)(m)$
+<b>4.</b> Bounded quantifier comprehension:
+&nbsp;&nbsp;&nbsp;&nbsp;<b>a.</b> functions: $∃f \, ∀n \, f(n) = μ(m&lt;T(n):φ(m,n))$   ($T$ is a term; $T$ and $φ$ do not use $f$)
+&nbsp;&nbsp;&nbsp;&nbsp;<b>b.</b> operators: $∃F \, ∀f \, ∀n \, F(f)(n) = μ(m&lt;T(n):φ(m,n,f))$   ($T$ is a term; $T$ and $φ$ do not use $F$)
+&nbsp;&nbsp;&nbsp;&nbsp;where $φ$ is a bounded quantifier formula
+&nbsp;&nbsp;&nbsp;&nbsp;- each numeric quantifier is in the form $∀z&lt;S$ or $∃z&lt;S$ where $S$ is a term that does not use $z$.
+&nbsp;&nbsp;&nbsp;&nbsp;- each function quantifier is in the form 4a (i.e. one can use bounded minimization to define new functions).
+&nbsp;&nbsp;&nbsp;&nbsp;- each operator quantifier is in the form 4b.</p>
+
+<p><b>Notes:</b>
+* Per convention, the axioms are open formulas that are assumed to be universally quantified.
+* Bounded quantifier formulas appear very expressive:  They can use functions and operators, and have quantifiers of the form $∃n&lt;f(m)$ (and $∃n&lt;F(f)(m)$ and so on), and even use $μ$ to get new functions as input to operators.
+* An alternative treatment would be to use a finite set of basic combinators (which would be operators for functions, and hyperoperators for operators) that capture bounded-quantifier comprehension and add their basic defining axioms.  In that set up, bounded-quantifier definitions correspond to terms.
+* If we used predicates instead of functions, and coded functions by predicates, then recursive comprehension would be necessary for basic things such as existence of $\{n: f(n)=0\}$.  By using functions directly, we avoid the need for unlimited recursive comprehension to get a meaningful theory of functions.</p>
+
+<p>One shorthand is to use λ in place of bounded function and operator quantifiers.  For example, set $\text{max} = λf.λn.f(\text{argmax}(f)(n))$ where $\text{argmax} = λf.λn.μ(m≤n:∀m'≤n \, f(m')≤f(m))$, and we can show that $\text{max}(f)(n) = \text{max}_{m≤n}f(m)$.</p>
+
+<p>On the one hand, bounded quantifier comprehension suffices to give a basic general theory of functions and operators.  On the other hand, the higher order theory with bounded quantifier comprehension is conservative over the first order theory with bounded-quantifier induction $\text{IΔ}_0+Ω_1$.  To see this, code functions and operators by sequences of bounded quantifier definitions, and note that evaluation allows one to expand them into numeric quantifiers and bounded quantifier formulas.  However, this result is model-theoretic (i.e. the coding is done outside of the theory), and may involve a speed-up of proofs, especially for restricted quantification proofs.  In particular, the definitions allow an exponential (the number of exponentials corresponding to the number of higher types) shortening of some bounded quantifier formulas.</p>
+
+<p>Without recursive comprehension, the complexity of definitions of functions is characterized by two parameters:
+(1) the complexity of evaluating the corresponding predicate
+(2) the permitted growth rate.
+High (2) leads to high (1).  However, in a weak theory, (2) has to be very limited, so (1) is important to allow definition of complex functions.  Without total exponentiation, even with recursive comprehension, one can define more complex predicates through bounded quantification over higher types (axiom 7 below).</p>
+
+<p><i>Polynomial Time Restriction:</i>  To get a theory corresponding to polynomial time:
+(1) Add unary numbers (with exponentiation function to get binary numbers).
+(2) Treat ordinary bounded quantifiers over binary numbers as unbounded.
+(3) In place of μ, use $\sum_{i=0}^{\text{len}(T)} 2^i φ(i)$ ($i$ is unary and $φ$ is bounded quantifier; 0 is False, and 1 is True) (and treat the corresponding definitional quantifier for a binary number as bounded).
+(4) Add $Σ^b_1$-PIND: $φ(0) ∧ ∀n (φ(\lfloor n/2 \rfloor)⇒φ(n)) ⇒ ∀nφ(n)$, where $φ$ is $∃m≤n \, p(m,n)$ and $p$ is a boolean function symbol.
+(5) Bounded Time Comprehension:  Treat the following quantifier as bounded: $∃w ∀i \, (w(i) ⇔ i&lt;j ∧ q(w↾i))$ ($w$ is a word (a binary number), $i$ and $j$ are unary ($j$ is a free variable), and $q$ is a boolean function).
+<i>Note:</i> It may be more natural to treat unary numbers as numbers here and binary numbers as words.
+<i>Extension:</i>  To compensate for the lack of max operator, we can add $∀n∃n'∀m≤n f(m)&lt;n'$ or the stronger $∀f ∃g ∀n ∀m≤n \, f(m)&lt;g(n)$.
+<i>Strength:</i>  I did not verify whether the above theory is conservative over $\text{S}^1_2$.</p>
+
+
+
+<h3> <a id="A3.2"/> 3.2 Extensions </h3>
+
+<p><b>5.</b> Bounded collection:  $∀m ∃n \, f(m,n)=1 ⇒ ∀m ∃n ∀m'&lt;m ∃n'&lt;n \, f(m',n')=1$
+<b>Note:</b> Bounded collection (even for polynomial time relation $f$) appears unprovable in PRA, even if extended with all true $Π^0_2$ statements, but it is very useful for dealing with arbitrary recursive functions (without recursive comprehension, recursive 'functions' need not be functions in the theory).</p>
+
+<p><b>6.</b> Add (or assert existence of) $\text{SUM}$ operator: $\text{SUM}(f)(n) = \sum_{i=0}^n f(n)$.
+<b>7.</b> More generally, treat quantification over $P(n)$ (using functions) or $P(P(n))$ (using operators) as bounded, or otherwise allow a high computational complexity class in defining functions and operators. (Here, $P$ stands for power set, and $n$ is a number. A boolean function $f$ codes an element of $P(n)$ iff $∀m≥n \, f(m)=0$, and a boolean $F$ codes an element of $P(P(n))$ iff $F(f)$ depends on $f$ only through $\{m&lt;n:f(m)=0\}$.)
+<b>8.</b> Allow quasipolynomial time functions:  $x→x^{\text{len}(x)^{\text{len}(\text{len}(x))}}$.</p>
+
+<p>For a fixed $k$ (but not simultaneously for all $k$ in $ℕ$), we can even allow
+$Ω_k$:  For all $x$, x^len(x)^...^len<sup>k</sup>(x) exists, where len<sup>k</sup> is $k$-fold iteration of len.
+Function $Ω_k$:  x→x^len(x)^...^len<sup>k</sup>(x) exists as a function.</p>
+
+<p><i>Extension to higher types:</i> The language and the theory can be extended with hyperoperators (and any fixed finite number of types) defined analogously to operators, and satisfying extensionality and bounded quantifier comprehension, and axiom 7 can be extended to treat quantifiers over $P(P(P(n)))$ (and any fixed number of power sets) as bounded.  One formalization of bounded quantification over $P(...P(n)..)$ is to treat the quantifier $∃G (G=C_n(G))$ as bounded where $G$ is a function (or a higher type), and $C_n$ 'contracts' its argument to $n$, as $C$ does in the proof of axiom 12.</p>
+
+<p><i>Integers of higher types:</i>  In the absence of total exponentiation, and using axioms 1-7, we can still iterate exponentiation of ordinary numbers a fixed number of times using numbers of higher types (and with exponentiation being a function/operator/etc).  For example, we can treat $f:ℕ→\{0,1\}$ with $f(0)=\text{sup}(x+1:f(x+1)=1)$ as $\sum_{i=1}^{f(0)}{2^{i-1} f(i)}$ to get numbers in $2^{&lt;ℕ} = \{n:\text{len}(n)∈ℕ\}$; let $\text{code}(n)$ refer to this coding of numbers by functions.  Similarly, we can use operators to get numbers in $2^{&lt;2^{&lt;ℕ}} = \{n: \text{len}(\text{len}(n))∈ℕ\}$, and so on.  The exact coding does not matter as long as basic operations are bounded quantifier.  Note that while there is no bounded quantifier formula testing whether a function codes a number (i.e whether $f∈\text{code}$), there is an operator $F$ such that $F(f)∈\text{code}$ and also $f∈\text{code}⇒F(f)=f$, which suffices. For example, the quantifier $∃G:2^{&lt;ℕ}→2^{&lt;ℕ}$ is equivalent to the quantifier $∃G'∃G=λf.F(G'(F(f)))$ and hence uses only one unbounded quantifier. We may also want to add bounded collection as axioms for numbers of higher types if we do not include stronger axioms that imply it.</p>
+
+<p><b>Further Extensions:</b>
+<b>9.</b> Recursive Comprehension:  $∀m ∃n \, p(m,n) ⇒ ∃f \, ∀m \, p(m,f(m))$ ($p$ is a boolean function).
+<b>10.</b> Weak König's Lemma (WKL):  Every infinite binary tree has an infinite path.  Here, a tree can be coded by a boolean $f$ with $∀n>0\, f(n)⇒f(\lfloor (n-1)/2 \rfloor)$&nbsp; ($\lfloor (n-1)/2 \rfloor$ is the parent of $n$), and a path is a nonbranching tree.</p>
+
+<p><b>Notes:</b>
+* Axioms 9 and 10 are extremely useful for mathematical analysis, but 9 breaks the relation between functions and bounded time computability, and 10 breaks the relation between functions and computability.
+* WKL implies recursive comprehension (and $Σ^0_1$ separation) for predicates on unary numbers.
+* There is an extension of WKL that we can add:
+<b>10a.</b> WKL holds for numbers of the type $2^{&lt;ℕ}$ (coded by functions, and with the tree and path coded by operators) (and its extensions to higher types).
+In the absence of exponentiation, 10a does not appear to follow from WKL. <!-- [old text] For the coding, $f(0)$ should equal $\text{len}(n)$ (or for $n$ in $2^{&lt;2^{&lt;ℕ}}$ $F(0) = \text{len}(\text{len}(n))$).  For reference, let $\text{code}$ denote a coding of numbers by functions, with $\text{code}(n)(0)=\text{len}(n)$ and $\text{code}(n)(k)&lt;2$ for $k>0$ and $\text{code}(n)(m)=0$ for $m>\text{len}(n)$.  Indicating the length upfront is needed since otherwise (in weak systems) the operator would be undefined for infinite length fake numbers.-->  
+* If exponentiation is not total, then in the presence of 1-7, WKL is implied by ($\text{code}$ is as defined in "Integers of higher types" (above)):
+<b>10b.</b> $∀f:ℕ→\{0,1\} \, ∃F \, ∀n∈ℕ \, F(\text{code}(n))=f(n)$
+The implication holds because (using $F$) we can evaluate $f$ past $ℕ$, and process the binary tree coded by $f$.  Axiom 7 ensures that numbers in $2^{&lt;ℕ}$ are well-behaved.  It is unclear if the statement is provable from the axioms, but it (including extensions to $2^{&lt;ℕ}$ and so on) is interpretable in $\text{IΔ}_0$ (using the second proof in "Proof of Interpretability in $\text{IΔ}_0$" section).</p>
+
+<p><b>Further extensions for higher types:</b>
+<b>11.</b> Recursive Comprehension for Operators: $∀f∃n \, P(f,n) ⇒ ∃F ∀f \, P(f,F(f)(0))$ ($P$ is a boolean operator) (and similar extensions for operators of higher types).
+<b>12.</b> Uniformization (or quantifier-free axiom of choice) (extension of 11): $∀f∃g \, P(f,g) ⇒ ∃F ∀f \, P(f,F(f))$ ($P$ is a boolean operator) (and similar extensions for operators of higher types).</p>
+
+<p><b>Notes:</b>
+* There may be different reasonable notions of recursive comprehension for operators and higher types, and it would be interesting to work out different theories, their strength, and relations with extensionality and WKL.
+* Axiom 11 appears the best match for recursive comprehension (when used in conjunction with bounded quantifier comprehension) while retaining interpretability in $\text{IΔ}_0$.
+* Axiom 12 looks very powerful, and under the set semantics, it is unprovable in ZF.  However, the power depends on certain prerequisites that are not available in the base theory, and in the model and $F$ we will construct, $F(f)$ will be (in the appropriate sense) finite.  Also, in the model, every operator $G$ that is a predicate on boolean functions is finite.  By contrast, existence of an operator testing for a boolean function being zero would lead to Peano Arithmetic (PA). Also, one weakening of 12 provable in ZF is $∀f ∃!g ∃h \, P(f,g,h) ⇒ ∃F ∀f ∃h \, P(f,F(f),h)$, but (unless $g$ is a number) the premise (or just $∃P∃!g \, P(g)$) implies PA (and ACA<sub>0</sub> for predicates).</p>
+
+<p>In place of a hierarchy of theories, we can also speak of their union (thus using infinite number of types, bounded quantification over $P(P...P(N)...)$, and closure under $Ω_k$).  The resulting theory will have every finite fragment interpretable in $\text{IΔ}_0$.  It appears that the combined system proves the same $Π^0_1$ statements as EFA, but with an iterated exponential slow-down of certain proofs.  (The amalgamation of numbers of higher types forms a model of EFA, but we cannot get to $n$ exponentials using less than $n$ symbols.)
+</p>
+
+
+<h3><a id="A3.3"/> 3.3 Formula Expressiveness</h3>
+
+<p>A $Π_k$ sentence is a sentence of the type $QX_1 QX_2 ... QX_k \, φ$, where each $Q$ is a quantifier ($∀$ or $∃$), the first $Q$ being $∀$ (or $∃$ for $Σ_k$), each $X_i$ is a tuple of variables, and $φ$ is a bounded quantifier formula.
+Under the set-theoretical interpretation, $Π_{k+1}$ formulas correspond to $Π^2_k$ formulas ($k>0$) (and with hyperoperators, $Π^3_k$ formulas, and so on).  A $Σ^2_1$ formula can be coded as $∃F ∀g \, φ$ where $φ$ is bounded quantifier.  (It can also be coded as $∃F ∀G \, φ$, where $φ$ is an equation and $F$ is binary.)
+Conversely (assuming comprehension, which is not in our axioms), a $Σ_1$ formula can be witnessed by an operator which is zero on all but a finite set of functions. $Σ_1$ statements using functions and operators are essentially $Σ^0_1$, and all true $Σ_1$ statements are provable from the axioms 1-4 (even if $φ$ may quantify over $P(n)$ and $P(P(n))$).  The only complication is extensionality, which is addressed by giving a witness that the functions on which the operators gave different results are in fact different.  I conjecture that this (provability of true $Σ_1$ statements in the analog of axioms 1-4) applies to extensions to higher types and that a true $Σ_1$ statement has a finite (for example, as in Finite Example Property in the proof of axiom 12) example.</p>
+
+
+<h2><a id="A4"/> 4 Real Numbers and Analysis </h2>
+
+<h3><a id="A4.1"/> 4.1 Introduction and Real Numbers</h3>
+
+<p>Reverse mathematics up to RCA<sub>0</sub> illuminated much of the structure of mathematical analysis.  Going further, and doing analysis without full recursive comprehension will illuminate which constructions use bounded versus unbounded time.  Studying weak theories also shows the complexity of certain constructions, such as the equivalence between (a) being able to do integration, (b) having SUM operator (axiom 6), and (c) having oracles for relativized PP problems.</p>
+
+<p>Because of absence of exponentiation, there are two natural notions of real numbers, both of which satisfy real field axioms.  For every unary number $t$, ordinary real numbers are defined with $2^{-t}$ error, and approximate real numbers are defined with $1/t$ error.  They can can defined as follows.
+* Ordinary real numbers:  Let $(n,f)$ code $n+\sum_{i=1}^{∞} f(2^i)/2^i$ where $n$ is an integer and each $f(2^i)$ is in $\{0,1,2\}$.
+* Approximate real numbers:  Same as above, but $n$ is a unary integer and use $f(2^{2^i})$ in place of $f(2^i)$.
+Operations between ordinary and approximate real numbers yield approximate real numbers, except when the result is out of bounds.  Approximate real numbers are useful especially for weaker theories, such as with polynomial time computation.  In the other direction, given enough comprehension, one can also define real numbers corresponding to integers of higher types.</p>
+
+<p>A function $ℝ→ℝ$ may depend only the value of the real number (that is $r=s⇒f(r)=f(s)$ even though $f(r)$ and $f(s)$ may be different as codes), as opposed to an intensional function that may depend on the code.</p>
+
+<h3><a id="A4.2"/> 4.2 Continuous Functions</h3>
+
+<!-- old text
+<p>Without recursive comprehension, and to a lesser extent, without WKL, classically equivalent notions become nonequivalent.  Nevertheless, there is a notion of a continuous function on $ℝ^n$ ($n$ is a unary number) that captures what we need (for axioms 1-4):
+$f$ is continuous iff there is a function $g(r,δ) → ε$ such that $|y|&lt;r ∧ |y-z|&lt;ε ⇒ |f(y)-f(z)|&lt;δ$ and $δ>0 ⇒ ε>0$.
+In other words, $f$ is uniformly continuous in every ball, and there is a function witnessing this.  This works because every closed bounded subset of $ℝ^n$ is compact; the base theory appears too weak to properly handle arbitrary separable metric spaces.  For typical continuous functions on $[0,1]^n$, the theory suffices to prove continuity, and for typical continuous $f:ℝ^n→ℝ^n$, the theory suffices unless $f$ grows or changes at a superpolynomial rate.
+<i>Coding:</i> $f$ can be coded by, for example, a function giving the value of $f$ for each n-tuple of dyadic rationals together with a function $g'(r,1/δ) → 1/ε$ with $r$, $1/δ$, $1/ε$ being integers.</p>
+
+<p>With this definition, every continuous function $ℝ^n→ℝ^n$ can be coded by a numeric function, as opposed to an operator, and quantification over continuous functions needs only one unbounded quantifier.  (There is an operator that changes every code $f$ into a code $f'$ such that $f'$ is valid, and if $f$ is valid, $f$ and $f'$ code the same function.) Note that by having $g$ as a function, we do not need recursive comprehension for basic theory:  For example, the supremum (equivalently a code for the supremum) of a continuous function $f$ on $[0,1]^n$ can be computed by a bounded quantifier formula (using $g$).  Using axioms 1-4,6, we can show that integration exists as an operator, and is linear and satisfies most of its basic properties; axiom 6 is not needed for approximate reals (if unary numbers are closed under $x^n$).</p> -->
+
+
+<p>Without recursive comprehension and WKL, classically equivalent notions become nonequivalent.  For continuity, the differences are in (1) to what extent must a modulus of continuity exist as a function (and included in the code, the later being relevant for operators on functions and quantifier counting), and (2) whether the continuity holds for (in a sense) generic real numbers (or points) or just the ones in the model.  One approach is to just require (and include in the code) a modulus of pointwise continuity as a function.  Instead, however, we will identify a general category of spaces and impose the needed conditions to get a good theory with just axioms 1-4.</p>
+
+<p><i>Type of space:</i> Complete metric spaces with every bounded subset totally bounded. Examples include $ℝ^n$ (unary $n$) and the Hilbert cube (each successive dimension halving in size).
+<i>Coding of the Space:</i> Such a space is coded by using a countable dense set (indexed by numbers), a metric $d$ (on that dense set), and a function witnessing total boundness: $h(r,ε)→m$ such that every point within distance $r$ from the first point is within distance $ε$ of one of the first $m$ points; for coding, $r$ and $1/ε$ can be restricted to (and coded as) numbers.
+<i>Coding of points:</i>  Analogous to real numbers.  For example, use a sequence $x$ (of indices in the dense set) such that $d(x_n,x_{n+1})&lt;2^{-n}$.
+<i>Coding of a function $f$:</i>  (1) Specify (as a function of the index) the value of $f$ for every element of the dense set.  (Alternatively, use any reasonable standard coding of continuous functions using functions rather than predicates.)
+(2) Give a function witnessing that $f$ is uniformly continuous on every bounded set:  $g(r,δ) → ε$ such that $d(y,0)&lt;r ∧ d(y,z)&lt;ε ⇒ d(f(y),f(z))&lt;δ$ and $δ>0 ⇒ ε>0$, with $r$,$1/δ$,$1/ε$ restricted to and coded by positive integers.
+<i>Generalization to other spaces (not formalized):</i>  Given a function $h$ with for all $x$, $h(x)$ being a compact subset of the domain $f$, require there to be $g$ with $g(x)$ returning a modulus of uniform continuity for $f$ on $h(x)$.  If in our domain there is a canonical choice of $h$, include $g$ in the code for $f$.</p>
+
+<p>With this definition, continuous functions are coded by numeric functions rather than operators, function application is bounded quantifier (with invalid arguments potentially returning invalid values), and the choice of coding is irrelevant (in various senses that can be made precise).  Quantification over functions uses a single unbounded quantifier:  There is an operator that changes every code $f$ into a code $f'$ such that $f'$ is valid, and if $f$ is valid, $f$ and $f'$ code the same function.  The requirement of uniform continuity on bounded subsets (which automatically holds under recursive comprehension and WKL) allows us to develop the intended basic theory in a weak system.  Also, for typical continuous functions on $[0,1]^n$, the theory suffices to prove continuity, and for typical continuous $f:ℝ^n→ℝ^n$, the theory suffices unless $f$ grows or changes at a superpolynomial rate.</p>
+
+<p>Note that by having $g$ as a function, we do not need recursive comprehension for basic theory:  For example, the supremum (equivalently a code for the supremum) of a continuous function $f$ on $[0,1]^n$ can be computed by a bounded quantifier formula (using $g$).  Also, using axioms 1-4,6, we can show that integration on $ℝ^n$ exists as an operator, and is linear and satisfies most of its basic properties; axiom 6 is not needed for approximate reals (if unary numbers are closed under $x^n$).</p>
+
+
+<h3><a id="A4.3"/> 4.3 Reverse Mathematics</h3>
+
+<p>We can also do reverse mathematics.</p>
+
+<p><b>Theorem (axioms 1-5):</b>  Intermediate value theorem is equivalent to recursive comprehension for predicates on unary numbers.
+<b>Proof:</b>  (⇐) If the function has no rational zeros, use the constructive version (below) and wait until the interval becomes short enough before returning it.  If the interval does not become shorter than $ε$, then the function is $0$ on an interval of length $ε$ and hence has a rational zero. 
+(⇒) Given a recursive (allowing parameters) predicate $g$, we can find a bounded quantifier (allowing parameters) function $f$ on reals with one zero, and that zero will code $g$.  The construction is as follows. Fix an interval.  Run an evaluation of $g(0)$, and during that time, output that $f$ is close to $0$ on that interval and is negative to the left of the interval and positive to the right of the interval.  Then, if $g(0)=0$, narrow the interval to the first third, and if $g(0)=1$ — the last third, and continue with $g(1)$ and so on.
+<b>Notes:</b>
+* In the base system, the complexity of a function is decoupled from its growth rate, so finding complex predicates does not prove existence of fast growing functions.  Also, complex predicates on unary numbers need not imply complex nonsparse predicates on binary numbers. However, given bounded collection (for binary numbers), recursive comprehension for functions on unary numbers implies recursive comprehension for functions on binary numbers.
+* Without bounded collection, the equivalence is for this form of comprehension: $∀m ∃n ∀m'≤m ∃n'≤n \, p(m',n') ⇒ ∃g \, ∀i \, (g(i) ⇔ \text{min}(n: p(2^i,n)) \text{ is odd})$ ($g$ is a predicate on unary numbers, and $p$ is a predicate).</p>
+
+<p><b>Problem:</b>  Find other natural equivalents to recursive comprehension.</p>
+
+<p>A constructive weakening of intermediate value theorem is provable in the base system:  If $f$ is continuous, and $f(0)&lt;0$ and $f(1)>0$, then there is $g$ such that $g(n)$ returns $(a_n,b_n)$ with $∀x (a_n &lt; x &lt; b_n) \, |f(x)|&lt;1/n$ and $a_j &lt; a_k &lt; b_k &lt; a_j$ for $j&lt;k$.</p>
+
+<p>We can show that every continuous function on $[0,1]$ has a supremum.  However, having a maximum value, along with many other statements in analysis, is equivalent to Weak König's Lemma.  Some of these equivalences have been worked out in a theory called BTFA and its extensions (see [Ferreira 1994] and [Fernandes]). <i>Subsystems of Second Order Arithmetic</i> [Simpson 2009] is a good reference for reverse mathematics, including equivalences of Weak König's Lemma assuming RCA<sub>0</sub>. (Note that in these references, continuity on [0,1] is not defined so as to give uniform continuity, and hence in their treatment RCA<sub>0</sub> does not prove that continuous functions on $[0,1]$ are bounded and have other basic properties.)  Many of these equivalences apply here assuming axioms 1-6,9.</p>
+
+
+<h2><a id="A5"/> 5 Proof of Interpretability in $\text{IΔ}_0$ </h2>
+
+<h3><a id="A5.1"/> 5.1 Setup </h3>
+
+<p>Despite its expressiveness and apparent power, the theory (axioms 1-12 and extensions) is interpretable in $\text{IΔ}_0$.  Furthermore, under our interpretation in $\text{IΔ}_0$, there is a definable cut $K$ and a formula $φ$ coding the satisfaction relation for bounded quantifier formulas whose length is in $K$.</p>
+
+<p>In $\text{IΔ}_0$ (and even in extended Robinson arithmetic Q<sup>+</sup>), we have a rich collection of definable cuts:
+* Given a definable cut $I$, there is a definable cut $J$ that such that for $∀n∈J \, 2^n∈I$
+* Unless $I$ satisfies $Σ_2$ induction (and $Σ_k$ induction), there is a definable cut $J &lt; I$.</p>
+
+<p><b>Proposition:</b>  A model of $\text{IΔ}_0$ has no definable cuts iff it satisfies Peano Arithmetic.
+<b>Proof:</b>  A definable cut contradicts induction.  Conversely, given an induction schema  $∀n \, φ(n)$, consider $\{n: ∀m≤n \, φ(m)\}$.  If the set is a cut, it is a definable cut, otherwise choose minimum $n$ that is not in the set, and use the induction instance coded by $φ(n)$ to get a cut.</p>
+
+<p>If there is too much induction ($Σ_1$ induction suffices), then instead of getting a proper cut of $ℕ$, we will have (in the construction below) $J=ℕ$ and use a coding for nonstandard numbers to get $I$.  Alternatively, known results on interpretability of WKL<sub>0</sub> might be extendable to our axioms.  Technically, the interpretation will behave one way if sufficient induction holds and another way if it fails.</p>
+
+<p>In its general form, the theory can be parameterized by
+$k_1$ — numbers satisfy $Ω_{k_1}$
+$k_2$ — the number of higher types (i.e. $k_2 = 2$ if we use just functions and operators).
+$k_3$ — number of exponentials sufficient for computation of bounded quantification (with axiom 7 and its analogues $k_3 = k_2+1$, and without it $k_3 = 1$).
+$k_4$ — (not used in the proof) for restricted quantification theories, maximum $k$ such that $Π_k$ formulas are allowed.</p>
+
+<p>We present (or sketch) two proofs/constructions, one in which operators essentially correspond to bounded quantifier definitions, and another in which the set of operators is in a sense maximized.  The first proof only applies to axioms 1-10 (not 10a), and in that proof, I did not verify extensionality for hyperoperators and higher types.</p>
+
+
+<h3><a id="A5.2"/> 5.2 First Proof </h3>
+
+<p>The construction will use three cuts: $K≤J&lt;I$.
+$I$ — satisfies $Ω_1$
+$J$ — satisfies $Ω_{k_1}$, and with $∃n∉J \, 2_{k_3}^n∈I$.
+$K$ — closed under '$+$' and '$⋅$', and such that for every total function $f$ on $J$ (as below, with a number coding the graph of $f$ up to some point beyond $J$):  $J$ is also closed under $f^{2_{k_2}^n}$ for all $n$ in $K$.</p>
+
+<p><b>Interpretation</b>
+* Numbers are elements of $J$.
+* Functions are arbitrary functions that are total on $J$ with a number coding the graph of the function up to some point beyond $J$. <!--
+The commented out part does not make sense since it appears to agree with the above simpler definition of functions.
+* Functions are polynomial time functions on $I$ whose runtime is $(\text{len}(x)+\text{len}(M))^c$, with $(M,c)$ included in the code, and
+&nbsp;&nbsp; - $M∈I$
+&nbsp;&nbsp; - $∃n∈K \, c &lt; 2_{k_2+1}^n$
+&nbsp;&nbsp; - the function is total on $J$. -->
+* Primitive operators (and similarly for higher types):  Every number $x$ with len(len($x$))∈J is included as an operator constant (and similarly for higher types).  The exact coding is unimportant as long as the codes can be processed with bounded quantifier formulas.
+* Operators (and hyperoperators, etc.) and bounded quantifier formulas are coded by a sequence of bounded-quantifier definitions whose total length (number of bits) is in $K$, and that may refer to numbers and functions and primitive operators (and if applicable, hyperoperators, etc).</p>
+
+<p><b>Formula Evaluation</b>
+<i>Goal:</i>  Given a bounded quantifier formula and values for its free variables (number, functions, primitive operators, function and operator definitions), evaluate whether it is true.
+<i>Procedure:</i>  The formula is evaluated recursively, keeping track of free variables.
+* $A ∨ B$ is evaluated by evaluating $A$ and evaluating $B$, and similarly with $A ∧ B$.
+* $∃m &lt; T$ is evaluated by evaluating $T$, and then evaluating the formula for every $m&lt;T$,
+  and similarly with $∀m&lt;T$ and $μ(m&lt;T:φ)$, and also for quantification over $P(n)$, etc.
+* For definitional quantifiers, note the definition and proceed to evaluate the formula.
+* It remains to show how to evaluate a term.  Each top level term is in one of three forms: 
+&nbsp;&nbsp; - $n$ where $n$ is a number
+&nbsp;&nbsp; - $f(T)$ where $f$ is a function symbol.  Evaluate $T$.  Then evaluate $f(T)$ either directly or recursively using the definition of $f$.
+&nbsp;&nbsp; - $F(T_f)(T)$ where $F$ is an operator symbol and $T_f$ is a function term.  Evaluate $T$, add function $T_f$, and evaluate $F(T_f)(T)$ using the definition of $F$. Note that for the primitive operators above, $F(f)$ can be evaluated by looking up its value on (under one choice of coding) $(f(0),f(1),...,f(f(0)))$.
+&nbsp;&nbsp; - Higher types are handled analogously.</p>
+
+<p><b>Notes:</b>
+* Bounded collection holds because its failure would allow computation of the least element not in $J$.
+* Recursive comprehension holds because given $f$ (coded as $f:n→n$ for some $n∉J$), we can evaluate a recursive-in-$f$ function on $J$ up to some element beyond $J$, and halt when the computation reaches $n$, which will only happen outside of $J$.
+* WKL can be shown similarly.  A coded predicate $P$ on $J$ is defined up to some point beyond $J$, and we can choose a path through the binary tree corresponding to $P$.
+* Closure of $K$ under multiplication ensures that given a formula and substitutions for some of its free variables, the result is valid.
+* Closure of $I$ and $J$ under the relevant functions ensures that bounded quantifier comprehension using formulas with length in K still leads to valid numbers and functions.  It also ensures that formula evaluation (above) is bounded-quantifier (in $I$), assuming that we are given a sufficiently large element of $I$ (independent of the formula) and may return an arbitrary result if a parameter is invalid or the formula length is not in $K$.
+* A length $n$ bounded quantifier formula can apply a function up to about $2_{k_2}^n$ number of times.  Conversely, for an operator $F$ with bounded-quantifier definition length $n$, we can find a function $g$ such that $F(f)(m)$ uses $f$ only for arguments less than $h^{2_{k_2}^n}(m)$ where $h(x) = \max_{y≤x}(f(y)+g(y))$.  Similar results also hold for higher types, and extensionality follows.  In $\text{IΔ}_0$, while we cannot do induction on extensionality directly, we can use induction for these concrete properties.
+* Note that the same function can have multiple codes; it is not clear if this can be avoided (and it would be interesting to get non-interpretability results under unique coding).
+* We can vary the construction to get (in a sense) minimal models for various subsystems.  For examples, for axioms 1-4, we can simply code functions and operators by bounded quantifier definitions.
+* The interpretation (and also the interpretation in the second proof) satisfies two desirable properties: It is definable parameter free, and by being cut-based, $\text{IΔ}_0$ proves that for every $Σ^0_1$ formula whose length is in K the interpretation satisfies only true instances.</p>
+
+
+<h3><a id="A5.3"/> 5.3 Second Proof </h3>
+
+<p>Let $I$ and $J$ (and numbers and functions) be as above.  We ensure extensionality while keeping function (including higher level function) application bounded quantifier (in $I$) as follows.<!-- Let operators be arbitrary extensional mappings between functions that can coded as follows:  For some $n∉J$ (with $2^{2^n}∈I$), the code assigns to every function $f:n→n$ a function $g:n→n$ such that if $f$ and $f'$ agree on $J$ and are total on $J$, then so are $g$ and $g'$.  -->
+<b>Coding:</b>  Objects of type $k$ (0 is numbers, 1 is functions, and so on) will be coded by valid level $k$ codes.  Given $n$ ($n∉J$ and $2_{k_2}^n∈I$), a level 0 code is a number $&lt;n$; a level $k+1$ code is a function (coded by a number): $\text{code}_k→\text{code}_k$ where $\text{code}_k$ is the set of all level $k$ codes. A level 0 code is valid iff it is in $J$; equivalence is identity.  A level $k+1$ code is valid iff it maps equivalent valid level $k$ codes into equivalent valid level $k$ codes. Two valid level $k+1$ codes $f$ and $g$ are equivalent iff $f(x)$ is equivalent to $g(x)$ for every valid level $k$ code $x$.
+
+<b>Note:</b>  This construction appears ideal for getting the most while staying within interpretability in $\text{IΔ}_0$.  A good project may be to investigate whether there are additional natural true axioms that this construction can be made to satisfy and are interpretable in $\text{IΔ}_0$.</p>
+
+<p><b>Formula Evaluation:</b>  When encountering a definitional quantifier, compute the table corresponding to the function (or operator, etc.) defined in the quantifier.  (We get a point outside of $J$ using one of the higher-order parameters, or if there are none, we can pick (or quantify over) any point that is not too large.)
+<b>Cut $K$:</b> Let $K⊂J$ be the cut (or a subcut closed under '$⋅$') such that bounded quantifier formulas whose length is in $K$ are extensional, that is their values do not depend on how the parameters are coded, and such that terms whose length is in $K$ evaluate to valid numbers (or functions, etc.).  We have to show that this is a cut.  Extensionality is clearly preserved by logical connectives and bounded numerical quantifiers.
+<b>Definitional Quantifiers:</b> Extensionality is preserved by the definitional quantifiers assuming that the definition actually (and extensionally) defines a function (or operator, etc.).  A level $k$ function $f_k$ (level 2 being operators) can be characterized as an extensional function $f:f_{k-1},...,f_2,f_1,m→n$, and we need to show that a bounded quantifier definition (as in the axioms) guarantees existence and extensionality of $f$.  Existence follows from formula evaluation and closure of $J$ under terms whose length is in $K$.  Extensionality follows from extensionality of the underlying formula for (essentially) $f(f_{k-1},...,f_2,f_1,m)=n$.</p>
+
+<p><b>Proof of Axiom 12:</b>
+<i>Extensional Extensions and Contractions:</i>  If in the codes (for functions, operators, etc.), we switch coding from using $N$ (and $N→N$, etc.) to using $N'$ (and $N'→N'$, etc.), we want to extend (if $N'>N$) or contract (if $N'&lt;N$) the functions (including higher level functions) while preserving extensionality on $J&lt;\text{min}(N',N)$.  Here is one recipe, where $E$ is extension and $C$ is contraction: $E(n)=n, C(n)=\text{min}(\text{min}(N',N)-1,n)$, $E(F)(f) = E(F(C(f)))$, $C(F)(f) = C(F(E(f)))$.
+Note that as desired, $C(E(F))(f) = C(E(F)(E(f))) = C(E(F(C(E(f))))) = F(f)$.  One can also show (by recursion on the type level) that extensionality is preserved (but note that contractions may add extensionality), and that for valid $F$ and $f$, $C(F)(C(f))$ is equivalent to $C(F(f))$, and also that extension from an $N$ in $J$ to an $N'$ outside of $J$ guarantees extensionality.
+<i>Finite Example Property:</i> <!-- note: the definition in here might be used in "Formula Expressiveness" subsection --> If $∃F \, P(F)$ ($F$ and $P$ are valid), then there is a finite '$F$' (finite means being based on some $N∈J$) whose extension satisfies $P$.
+<i>Proof:</i>  Using extensional contractions, a suitable '$F$' exists for every $N∉J$, and since $J$ is a cut, it must exist for an $N∈J$.
+<i>Axiom 12 Proof:</i> Assuming $∀f ∃g \, P(f,g)$ ($P$ is a boolean operator/hyperoperator/etc.), set $F(f)$ to be $E(g)$ for the least (which implies using the least number $N$) $g$ such that $P(f,E(g))$.
+<i>End of proof</i></p>
+
+<p>Proofs of other axioms are routine. Proof of WKL is as in the first proof.</p>
+
+<h3><a id="A5.4"/> 5.4 Further Remarks </h3>
+
+<b>Continuity</b> <i>(not part of the proof)</i>: It appears that in the model (in the second proof), higher level functions are precisely the hereditarily continuous extensional functionals (coded by numbers in $I$). A code for $F$ (with $F(f)∈ℕ$) is a set of partial_input-output pairs (each pair is a number of type $n-1$ where the type of $F$ is $n$) such that for every code $c$ for $f$, every sufficiently large initial segment of $c$ will give $F(f)$. Note that codes are non-unique, and extensionality is not vacuous.  The property of being a code for $F$ is definable (and code application is partial recursive and total on valid codes), and we could have developed the theory using codes at the price of requiring the continuity, imposing properties such as recursive comprehension on the base theory, and having a cumbersome exposition, including lack of a simple analog to our bounded quantifier formulas.
+
+<p>Using cut elimination (see for example [Beckmann 2011] and [Gerhardy 2005]), the interpretability implies that for every finite $k_1,k_2,k_3,k_4$ if we restrict first order logic to boolean combinations of $Π_{k_4}$ formulas, there is $k$ such that every proof of existence of $2_k^n$ has length $>n$.</p>
+
+<p style="text-align:center"><br/>REFERENCES</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Beckmann, Arnold; Buss, Samuel R. Corrected upper bounds for free-cut elimination. [J] Theor. Comput. Sci. 412, No. 39, 5433-5445 (2011). ISSN 0304-3975.
+&nbsp;&nbsp;&nbsp;&nbsp;Fernandes, António M.; Ferreira, Fernando. Basic applications of weak König’s lemma in feasible analysis.
+&nbsp;&nbsp;&nbsp;&nbsp;Ferreira, Fernando. A Feasible Theory for Analysis. J. Symbolic Logic 59 (1994), no. 3, 1001--1011.
+&nbsp;&nbsp;&nbsp;&nbsp;Ferreira, Fernando; Ferreira; Gilda. Interpretability in Robinson's Q. Bulletin of Symbolic Logic, 19, pp 289-317 (2013). doi:10.1017/S1079898600010660.
+&nbsp;&nbsp;&nbsp;&nbsp;Gerhardy, Philipp. The Role of Quantifier Alternations in Cut Elimination. Notre Dame J. Formal Logic, Volume 46, Number 2 (2005), 165-171.
+&nbsp;&nbsp;&nbsp;&nbsp;Simpson, Stephen G. Subsystems of Second Order Arithmetic (Perspectives in Logic) 2nd Edition (2009).
+&nbsp;&nbsp;&nbsp;&nbsp;Švejdar, Vítězslav. An Interpretation of Robinson Arithmetic in its Grzegorczyk's Weaker Variant. Fundamenta Informaticae. Volume 81 Issue 1-3, May 2008, 347-354.</p>
+
+</body>
+</html>
+
